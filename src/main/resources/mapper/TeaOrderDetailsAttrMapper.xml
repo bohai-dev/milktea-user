@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.milktea.milkteauser.dao.TeaOrderDetailsAttrMapper">
+  <resultMap id="BaseResultMap" type="com.milktea.milkteauser.domain.TeaOrderDetailsAttr">
+    <result column="ORDER_DETAIL_ID" jdbcType="VARCHAR" property="orderDetailId" />
+    <result column="ATTR_ID" jdbcType="VARCHAR" property="attrId" />
+  </resultMap>
+  <insert id="insert" parameterType="com.milktea.milkteauser.domain.TeaOrderDetailsAttr">
+    insert into TEA_ORDER_DETAILS_ATTR (ORDER_DETAIL_ID, ATTR_ID)
+    values (#{orderDetailId,jdbcType=VARCHAR}, #{attrId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaOrderDetailsAttr">
+    insert into TEA_ORDER_DETAILS_ATTR
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderDetailId != null">
+        ORDER_DETAIL_ID,
+      </if>
+      <if test="attrId != null">
+        ATTR_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderDetailId != null">
+        #{orderDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="attrId != null">
+        #{attrId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

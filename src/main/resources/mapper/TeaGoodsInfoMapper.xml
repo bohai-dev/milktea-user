@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.milktea.milkteauser.dao.TeaGoodsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.milktea.milkteauser.domain.TeaGoodsInfo">
+    <id column="GOODS_ID" jdbcType="VARCHAR" property="goodsId" />
+    <result column="STORE_NO" jdbcType="VARCHAR" property="storeNo" />
+    <result column="CN_GOODS_NAME" jdbcType="VARCHAR" property="cnGoodsName" />
+    <result column="CN_GOODS_INTRODUCTION" jdbcType="VARCHAR" property="cnGoodsIntroduction" />
+    <result column="CN_GOODS_PICTURE_BIG" jdbcType="VARCHAR" property="cnGoodsPictureBig" />
+    <result column="CN_GOODS_PICTURE_ROUND" jdbcType="VARCHAR" property="cnGoodsPictureRound" />
+    <result column="US_GOODS_NAME" jdbcType="VARCHAR" property="usGoodsName" />
+    <result column="US_GOODS_INTRODUCTION" jdbcType="VARCHAR" property="usGoodsIntroduction" />
+    <result column="US_GOODS_PICTURE_BIG" jdbcType="VARCHAR" property="usGoodsPictureBig" />
+    <result column="US_GOODS_PICTURE_ROUND" jdbcType="VARCHAR" property="usGoodsPictureRound" />
+    <result column="GOODS_PRICE" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="GOODS_STATUS" jdbcType="CHAR" property="goodsStatus" />
+    <result column="GOODS_STOCK" jdbcType="DECIMAL" property="goodsStock" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    GOODS_ID, STORE_NO, CN_GOODS_NAME, CN_GOODS_INTRODUCTION, CN_GOODS_PICTURE_BIG, CN_GOODS_PICTURE_ROUND, 
+    US_GOODS_NAME, US_GOODS_INTRODUCTION, US_GOODS_PICTURE_BIG, US_GOODS_PICTURE_ROUND, 
+    GOODS_PRICE, GOODS_STATUS, GOODS_STOCK, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_GOODS_INFO
+    where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TEA_GOODS_INFO
+    where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.milktea.milkteauser.domain.TeaGoodsInfo">
+    insert into TEA_GOODS_INFO (GOODS_ID, STORE_NO, CN_GOODS_NAME, 
+      CN_GOODS_INTRODUCTION, CN_GOODS_PICTURE_BIG, 
+      CN_GOODS_PICTURE_ROUND, US_GOODS_NAME, US_GOODS_INTRODUCTION, 
+      US_GOODS_PICTURE_BIG, US_GOODS_PICTURE_ROUND, 
+      GOODS_PRICE, GOODS_STATUS, GOODS_STOCK, 
+      UPDATE_TIME)
+    values (#{goodsId,jdbcType=VARCHAR}, #{storeNo,jdbcType=VARCHAR}, #{cnGoodsName,jdbcType=VARCHAR}, 
+      #{cnGoodsIntroduction,jdbcType=VARCHAR}, #{cnGoodsPictureBig,jdbcType=VARCHAR}, 
+      #{cnGoodsPictureRound,jdbcType=VARCHAR}, #{usGoodsName,jdbcType=VARCHAR}, #{usGoodsIntroduction,jdbcType=VARCHAR}, 
+      #{usGoodsPictureBig,jdbcType=VARCHAR}, #{usGoodsPictureRound,jdbcType=VARCHAR}, 
+      #{goodsPrice,jdbcType=DECIMAL}, #{goodsStatus,jdbcType=CHAR}, #{goodsStock,jdbcType=DECIMAL}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaGoodsInfo">
+    insert into TEA_GOODS_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        GOODS_ID,
+      </if>
+      <if test="storeNo != null">
+        STORE_NO,
+      </if>
+      <if test="cnGoodsName != null">
+        CN_GOODS_NAME,
+      </if>
+      <if test="cnGoodsIntroduction != null">
+        CN_GOODS_INTRODUCTION,
+      </if>
+      <if test="cnGoodsPictureBig != null">
+        CN_GOODS_PICTURE_BIG,
+      </if>
+      <if test="cnGoodsPictureRound != null">
+        CN_GOODS_PICTURE_ROUND,
+      </if>
+      <if test="usGoodsName != null">
+        US_GOODS_NAME,
+      </if>
+      <if test="usGoodsIntroduction != null">
+        US_GOODS_INTRODUCTION,
+      </if>
+      <if test="usGoodsPictureBig != null">
+        US_GOODS_PICTURE_BIG,
+      </if>
+      <if test="usGoodsPictureRound != null">
+        US_GOODS_PICTURE_ROUND,
+      </if>
+      <if test="goodsPrice != null">
+        GOODS_PRICE,
+      </if>
+      <if test="goodsStatus != null">
+        GOODS_STATUS,
+      </if>
+      <if test="goodsStock != null">
+        GOODS_STOCK,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNo != null">
+        #{storeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cnGoodsName != null">
+        #{cnGoodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnGoodsIntroduction != null">
+        #{cnGoodsIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="cnGoodsPictureBig != null">
+        #{cnGoodsPictureBig,jdbcType=VARCHAR},
+      </if>
+      <if test="cnGoodsPictureRound != null">
+        #{cnGoodsPictureRound,jdbcType=VARCHAR},
+      </if>
+      <if test="usGoodsName != null">
+        #{usGoodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="usGoodsIntroduction != null">
+        #{usGoodsIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="usGoodsPictureBig != null">
+        #{usGoodsPictureBig,jdbcType=VARCHAR},
+      </if>
+      <if test="usGoodsPictureRound != null">
+        #{usGoodsPictureRound,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsStatus != null">
+        #{goodsStatus,jdbcType=CHAR},
+      </if>
+      <if test="goodsStock != null">
+        #{goodsStock,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.milktea.milkteauser.domain.TeaGoodsInfo">
+    update TEA_GOODS_INFO
+    <set>
+      <if test="storeNo != null">
+        STORE_NO = #{storeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cnGoodsName != null">
+        CN_GOODS_NAME = #{cnGoodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnGoodsIntroduction != null">
+        CN_GOODS_INTRODUCTION = #{cnGoodsIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="cnGoodsPictureBig != null">
+        CN_GOODS_PICTURE_BIG = #{cnGoodsPictureBig,jdbcType=VARCHAR},
+      </if>
+      <if test="cnGoodsPictureRound != null">
+        CN_GOODS_PICTURE_ROUND = #{cnGoodsPictureRound,jdbcType=VARCHAR},
+      </if>
+      <if test="usGoodsName != null">
+        US_GOODS_NAME = #{usGoodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="usGoodsIntroduction != null">
+        US_GOODS_INTRODUCTION = #{usGoodsIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="usGoodsPictureBig != null">
+        US_GOODS_PICTURE_BIG = #{usGoodsPictureBig,jdbcType=VARCHAR},
+      </if>
+      <if test="usGoodsPictureRound != null">
+        US_GOODS_PICTURE_ROUND = #{usGoodsPictureRound,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        GOODS_PRICE = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsStatus != null">
+        GOODS_STATUS = #{goodsStatus,jdbcType=CHAR},
+      </if>
+      <if test="goodsStock != null">
+        GOODS_STOCK = #{goodsStock,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.milktea.milkteauser.domain.TeaGoodsInfo">
+    update TEA_GOODS_INFO
+    set STORE_NO = #{storeNo,jdbcType=VARCHAR},
+      CN_GOODS_NAME = #{cnGoodsName,jdbcType=VARCHAR},
+      CN_GOODS_INTRODUCTION = #{cnGoodsIntroduction,jdbcType=VARCHAR},
+      CN_GOODS_PICTURE_BIG = #{cnGoodsPictureBig,jdbcType=VARCHAR},
+      CN_GOODS_PICTURE_ROUND = #{cnGoodsPictureRound,jdbcType=VARCHAR},
+      US_GOODS_NAME = #{usGoodsName,jdbcType=VARCHAR},
+      US_GOODS_INTRODUCTION = #{usGoodsIntroduction,jdbcType=VARCHAR},
+      US_GOODS_PICTURE_BIG = #{usGoodsPictureBig,jdbcType=VARCHAR},
+      US_GOODS_PICTURE_ROUND = #{usGoodsPictureRound,jdbcType=VARCHAR},
+      GOODS_PRICE = #{goodsPrice,jdbcType=DECIMAL},
+      GOODS_STATUS = #{goodsStatus,jdbcType=CHAR},
+      GOODS_STOCK = #{goodsStock,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where GOODS_ID = #{goodsId,jdbcType=VARCHAR}
+  </update>
+</mapper>
