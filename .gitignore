@@ -1,4 +1,4 @@
-/target/
+
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -24,3 +24,5 @@
 /nbdist/
 /.nb-gradle/
 /.mvn/
+/wxpay-sdk/target/
+/milktea-user/target/
