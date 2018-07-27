@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.milktea.milkteauser.dao.TeaClassInfoMapper">
+  <resultMap id="BaseResultMap" type="com.milktea.milkteauser.domain.TeaClassInfo">
+    <id column="CLASS_ID" jdbcType="VARCHAR" property="classId" />
+    <result column="CN_CLASS_NAME" jdbcType="VARCHAR" property="cnClassName" />
+    <result column="CN_CLASS_LOGO" jdbcType="VARCHAR" property="cnClassLogo" />
+    <result column="US_CLASS_NAME" jdbcType="VARCHAR" property="usClassName" />
+    <result column="US_CLASS_LOGO" jdbcType="VARCHAR" property="usClassLogo" />
+    <result column="CLASS_TYPE" jdbcType="CHAR" property="classType" />
+    <result column="INDEX_NO" jdbcType="DECIMAL" property="indexNo" />
+    <result column="DELETE_FLAG" jdbcType="CHAR" property="deleteFlag" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CLASS_ID, CN_CLASS_NAME, CN_CLASS_LOGO, US_CLASS_NAME, US_CLASS_LOGO, CLASS_TYPE, 
+    INDEX_NO, DELETE_FLAG, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_CLASS_INFO
+    where CLASS_ID = #{classId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TEA_CLASS_INFO
+    where CLASS_ID = #{classId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.milktea.milkteauser.domain.TeaClassInfo">
+    insert into TEA_CLASS_INFO (CLASS_ID, CN_CLASS_NAME, CN_CLASS_LOGO, 
+      US_CLASS_NAME, US_CLASS_LOGO, CLASS_TYPE, 
+      INDEX_NO, DELETE_FLAG, UPDATE_TIME
+      )
+    values (#{classId,jdbcType=VARCHAR}, #{cnClassName,jdbcType=VARCHAR}, #{cnClassLogo,jdbcType=VARCHAR}, 
+      #{usClassName,jdbcType=VARCHAR}, #{usClassLogo,jdbcType=VARCHAR}, #{classType,jdbcType=CHAR}, 
+      #{indexNo,jdbcType=DECIMAL}, #{deleteFlag,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaClassInfo">
+    insert into TEA_CLASS_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        CLASS_ID,
+      </if>
+      <if test="cnClassName != null">
+        CN_CLASS_NAME,
+      </if>
+      <if test="cnClassLogo != null">
+        CN_CLASS_LOGO,
+      </if>
+      <if test="usClassName != null">
+        US_CLASS_NAME,
+      </if>
+      <if test="usClassLogo != null">
+        US_CLASS_LOGO,
+      </if>
+      <if test="classType != null">
+        CLASS_TYPE,
+      </if>
+      <if test="indexNo != null">
+        INDEX_NO,
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classId != null">
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="cnClassName != null">
+        #{cnClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnClassLogo != null">
+        #{cnClassLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="usClassName != null">
+        #{usClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="usClassLogo != null">
+        #{usClassLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="classType != null">
+        #{classType,jdbcType=CHAR},
+      </if>
+      <if test="indexNo != null">
+        #{indexNo,jdbcType=DECIMAL},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.milktea.milkteauser.domain.TeaClassInfo">
+    update TEA_CLASS_INFO
+    <set>
+      <if test="cnClassName != null">
+        CN_CLASS_NAME = #{cnClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnClassLogo != null">
+        CN_CLASS_LOGO = #{cnClassLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="usClassName != null">
+        US_CLASS_NAME = #{usClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="usClassLogo != null">
+        US_CLASS_LOGO = #{usClassLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="classType != null">
+        CLASS_TYPE = #{classType,jdbcType=CHAR},
+      </if>
+      <if test="indexNo != null">
+        INDEX_NO = #{indexNo,jdbcType=DECIMAL},
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CLASS_ID = #{classId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.milktea.milkteauser.domain.TeaClassInfo">
+    update TEA_CLASS_INFO
+    set CN_CLASS_NAME = #{cnClassName,jdbcType=VARCHAR},
+      CN_CLASS_LOGO = #{cnClassLogo,jdbcType=VARCHAR},
+      US_CLASS_NAME = #{usClassName,jdbcType=VARCHAR},
+      US_CLASS_LOGO = #{usClassLogo,jdbcType=VARCHAR},
+      CLASS_TYPE = #{classType,jdbcType=CHAR},
+      INDEX_NO = #{indexNo,jdbcType=DECIMAL},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CLASS_ID = #{classId,jdbcType=VARCHAR}
+  </update>
+</mapper>

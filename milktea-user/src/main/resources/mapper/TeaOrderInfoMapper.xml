@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.milktea.milkteauser.dao.TeaOrderInfoMapper">
+  <resultMap id="BaseResultMap" type="com.milktea.milkteauser.domain.TeaOrderInfo">
+    <id column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
+    <result column="USER_NO" jdbcType="VARCHAR" property="userNo" />
+    <result column="TELEPHONE" jdbcType="VARCHAR" property="telephone" />
+    <result column="WEIXIN_ID" jdbcType="VARCHAR" property="weixinId" />
+    <result column="PROMOTION_ID" jdbcType="VARCHAR" property="promotionId" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="ORIG_PRICE" jdbcType="DECIMAL" property="origPrice" />
+    <result column="DISCOUNT" jdbcType="DECIMAL" property="discount" />
+    <result column="ORDER_PRICE" jdbcType="DECIMAL" property="orderPrice" />
+    <result column="TAKE_NO" jdbcType="VARCHAR" property="takeNo" />
+    <result column="ORDER_TIME" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="ORDER_STATUS" jdbcType="CHAR" property="orderStatus" />
+    <result column="PAY_STATUS" jdbcType="CHAR" property="payStatus" />
+    <result column="ORDER_TYPE" jdbcType="CHAR" property="orderType" />
+    <result column="MAKE_FINISH_TIME" jdbcType="TIMESTAMP" property="makeFinishTime" />
+    <result column="BOOK_TIME" jdbcType="TIMESTAMP" property="bookTime" />
+    <result column="DELETE_FLAG" jdbcType="CHAR" property="deleteFlag" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ORDER_NO, USER_NO, TELEPHONE, WEIXIN_ID, PROMOTION_ID, REMARK, ORIG_PRICE, DISCOUNT, 
+    ORDER_PRICE, TAKE_NO, ORDER_TIME, ORDER_STATUS, PAY_STATUS, ORDER_TYPE, MAKE_FINISH_TIME, 
+    BOOK_TIME, DELETE_FLAG, UPDATE_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_ORDER_INFO
+    where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TEA_ORDER_INFO
+    where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.milktea.milkteauser.domain.TeaOrderInfo">
+    insert into TEA_ORDER_INFO (ORDER_NO, USER_NO, TELEPHONE, 
+      WEIXIN_ID, PROMOTION_ID, REMARK, 
+      ORIG_PRICE, DISCOUNT, ORDER_PRICE, 
+      TAKE_NO, ORDER_TIME, ORDER_STATUS, 
+      PAY_STATUS, ORDER_TYPE, MAKE_FINISH_TIME, 
+      BOOK_TIME, DELETE_FLAG, UPDATE_TIME
+      )
+    values (#{orderNo,jdbcType=VARCHAR}, #{userNo,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{weixinId,jdbcType=VARCHAR}, #{promotionId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{origPrice,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, #{orderPrice,jdbcType=DECIMAL}, 
+      #{takeNo,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=CHAR}, 
+      #{payStatus,jdbcType=CHAR}, #{orderType,jdbcType=CHAR}, #{makeFinishTime,jdbcType=TIMESTAMP}, 
+      #{bookTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaOrderInfo">
+    insert into TEA_ORDER_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        ORDER_NO,
+      </if>
+      <if test="userNo != null">
+        USER_NO,
+      </if>
+      <if test="telephone != null">
+        TELEPHONE,
+      </if>
+      <if test="weixinId != null">
+        WEIXIN_ID,
+      </if>
+      <if test="promotionId != null">
+        PROMOTION_ID,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="origPrice != null">
+        ORIG_PRICE,
+      </if>
+      <if test="discount != null">
+        DISCOUNT,
+      </if>
+      <if test="orderPrice != null">
+        ORDER_PRICE,
+      </if>
+      <if test="takeNo != null">
+        TAKE_NO,
+      </if>
+      <if test="orderTime != null">
+        ORDER_TIME,
+      </if>
+      <if test="orderStatus != null">
+        ORDER_STATUS,
+      </if>
+      <if test="payStatus != null">
+        PAY_STATUS,
+      </if>
+      <if test="orderType != null">
+        ORDER_TYPE,
+      </if>
+      <if test="makeFinishTime != null">
+        MAKE_FINISH_TIME,
+      </if>
+      <if test="bookTime != null">
+        BOOK_TIME,
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userNo != null">
+        #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinId != null">
+        #{weixinId,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionId != null">
+        #{promotionId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="origPrice != null">
+        #{origPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderPrice != null">
+        #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="takeNo != null">
+        #{takeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="orderType != null">
+        #{orderType,jdbcType=CHAR},
+      </if>
+      <if test="makeFinishTime != null">
+        #{makeFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookTime != null">
+        #{bookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        #{deleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.milktea.milkteauser.domain.TeaOrderInfo">
+    update TEA_ORDER_INFO
+    <set>
+      <if test="userNo != null">
+        USER_NO = #{userNo,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinId != null">
+        WEIXIN_ID = #{weixinId,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionId != null">
+        PROMOTION_ID = #{promotionId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="origPrice != null">
+        ORIG_PRICE = #{origPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="discount != null">
+        DISCOUNT = #{discount,jdbcType=DECIMAL},
+      </if>
+      <if test="orderPrice != null">
+        ORDER_PRICE = #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="takeNo != null">
+        TAKE_NO = #{takeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTime != null">
+        ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null">
+        ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      </if>
+      <if test="payStatus != null">
+        PAY_STATUS = #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="orderType != null">
+        ORDER_TYPE = #{orderType,jdbcType=CHAR},
+      </if>
+      <if test="makeFinishTime != null">
+        MAKE_FINISH_TIME = #{makeFinishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bookTime != null">
+        BOOK_TIME = #{bookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null">
+        DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.milktea.milkteauser.domain.TeaOrderInfo">
+    update TEA_ORDER_INFO
+    set USER_NO = #{userNo,jdbcType=VARCHAR},
+      TELEPHONE = #{telephone,jdbcType=VARCHAR},
+      WEIXIN_ID = #{weixinId,jdbcType=VARCHAR},
+      PROMOTION_ID = #{promotionId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ORIG_PRICE = #{origPrice,jdbcType=DECIMAL},
+      DISCOUNT = #{discount,jdbcType=DECIMAL},
+      ORDER_PRICE = #{orderPrice,jdbcType=DECIMAL},
+      TAKE_NO = #{takeNo,jdbcType=VARCHAR},
+      ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
+      ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
+      PAY_STATUS = #{payStatus,jdbcType=CHAR},
+      ORDER_TYPE = #{orderType,jdbcType=CHAR},
+      MAKE_FINISH_TIME = #{makeFinishTime,jdbcType=TIMESTAMP},
+      BOOK_TIME = #{bookTime,jdbcType=TIMESTAMP},
+      DELETE_FLAG = #{deleteFlag,jdbcType=CHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+  </update>
+</mapper>
