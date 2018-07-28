@@ -25,10 +25,11 @@
         </dependency>
 
         <!--oracle jar 请修改成本地maven 仓库的-->
+        
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0</version>
+	        <groupId>ojdbc6</groupId>
+	        <artifactId>ojdbc6</artifactId>
+	        <version>6</version>
         </dependency>
 
         <!--  Apache IO、文件工具类-->
