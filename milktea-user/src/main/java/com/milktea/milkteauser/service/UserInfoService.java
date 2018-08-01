@@ -18,12 +18,14 @@ public interface UserInfoService {
      */
    public Integer insert(TeaUserInfo teaUserInfo) throws MilkTeaException;
    
+   
+   
    /**
     * 根据ID查用户信息
     * @param figureVo
     * @throws MilkTeaException
     */
-   public TeaUserInfo selectByUserId(Integer userId) throws MilkTeaException;
+   public TeaUserInfo selectByUserId(String userNo) throws MilkTeaException;
    
    /**
     * 修改用户信息
