@@ -7,14 +7,19 @@ import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.milktea.milkteauser.domain.TeaUserInfo;
+import com.milktea.milkteauser.domain.TeaLoginWeixin;
+import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
+import com.milktea.milkteauser.service.UserLoginService;
 import com.milktea.milkteauser.vo.ResponseHeader;
 
 
@@ -34,9 +39,13 @@ public class UserLoginController {
 	
 	public String param;
 	
+	@Autowired
+    private UserLoginService userLoginService;
+	
 	//微信客户登入
 	@RequestMapping(value="/weixin", method = RequestMethod.POST)
 	public ResponseHeader  userInfoLogin(String code) throws MilkTeaException{
+		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 		
 		ResponseHeader header = new ResponseHeader();
 		
@@ -76,8 +85,8 @@ public class UserLoginController {
             openid = json.getString("openid");
             System.out.println(result);
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
-            e.printStackTrace();
+        	logger.error(MilkTeaErrorConstant.WEIXIN_ACCESSTOKEN_FAILURE.getCnErrorMsg(), e);
+            throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_ACCESSTOKEN_FAILURE, e);
         }
         // 使用finally块来关闭输入流
         finally {
@@ -121,20 +130,22 @@ public class UserLoginController {
                   while ((line = in.readLine()) != null) {
                       result += line;
                   }
+                  TeaLoginWeixin teaLoginWeixin = new TeaLoginWeixin();
                   JSONObject json = JSON.parseObject(result);
-                  openid = json.getString("openid");
-                  String nickname = json.getString("nickname");
-                  String sex = json.getString("sex");
-                  String province = json.getString("province");
-                  String city = json.getString("city");
-                  String country = json.getString("country");
-                  String headimgurl = json.getString("headimgurl");
-                  String privilege = json.getString("privilege");
+                  teaLoginWeixin.setWeixinOpenid(json.getString("openid"));
+                  teaLoginWeixin.setWeixinNickname(json.getString("nickname"));
+                  teaLoginWeixin.setWeixinSex(json.getString("sex"));
+                  teaLoginWeixin.setPrivilege(json.getString("privilege"));
+                  teaLoginWeixin.setCity(json.getString("city"));
+                  teaLoginWeixin.setCountry(json.getString("country"));
+                  teaLoginWeixin.setHeadimgurl(json.getString("headimgurl"));
+                  teaLoginWeixin.setWeixinProvince(json.getString("province"));
+                  this.userLoginService.insert(teaLoginWeixin);
                   
                   System.out.println(result);
               } catch (Exception e) {
-                  System.out.println("发送GET请求出现异常！" + e);
-                  e.printStackTrace();
+            	  logger.error(MilkTeaErrorConstant.WEIXIN_GETUSERINFO_FAILURE.getCnErrorMsg(), e);
+                  throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_GETUSERINFO_FAILURE, e);
               }
               // 使用finally块来关闭输入流
               finally {
