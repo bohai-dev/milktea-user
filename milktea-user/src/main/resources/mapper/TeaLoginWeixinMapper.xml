@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.milktea.milkteauser.dao.TeaLoginWeixinMapper">
+  <resultMap id="BaseResultMap" type="com.milktea.milkteauser.domain.TeaLoginWeixin">
+    <id column="WEIXIN_OPENID" jdbcType="VARCHAR" property="weixinOpenid" />
+    <result column="WEIXIN_NICKNAME" jdbcType="VARCHAR" property="weixinNickname" />
+    <result column="WEIXIN_SEX" jdbcType="CHAR" property="weixinSex" />
+    <result column="WEIXIN_PROVINCE" jdbcType="VARCHAR" property="weixinProvince" />
+    <result column="CITY" jdbcType="VARCHAR" property="city" />
+    <result column="COUNTRY" jdbcType="VARCHAR" property="country" />
+    <result column="HEADIMGURL" jdbcType="VARCHAR" property="headimgurl" />
+    <result column="PRIVILEGE" jdbcType="VARCHAR" property="privilege" />
+    <result column="UNIONID" jdbcType="VARCHAR" property="unionid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    WEIXIN_OPENID, WEIXIN_NICKNAME, WEIXIN_SEX, WEIXIN_PROVINCE, CITY, COUNTRY, HEADIMGURL, 
+    PRIVILEGE, UNIONID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_LOGIN_WEIXIN
+    where WEIXIN_OPENID = #{weixinOpenid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TEA_LOGIN_WEIXIN
+    where WEIXIN_OPENID = #{weixinOpenid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.milktea.milkteauser.domain.TeaLoginWeixin">
+    insert into TEA_LOGIN_WEIXIN (WEIXIN_OPENID, WEIXIN_NICKNAME, WEIXIN_SEX, 
+      WEIXIN_PROVINCE, CITY, COUNTRY, 
+      HEADIMGURL, PRIVILEGE, UNIONID
+      )
+    values (#{weixinOpenid,jdbcType=VARCHAR}, #{weixinNickname,jdbcType=VARCHAR}, #{weixinSex,jdbcType=CHAR}, 
+      #{weixinProvince,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{headimgurl,jdbcType=VARCHAR}, #{privilege,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaLoginWeixin">
+    insert into TEA_LOGIN_WEIXIN
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="weixinOpenid != null">
+        WEIXIN_OPENID,
+      </if>
+      <if test="weixinNickname != null">
+        WEIXIN_NICKNAME,
+      </if>
+      <if test="weixinSex != null">
+        WEIXIN_SEX,
+      </if>
+      <if test="weixinProvince != null">
+        WEIXIN_PROVINCE,
+      </if>
+      <if test="city != null">
+        CITY,
+      </if>
+      <if test="country != null">
+        COUNTRY,
+      </if>
+      <if test="headimgurl != null">
+        HEADIMGURL,
+      </if>
+      <if test="privilege != null">
+        PRIVILEGE,
+      </if>
+      <if test="unionid != null">
+        UNIONID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="weixinOpenid != null">
+        #{weixinOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinNickname != null">
+        #{weixinNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinSex != null">
+        #{weixinSex,jdbcType=CHAR},
+      </if>
+      <if test="weixinProvince != null">
+        #{weixinProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null">
+        #{headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="privilege != null">
+        #{privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null">
+        #{unionid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.milktea.milkteauser.domain.TeaLoginWeixin">
+    update TEA_LOGIN_WEIXIN
+    <set>
+      <if test="weixinNickname != null">
+        WEIXIN_NICKNAME = #{weixinNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinSex != null">
+        WEIXIN_SEX = #{weixinSex,jdbcType=CHAR},
+      </if>
+      <if test="weixinProvince != null">
+        WEIXIN_PROVINCE = #{weixinProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        CITY = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        COUNTRY = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="headimgurl != null">
+        HEADIMGURL = #{headimgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="privilege != null">
+        PRIVILEGE = #{privilege,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null">
+        UNIONID = #{unionid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WEIXIN_OPENID = #{weixinOpenid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.milktea.milkteauser.domain.TeaLoginWeixin">
+    update TEA_LOGIN_WEIXIN
+    set WEIXIN_NICKNAME = #{weixinNickname,jdbcType=VARCHAR},
+      WEIXIN_SEX = #{weixinSex,jdbcType=CHAR},
+      WEIXIN_PROVINCE = #{weixinProvince,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      COUNTRY = #{country,jdbcType=VARCHAR},
+      HEADIMGURL = #{headimgurl,jdbcType=VARCHAR},
+      PRIVILEGE = #{privilege,jdbcType=VARCHAR},
+      UNIONID = #{unionid,jdbcType=VARCHAR}
+    where WEIXIN_OPENID = #{weixinOpenid,jdbcType=VARCHAR}
+  </update>
+</mapper>
