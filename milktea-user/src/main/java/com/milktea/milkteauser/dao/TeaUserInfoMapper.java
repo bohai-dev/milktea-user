@@ -1,9 +1,7 @@
 package com.milktea.milkteauser.dao;
 
 import com.milktea.milkteauser.domain.TeaUserInfo;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public interface TeaUserInfoMapper {
     int deleteByPrimaryKey(String userNo);
 
