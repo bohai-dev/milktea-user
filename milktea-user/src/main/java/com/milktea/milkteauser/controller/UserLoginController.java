@@ -279,9 +279,7 @@ public class UserLoginController {
         // 使用finally块来关闭输入流
         finally {
             try {
-                if (in != null) {
-                    in.close();
-                }
+                if (in != null) { }
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
