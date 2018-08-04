@@ -1,5 +1,6 @@
 package com.milktea.milkteauser.service;
 
+import com.milktea.milkteauser.domain.TeaOrderInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.vo.CustOrderInfoVo;
 
@@ -14,7 +15,7 @@ public interface UserOrderInfoService {
  * @return
  * @throws MilkTeaException
  */
-public Integer userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException;
+public TeaOrderInfo userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException;
    
   
    

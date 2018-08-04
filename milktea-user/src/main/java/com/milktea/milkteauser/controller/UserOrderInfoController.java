@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.milktea.milkteauser.domain.TeaOrderInfo;
 import com.milktea.milkteauser.domain.TeaUserInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.UserOrderInfoService;
@@ -23,11 +24,18 @@ public class UserOrderInfoController {
 	@Autowired
 	UserOrderInfoService userOrderInfoService;
 	
+	/**
+	 * @param custOrderInfoVo
+	 * @return ResponseBody<TeaOrderInfo>
+	 * @throws MilkTeaException
+	 * 只有直接下单才进入此方法，
+	 */
 	@RequestMapping(value="/userOrderOper", method = RequestMethod.POST)
-	public ResponseHeader  userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException{
-		ResponseHeader header = new ResponseHeader();
-		this.userOrderInfoService.userOrderOper(custOrderInfoVo);
-		return header;
+	public ResponseBody<TeaOrderInfo>  userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException{
+		ResponseBody responseBody = new ResponseBody();
+		TeaOrderInfo teaOrderInfo = this.userOrderInfoService.userOrderOper(custOrderInfoVo);
+		responseBody.setData(teaOrderInfo);
+		return responseBody;
 	}
 	
 	
