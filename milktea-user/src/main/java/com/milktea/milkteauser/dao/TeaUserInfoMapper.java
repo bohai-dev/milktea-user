@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.milktea.milkteauser.domain.TeaUserInfo;
 
@@ -25,4 +26,7 @@ public interface TeaUserInfoMapper {
     
     @Select("select * from TEA_USER_INFO where WEIXIN_OPENID = #{weixinOpenId}")
     TeaUserInfo selectByWeixinOpenId(@Param("weixinOpenId") String weixinOpenId);
+    
+    @Update("update TEA_USER_INFO set WEIXIN_OPENID = #{weixinOpenId},WEIXIN_ID = #{weixinId} where TELEPHONE = #{telephone}")
+    TeaUserInfo bindTelephoneWeixinOpenid(@Param("telephone") String telephone,@Param("weixinOpenId") String weixinOpenId,@Param("weixinId") String weixinId);
 }

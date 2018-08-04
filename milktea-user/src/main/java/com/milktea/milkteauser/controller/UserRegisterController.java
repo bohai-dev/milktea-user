@@ -50,6 +50,7 @@ public class UserRegisterController {
 	
 	
 	/**
+	 * 微信OPENID查找，返回客户信息，如果为NULL返回TeaUserInfo
 	 * @param teaUserInfo
 	 * @return TeaUserInfo
 	 * @throws MilkTeaException
@@ -57,7 +58,20 @@ public class UserRegisterController {
 	@RequestMapping(value="/findUserByWeixinOpenid", method = RequestMethod.POST)
 	public ResponseBody<TeaUserInfo> findUserByWeixinOpenid(TeaUserInfo teaUserInfo) throws MilkTeaException{
 		ResponseBody<TeaUserInfo> responseBody = new ResponseBody<>();
-		responseBody.setData(this.userRegisterService.findRegister(teaUserInfo));
+		responseBody.setData(this.userRegisterService.findRegisterOpenid(teaUserInfo));
+		return responseBody;
+	}
+	
+	/**
+	 * 根据手机号查找客户信息，如果为NULL返回TeaUserInfo
+	 * @param teaUserInfo
+	 * @return TeaUserInfo
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping(value="/findUserByWeixinOpenid", method = RequestMethod.POST)
+	public ResponseBody<TeaUserInfo> findUserByTelephone(TeaUserInfo teaUserInfo) throws MilkTeaException{
+		ResponseBody<TeaUserInfo> responseBody = new ResponseBody<>();
+		responseBody.setData(this.userRegisterService.findRegisterTelephone(teaUserInfo));
 		return responseBody;
 	}
 	
@@ -72,16 +86,16 @@ public class UserRegisterController {
 	@RequestMapping(value="/bindOpenidTel", method = RequestMethod.POST)
 	public ResponseHeader bindOpenidTel(TeaUserInfo teaUserInfo) throws MilkTeaException{
 		ResponseHeader header = new ResponseHeader();
-		this.userInfoService.update(teaUserInfo);
+		this.userRegisterService.bindOpenidTel(teaUserInfo);
 		return header;
 	}
 	
 	
-	@RequestMapping(value="/selectByUserId", method = RequestMethod.POST)
-	public ResponseBody<TeaUserInfo> selectByUserId(String userNo) throws MilkTeaException{
-		ResponseBody<TeaUserInfo> responseBody = new ResponseBody<>();
-		responseBody.setData(this.userInfoService.selectByUserId(userNo));
-		return responseBody;
+	@RequestMapping(value="/getPollCode", method = RequestMethod.POST)
+	public String getPollCode(TeaUserInfo teaUserInfo) throws MilkTeaException{
+		String responseStr = "";
+		responseStr = this.userRegisterService.getPollCode(teaUserInfo);
+		return responseStr;
 	}
 	
 
