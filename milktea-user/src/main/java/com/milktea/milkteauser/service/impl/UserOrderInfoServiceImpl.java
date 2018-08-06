@@ -3,11 +3,14 @@ package com.milktea.milkteauser.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.milktea.milkteashop.domain.TeaGoodsInfo;
+import com.milktea.milkteashop.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.dao.TeaOrderInfoMapper;
 import com.milktea.milkteauser.domain.TeaOrderDetails;
 import com.milktea.milkteauser.domain.TeaOrderDetailsAttr;
@@ -43,6 +46,15 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		//客户辅料附加信息
 		List<TeaOrderDetailsAttr> listTeaOrderDetailsAttr = new ArrayList<TeaOrderDetailsAttr>();
 		listTeaOrderDetailsAttr = CustOrderInfoTemp.getListTeaOrderDetailsAttr();
+		
+//		TeaGoodsInfo dest = new TeaGoodsInfo();
+//        try {
+//            BeanUtils.copyProperties(dest, infoVo);
+//            this.goodsInfoMapper.insert(dest);
+//        } catch (Exception e) {
+//            logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
+//            throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+//        }
 		
 		//得到新的订单编号 YYYYMMDD_A_000000
 		// TODO:如果每一天都要连番从一开始则要重置SEQ
