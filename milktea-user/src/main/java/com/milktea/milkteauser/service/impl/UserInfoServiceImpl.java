@@ -26,7 +26,7 @@ public  class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	@Override
-	public TeaUserInfo selectByUserId(Integer userId) throws MilkTeaException {
+	public TeaUserInfo selectByUserId(String userNo) throws MilkTeaException {
 		// TODO Auto-generated method stub
 		return null;
 	}
