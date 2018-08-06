@@ -62,6 +62,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		//原始价格计算 ORIG_PRICE
 		//TODO:原始价格计算 调用子方法
 		
+		
 		//优惠价格 DISCOUNT 看参与的PROMOTION_ID 活动ID的详细信息
 		//TODO: 取得活动优惠内容
 		

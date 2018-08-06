@@ -1,14 +1,11 @@
 package com.milktea.milkteauser.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.milktea.milkteauser.domain.TeaSmsRegister;
 import com.milktea.milkteauser.domain.TeaUserInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.UserInfoService;
@@ -20,10 +17,6 @@ import com.milktea.milkteauser.vo.ResponseHeader;
 
 /**
  * @author caoxx
- *
- */
-/**
- * @author john
  *
  */
 @RestController
@@ -68,7 +61,7 @@ public class UserRegisterController {
 	 * @return TeaUserInfo
 	 * @throws MilkTeaException
 	 */
-	@RequestMapping(value="/findUserByWeixinOpenid", method = RequestMethod.POST)
+	@RequestMapping(value="/findUserByTelephone", method = RequestMethod.POST)
 	public ResponseBody<TeaUserInfo> findUserByTelephone(TeaUserInfo teaUserInfo) throws MilkTeaException{
 		ResponseBody<TeaUserInfo> responseBody = new ResponseBody<>();
 		responseBody.setData(this.userRegisterService.findRegisterTelephone(teaUserInfo));
@@ -90,13 +83,34 @@ public class UserRegisterController {
 		return header;
 	}
 	
-	
-	@RequestMapping(value="/getPollCode", method = RequestMethod.POST)
-	public String getPollCode(TeaUserInfo teaUserInfo) throws MilkTeaException{
-		String responseStr = "";
-		responseStr = this.userRegisterService.getPollCode(teaUserInfo);
-		return responseStr;
+	/**
+	 * 认证号码生成
+	 * @param teaUserInfo
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping(value="/createPollCode", method = RequestMethod.POST)
+	public int createPollCode(TeaUserInfo teaUserInfo) throws MilkTeaException{
+		int retInt = 0;
+		retInt = this.userRegisterService.createPollCode(teaUserInfo);
+		return retInt;
 	}
+	
+	/**
+	 * 认证号码生成（生产时设置60分钟过期，测试时2分钟过期）
+	 * @param teaUserInfo
+	 * @return 1为成功，0为失败，99为验证码错误，98为时间过期 
+	 * @throws MilkTeaException
+	 * 
+	 */
+	@RequestMapping(value="/comparePollCode", method = RequestMethod.POST)
+	public int comparePollCode(TeaSmsRegister teaSmsRegister) throws MilkTeaException{
+		int retInt = 0;
+		retInt = this.userRegisterService.comparePollCode(teaSmsRegister);
+		return retInt;
+	}
+	
+	
 	
 
 	
