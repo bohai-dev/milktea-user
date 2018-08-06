@@ -22,6 +22,8 @@ public class TeaOrderInfo {
 
     private BigDecimal orderPrice;
 
+    private String storeNo;
+
     private String takeNo;
 
     private Date orderTime;
@@ -110,6 +112,14 @@ public class TeaOrderInfo {
 
     public void setOrderPrice(BigDecimal orderPrice) {
         this.orderPrice = orderPrice;
+    }
+
+    public String getStoreNo() {
+        return storeNo;
+    }
+
+    public void setStoreNo(String storeNo) {
+        this.storeNo = storeNo == null ? null : storeNo.trim();
     }
 
     public String getTakeNo() {
