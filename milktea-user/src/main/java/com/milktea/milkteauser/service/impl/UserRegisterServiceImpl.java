@@ -1,7 +1,5 @@
 package com.milktea.milkteauser.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -12,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.milktea.milkteauser.dao.TeaUserInfoMapper;
 import com.milktea.milkteauser.domain.TeaUserInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
+import com.milktea.milkteauser.service.SmsService;
 import com.milktea.milkteauser.service.UserRegisterService;
+import com.milktea.milkteauser.vo.ResponseBody;
 
 
 @Service("userRegisterService")
@@ -20,6 +20,9 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 
 	@Autowired
 	TeaUserInfoMapper TeaUserInfoMapper;
+	
+	@Autowired
+	SmsService smsService;
 	
 	static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
 	
@@ -78,6 +81,9 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 		
 		//调用阿里云短信发送
 		// TODO: 调用阿里云短信发送 参数 电话号码 验证码为随机数
+		//SMS_134326005 是认证模板号
+		ResponseBody<String> responseStr = new ResponseBody<String>();
+		responseStr = smsService.sendVerCodeSMS(teaUserInfo.getTelephone(),"SMS_134326005");
 		
 		
 		//TODO：写入数据库 ？？？？

@@ -13,6 +13,8 @@ public enum MilkTeaErrorConstant {
     WEIXIN_ACCESSTOKEN_FAILURE("00002", "微信access_token取得错误" , "Get access_token failure"),
     WEIXIN_GETUSERINFO_FAILURE("00003", "微信用户详细信息取得错误" , "Get userinfo failure"),
     MILETEA_SHOP_FAILURE("00004","后台返回数据异常","Get mileteashop failure"),
+    SMS_FAILURE("00005","手机短消息异常","SMS failure"),
+    SMS_RESPONSE_FAILURE("00006","手机短消息请求异常","SMS RESPONSE failure"),
     
    
     

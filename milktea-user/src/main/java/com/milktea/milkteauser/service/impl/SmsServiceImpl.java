@@ -15,6 +15,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.service.SmsService;
 import com.milktea.milkteauser.vo.ResponseBody;
 
@@ -37,6 +38,7 @@ public class SmsServiceImpl implements SmsService {
 	@Override
 	public ResponseBody<String> sendVerCodeSMS(String phoneNumber, String templateCode) {
 		
+		//SMS_134326005
 		ResponseBody<String> responseBean=new ResponseBody<String>();
 		
 		//设置超时时间-可自行调整
@@ -65,7 +67,7 @@ public class SmsServiceImpl implements SmsService {
 		 request.setTemplateCode(templateCode);
 		 
 		
-	    //6位验证码
+	    //4位验证码
 		 String returnStr = "";
 	    long t = System.currentTimeMillis();
 		Random r1 = new Random(t);
@@ -106,13 +108,13 @@ public class SmsServiceImpl implements SmsService {
 				responseBean.setData(code);
 			}else {
 				
-				 responseBean.setRspCode();
-			     responseBean.setCnErrorMsg(sendSmsResponse.getMessage());
+				 responseBean.setRspCode(MilkTeaErrorConstant.SMS_FAILURE.getErrorCode());
+			     responseBean.setCnErrorMsg(MilkTeaErrorConstant.SMS_FAILURE.getCnErrorMsg());
 			}
 		} catch (ClientException e) {
 			 e.printStackTrace();
 			
-		     responseBean.setRspCode();
+		     responseBean.setRspCode(MilkTeaErrorConstant.SMS_RESPONSE_FAILURE.getErrorCode());
 		     responseBean.setCnErrorMsg(e.getErrMsg());
 		}
 		
@@ -166,13 +168,13 @@ public class SmsServiceImpl implements SmsService {
 				responseBean.setData(1);
 			}else {
 				
-				 responseBean.setRspCode(rspCode);
-			     responseBean.setCnErrorMsg(sendSmsResponse.getMessage());
+				 responseBean.setRspCode(MilkTeaErrorConstant.SMS_FAILURE.getErrorCode());
+			     responseBean.setCnErrorMsg(MilkTeaErrorConstant.SMS_FAILURE.getCnErrorMsg());
 			}
 		} catch (ClientException e) {
 			 e.printStackTrace();
 			
-		     responseBean.setRspCode(ErrorCode.SMS_EXCEPTION);
+		     responseBean.setRspCode(MilkTeaErrorConstant.SMS_RESPONSE_FAILURE.getErrorCode());
 		     responseBean.setCnErrorMsg(e.getErrMsg());
 		}
 		
