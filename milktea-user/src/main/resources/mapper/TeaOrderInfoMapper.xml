@@ -11,6 +11,7 @@
     <result column="ORIG_PRICE" jdbcType="DECIMAL" property="origPrice" />
     <result column="DISCOUNT" jdbcType="DECIMAL" property="discount" />
     <result column="ORDER_PRICE" jdbcType="DECIMAL" property="orderPrice" />
+    <result column="STORE_NO" jdbcType="VARCHAR" property="storeNo" />
     <result column="TAKE_NO" jdbcType="VARCHAR" property="takeNo" />
     <result column="ORDER_TIME" jdbcType="TIMESTAMP" property="orderTime" />
     <result column="ORDER_STATUS" jdbcType="CHAR" property="orderStatus" />
@@ -23,8 +24,8 @@
   </resultMap>
   <sql id="Base_Column_List">
     ORDER_NO, USER_NO, TELEPHONE, WEIXIN_ID, PROMOTION_ID, REMARK, ORIG_PRICE, DISCOUNT, 
-    ORDER_PRICE, TAKE_NO, ORDER_TIME, ORDER_STATUS, PAY_STATUS, ORDER_TYPE, MAKE_FINISH_TIME, 
-    BOOK_TIME, DELETE_FLAG, UPDATE_TIME
+    ORDER_PRICE, STORE_NO, TAKE_NO, ORDER_TIME, ORDER_STATUS, PAY_STATUS, ORDER_TYPE, 
+    MAKE_FINISH_TIME, BOOK_TIME, DELETE_FLAG, UPDATE_TIME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -40,17 +41,17 @@
     insert into TEA_ORDER_INFO (ORDER_NO, USER_NO, TELEPHONE, 
       WEIXIN_ID, PROMOTION_ID, REMARK, 
       ORIG_PRICE, DISCOUNT, ORDER_PRICE, 
-      TAKE_NO, ORDER_TIME, ORDER_STATUS, 
-      PAY_STATUS, ORDER_TYPE, MAKE_FINISH_TIME, 
-      BOOK_TIME, DELETE_FLAG, UPDATE_TIME
-      )
+      STORE_NO, TAKE_NO, ORDER_TIME, 
+      ORDER_STATUS, PAY_STATUS, ORDER_TYPE, 
+      MAKE_FINISH_TIME, BOOK_TIME, DELETE_FLAG, 
+      UPDATE_TIME)
     values (#{orderNo,jdbcType=VARCHAR}, #{userNo,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
       #{weixinId,jdbcType=VARCHAR}, #{promotionId,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{origPrice,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, #{orderPrice,jdbcType=DECIMAL}, 
-      #{takeNo,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=CHAR}, 
-      #{payStatus,jdbcType=CHAR}, #{orderType,jdbcType=CHAR}, #{makeFinishTime,jdbcType=TIMESTAMP}, 
-      #{bookTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{storeNo,jdbcType=VARCHAR}, #{takeNo,jdbcType=VARCHAR}, #{orderTime,jdbcType=TIMESTAMP}, 
+      #{orderStatus,jdbcType=CHAR}, #{payStatus,jdbcType=CHAR}, #{orderType,jdbcType=CHAR}, 
+      #{makeFinishTime,jdbcType=TIMESTAMP}, #{bookTime,jdbcType=TIMESTAMP}, #{deleteFlag,jdbcType=CHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaOrderInfo">
     insert into TEA_ORDER_INFO
@@ -81,6 +82,9 @@
       </if>
       <if test="orderPrice != null">
         ORDER_PRICE,
+      </if>
+      <if test="storeNo != null">
+        STORE_NO,
       </if>
       <if test="takeNo != null">
         TAKE_NO,
@@ -138,6 +142,9 @@
       <if test="orderPrice != null">
         #{orderPrice,jdbcType=DECIMAL},
       </if>
+      <if test="storeNo != null">
+        #{storeNo,jdbcType=VARCHAR},
+      </if>
       <if test="takeNo != null">
         #{takeNo,jdbcType=VARCHAR},
       </if>
@@ -194,6 +201,9 @@
       <if test="orderPrice != null">
         ORDER_PRICE = #{orderPrice,jdbcType=DECIMAL},
       </if>
+      <if test="storeNo != null">
+        STORE_NO = #{storeNo,jdbcType=VARCHAR},
+      </if>
       <if test="takeNo != null">
         TAKE_NO = #{takeNo,jdbcType=VARCHAR},
       </if>
@@ -234,6 +244,7 @@
       ORIG_PRICE = #{origPrice,jdbcType=DECIMAL},
       DISCOUNT = #{discount,jdbcType=DECIMAL},
       ORDER_PRICE = #{orderPrice,jdbcType=DECIMAL},
+      STORE_NO = #{storeNo,jdbcType=VARCHAR},
       TAKE_NO = #{takeNo,jdbcType=VARCHAR},
       ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
       ORDER_STATUS = #{orderStatus,jdbcType=CHAR},
