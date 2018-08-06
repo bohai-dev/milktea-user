@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.milktea.milkteauser.dao.TeaSmsRegisterMapper">
+  <resultMap id="BaseResultMap" type="com.milktea.milkteauser.domain.TeaSmsRegister">
+    <result column="TELEPHONE" jdbcType="VARCHAR" property="telephone" />
+    <result column="IDENTIFY_CODE" jdbcType="VARCHAR" property="identifyCode" />
+    <result column="IDENTIFY_TIME" jdbcType="TIMESTAMP" property="identifyTime" />
+    <result column="IDENTIFY_FLAG" jdbcType="DECIMAL" property="identifyFlag" />
+  </resultMap>
+  <insert id="insert" parameterType="com.milktea.milkteauser.domain.TeaSmsRegister">
+    insert into TEA_SMS_REGISTER (TELEPHONE, IDENTIFY_CODE, IDENTIFY_TIME, 
+      IDENTIFY_FLAG)
+    values (#{telephone,jdbcType=VARCHAR}, #{identifyCode,jdbcType=VARCHAR}, #{identifyTime,jdbcType=TIMESTAMP}, 
+      #{identifyFlag,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaSmsRegister">
+    insert into TEA_SMS_REGISTER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="telephone != null">
+        TELEPHONE,
+      </if>
+      <if test="identifyCode != null">
+        IDENTIFY_CODE,
+      </if>
+      <if test="identifyTime != null">
+        IDENTIFY_TIME,
+      </if>
+      <if test="identifyFlag != null">
+        IDENTIFY_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyCode != null">
+        #{identifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyTime != null">
+        #{identifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="identifyFlag != null">
+        #{identifyFlag,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>
