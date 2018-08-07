@@ -1,21 +1,20 @@
 package com.milktea.milkteauser.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.milktea.milkteauser.dao.TeaOrderInfoMapper;
 import com.milktea.milkteauser.domain.TeaOrderDetails;
-import com.milktea.milkteauser.domain.TeaOrderDetailsAttr;
 import com.milktea.milkteauser.domain.TeaOrderInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.UserOrderInfoService;
+import com.milktea.milkteauser.util.CalaPrice;
 import com.milktea.milkteauser.vo.CustOrderInfoVo;
 
 
@@ -60,11 +59,23 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		CustOrderInfoTemp.setOrderNo(custOrderSeq);
 		//用户编号 用户手机号 微信ID 活动ID 客户下单备注 下单时间  STORE_NO 由前端提供
 		//原始价格计算 ORIG_PRICE
-		//TODO:原始价格计算 调用子方法
+		CalaPrice calaPrice = new CalaPrice();
+		BigDecimal origPrice = new BigDecimal(0);
+		BigDecimal discount = new BigDecimal(0);
+		origPrice = calaPrice.balanceAccount(custOrderInfoVo);
+		CustOrderInfoTemp.setOrigPrice(origPrice);
 		
 		
 		//优惠价格 DISCOUNT 看参与的PROMOTION_ID 活动ID的详细信息
+		//TODO:传入 STORE_NO和 PROMOTION_ID 返回优惠活动是否有效
+		
+		String promotionId = "";
 		//TODO: 取得活动优惠内容
+		discount = calaPrice.promotionBalanceAccount(custOrderInfoVo,promotionId);
+		CustOrderInfoTemp.setDiscount(discount);
+		
+		//最终订单价格
+		CustOrderInfoTemp.setOrderPrice(origPrice.subtract(discount));
 		
 		//订单状态 0:已下单 1：制作完成 2:取货完成 3:外送 4:撤销
 		CustOrderInfoTemp.setOrderStatus("0");
