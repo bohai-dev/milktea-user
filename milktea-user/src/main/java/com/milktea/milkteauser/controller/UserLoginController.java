@@ -2,22 +2,12 @@ package com.milktea.milkteauser.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +23,6 @@ import com.milktea.milkteauser.domain.TeaLoginWeixin;
 import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.UserLoginService;
-import com.milktea.milkteauser.vo.ClassGoodsRequestVo;
 import com.milktea.milkteauser.vo.ResponseBody;
 
 

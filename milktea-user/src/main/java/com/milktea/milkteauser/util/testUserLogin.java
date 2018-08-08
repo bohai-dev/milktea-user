@@ -1,4 +1,4 @@
-package com.milktea.milkteauser;
+package com.milktea.milkteauser.util;
 
 
 import com.milktea.milkteauser.controller.UserInfoController;

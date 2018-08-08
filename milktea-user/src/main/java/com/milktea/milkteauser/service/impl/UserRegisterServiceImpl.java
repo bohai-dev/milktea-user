@@ -26,8 +26,8 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	@Autowired
 	TeaSmsRegisterMapper teaSmsRegisterMapper;
 	
-	@Autowired
-	SmsService smsService;
+	//@Autowired
+	//SmsService smsService;
 	
 	static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
 	
@@ -73,7 +73,7 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 		// TODO: 调用阿里云短信发送 参数 电话号码 验证码为随机数
 		//SMS_134326005 是认证模板号
 		ResponseBody<String> responseStr = new ResponseBody<String>();
-		responseStr = smsService.sendVerCodeSMS(teaUserInfo.getTelephone(),"SMS_134326005");
+		//responseStr = smsService.sendVerCodeSMS(teaUserInfo.getTelephone(),"SMS_134326005");
 		
 		//写入数据库
 		teaSmsRegisterMapper.insertSMSReg(teaUserInfo.getTelephone(), responseStr.getData());
