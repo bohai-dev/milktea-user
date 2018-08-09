@@ -274,6 +274,37 @@ public class UserLoginController {
 		return responseBody;
 	}
 	
+	//取得店铺内的商品
+		@RequestMapping(value="/getCarouselFigure")
+		public ResponseBody<JSONObject>  getCarouselFigure(@RequestParam("storeNo") String storeNo) throws MilkTeaException{
+			BufferedReader in = null;
+			String result = "";
+			Logger logger = LoggerFactory.getLogger(UserLoginController.class);
+			ResponseBody<JSONObject> responseBody = new ResponseBody<JSONObject>();
+			JSONObject jsonObject = new JSONObject();
+			JsonObject message = new JsonObject();
+			PrintWriter out = null;
+			String path = "http://localhost:8081/queryCarouselFigure"; 
+		        
+			try {
+
+				HttpUtil HttpUtil = new HttpUtil();
+				Map<String,String> mapParam = new HashMap<String,String>();
+				mapParam.put("storeNo", storeNo);
+				String retStr = HttpUtil.post(path, mapParam);
+				System.out.println(retStr);
+				jsonObject = JSON.parseObject(retStr);
+		        responseBody.setData(jsonObject);
+			
+	          
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}  
+	        
+			return responseBody;
+		}
+	
 	
 	
 	
