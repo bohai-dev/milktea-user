@@ -1,7 +1,6 @@
 package com.milktea.milkteauser.domain;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class TeaOrderDetails {
     private String orderDetailId;
@@ -12,13 +11,13 @@ public class TeaOrderDetails {
 
     private BigDecimal origPrice;
 
+    private BigDecimal attrPrice;
+
     private BigDecimal discount;
 
     private BigDecimal orderPrice;
 
     private String updateTime;
-    
-    private List<TeaOrderDetailsAttr> listTeaOrderDetailsAttr;
 
     public String getOrderDetailId() {
         return orderDetailId;
@@ -52,6 +51,14 @@ public class TeaOrderDetails {
         this.origPrice = origPrice;
     }
 
+    public BigDecimal getAttrPrice() {
+        return attrPrice;
+    }
+
+    public void setAttrPrice(BigDecimal attrPrice) {
+        this.attrPrice = attrPrice;
+    }
+
     public BigDecimal getDiscount() {
         return discount;
     }
@@ -75,13 +82,4 @@ public class TeaOrderDetails {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime == null ? null : updateTime.trim();
     }
-
-	public List<TeaOrderDetailsAttr> getListTeaOrderDetailsAttr() {
-		return listTeaOrderDetailsAttr;
-	}
-
-	public void setListTeaOrderDetailsAttr(List<TeaOrderDetailsAttr> listTeaOrderDetailsAttr) {
-		this.listTeaOrderDetailsAttr = listTeaOrderDetailsAttr;
-	}
-    
 }
