@@ -248,24 +248,17 @@ public class UserLoginController {
 		JSONObject jsonObject = new JSONObject();
 		JsonObject message = new JsonObject();
 		PrintWriter out = null;
-		String path = "http://localhost:8081/queryClassGoods"; 
-		message.addProperty("storeNo", storeNo);
-		message.addProperty("classType", classType);
-		
-		//将对像转成json格式
-		ClassGoodsRequestVo ClassGoodsRequestVo = new ClassGoodsRequestVo();
-		ClassGoodsRequestVo.setStoreNo(storeNo);
-		ClassGoodsRequestVo.setClassType(classType);
-		String json = JSON.toJSONString(ClassGoodsRequestVo);
+		String path = "http://localhost:8081/queryClassGoodsNational"; 
+	        
         
-        //1, 得到URL对象  
-        URL url;
+
 		try {
-			url = new URL(path);
+
 			HttpUtil HttpUtil = new HttpUtil();
 			Map<String,String> mapParam = new HashMap<String,String>();
 			mapParam.put("storeNo", storeNo);
 			mapParam.put("classType", classType);
+			mapParam.put("lang", "zh");
 			String retStr = HttpUtil.post(path, mapParam);
 			System.out.println(retStr);
 			jsonObject = JSON.parseObject(retStr);
@@ -280,6 +273,8 @@ public class UserLoginController {
         
 		return responseBody;
 	}
+	
+	
 	
 	
 	
