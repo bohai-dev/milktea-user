@@ -240,7 +240,7 @@ public class UserLoginController {
 	
 	//取得店铺内的商品
 	@RequestMapping(value="/getClassGoods")
-	public ResponseBody<JSONObject>  getClassGoods(@RequestParam("storeNo") String storeNo,@RequestParam("classType") String classType) throws MilkTeaException{
+	public ResponseBody<JSONObject>  getClassGoods(@RequestParam("storeNo") String storeNo,@RequestParam("classType") String classType,@RequestParam("lang") String lang) throws MilkTeaException{
 		BufferedReader in = null;
 		String result = "";
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
@@ -258,7 +258,7 @@ public class UserLoginController {
 			Map<String,String> mapParam = new HashMap<String,String>();
 			mapParam.put("storeNo", storeNo);
 			mapParam.put("classType", classType);
-			mapParam.put("lang", "zh");
+			mapParam.put("lang", lang);
 			String retStr = HttpUtil.post(path, mapParam);
 			System.out.println(retStr);
 			jsonObject = JSON.parseObject(retStr);
