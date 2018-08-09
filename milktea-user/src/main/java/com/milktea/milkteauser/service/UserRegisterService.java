@@ -14,14 +14,14 @@ public interface UserRegisterService {
      * @param figureVo
      * @throws MilkTeaException
      */
-   public TeaUserInfo findRegisterOpenid(TeaUserInfo teaUserInfo) throws MilkTeaException;
+   public TeaUserInfo findRegisterOpenid(String weixinOpenid) throws MilkTeaException;
    
    /**
     * 认证用户信息TELEPHONE
     * @param figureVo
     * @throws MilkTeaException
     */
-  public TeaUserInfo findRegisterTelephone(TeaUserInfo teaUserInfo) throws MilkTeaException;
+  public TeaUserInfo findRegisterTelephone(String telephone) throws MilkTeaException;
    
    
     /**

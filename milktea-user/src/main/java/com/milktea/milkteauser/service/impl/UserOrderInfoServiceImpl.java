@@ -33,15 +33,6 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		CustOrderInfoVo CustOrderInfoTemp = new CustOrderInfoVo();
 		CustOrderInfoTemp = custOrderInfoVo;
 		
-		//客户基础信息
-		
-		
-		//客户订单信息 客户辅料附加信息
-		List<TeaOrderDetails> listTeaOrderDetails = new ArrayList<TeaOrderDetails>();
-		listTeaOrderDetails = CustOrderInfoTemp.getListTeaOrderDetails();
-		
-		//
-		
 		
 //		TeaGoodsInfo dest = new TeaGoodsInfo();
 //        try {

@@ -32,13 +32,13 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
 	
 	@Override
-	public TeaUserInfo findRegisterOpenid(TeaUserInfo teaUserInfo) throws MilkTeaException {
+	public TeaUserInfo findRegisterOpenid(String weixinOpenid) throws MilkTeaException {
 		//用户是否已经注册，及是否已经能取得正确的手机号
 		TeaUserInfo teaUserInfoRet = new TeaUserInfo () ;
-		if(null != teaUserInfo.getWeixinOpenid()){
-			//微信登入的场合返回客户已经登入的信息，如果返回空则说明没有注册过
-			teaUserInfoRet = TeaUserInfoMapper.selectByWeixinOpenId(teaUserInfo.getWeixinOpenid());
-		}
+	
+		//微信登入的场合返回客户已经登入的信息，如果返回空则说明没有注册过
+		teaUserInfoRet = TeaUserInfoMapper.selectByWeixinOpenId(weixinOpenid);
+
 		
 		
 		return teaUserInfoRet;
@@ -54,16 +54,15 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	}
 
 	@Override
-	public TeaUserInfo findRegisterTelephone(TeaUserInfo teaUserInfo) throws MilkTeaException {
+	public TeaUserInfo findRegisterTelephone(String telephone) throws MilkTeaException {
 		//用户是否已经注册，及是否已经能取得正确的手机号
-				TeaUserInfo teaUserInfoRet = new TeaUserInfo () ;
+		TeaUserInfo teaUserInfoRet = new TeaUserInfo () ;
 				
-				if(null != teaUserInfo.getTelephone()){
-					//已经有了手机号 则直接返回详细信息，如果返回NULL则说明没有注册过
-					teaUserInfoRet = TeaUserInfoMapper.selectByTelephone(teaUserInfo.getTelephone());
-					return teaUserInfoRet;
-				}
-			return teaUserInfoRet;
+			
+		//已经有了手机号 则直接返回详细信息，如果返回NULL则说明没有注册过
+		teaUserInfoRet = TeaUserInfoMapper.selectByTelephone(telephone);
+					
+		return teaUserInfoRet;
 	}
 
 	@Override
