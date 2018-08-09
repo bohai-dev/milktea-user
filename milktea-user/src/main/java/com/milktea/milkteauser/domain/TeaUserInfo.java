@@ -8,7 +8,11 @@ public class TeaUserInfo {
 
     private String userName;
 
+    private String userPassword;
+
     private String weixinId;
+
+    private String weixinOpenid;
 
     private String telephone;
 
@@ -44,12 +48,28 @@ public class TeaUserInfo {
         this.userName = userName == null ? null : userName.trim();
     }
 
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword == null ? null : userPassword.trim();
+    }
+
     public String getWeixinId() {
         return weixinId;
     }
 
     public void setWeixinId(String weixinId) {
         this.weixinId = weixinId == null ? null : weixinId.trim();
+    }
+
+    public String getWeixinOpenid() {
+        return weixinOpenid;
+    }
+
+    public void setWeixinOpenid(String weixinOpenid) {
+        this.weixinOpenid = weixinOpenid == null ? null : weixinOpenid.trim();
     }
 
     public String getTelephone() {
