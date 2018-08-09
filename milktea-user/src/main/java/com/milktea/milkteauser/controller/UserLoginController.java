@@ -181,7 +181,7 @@ public class UserLoginController {
 	
 	//得到所有店铺LIST
 	@RequestMapping(value="/storelist", method = RequestMethod.GET)
-	public ResponseBody<JSONObject>  getStoreList() throws MilkTeaException{
+	public ResponseBody<JSONObject>  getStoreList(@RequestParam("lang") String lang) throws MilkTeaException{
 		BufferedReader in = null;
 		String result = "";
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
@@ -192,7 +192,13 @@ public class UserLoginController {
         //所有商铺 
 //		param = "appid=" + weiXinAppid +"&" + "secret=" + weiXinSecret + "&" + "code=" + code + "&" + "grant_type=authorization_code";
         String url = "http://localhost:8081/queryStores";
-        String urlNameString = url ;
+        String urlNameString = "" ;
+        if("".equals(lang)){
+        	 urlNameString = url ;
+        } else {
+        	urlNameString = url + "/" +lang;
+        }
+        
         
         try {
 	        URL realUrl = new URL(urlNameString);
