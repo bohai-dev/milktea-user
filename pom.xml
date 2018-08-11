@@ -30,7 +30,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
+   <dependencies>
+       <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-devtools</artifactId>
+           <scope>runtime</scope>
+       </dependency>
 
+   </dependencies>
     <!-- 版本说明：这里统一管理依赖的版本号 -->
     <dependencyManagement>
         <dependencies>
