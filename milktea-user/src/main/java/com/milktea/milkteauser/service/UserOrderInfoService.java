@@ -15,7 +15,7 @@ public interface UserOrderInfoService {
  * @return
  * @throws MilkTeaException
  */
-public TeaOrderInfo userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException;
+public CustOrderInfoVo userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException;
    
   
    

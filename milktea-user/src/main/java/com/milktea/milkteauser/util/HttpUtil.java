@@ -69,7 +69,7 @@ public class HttpUtil {
      * @return
      * @throws IOException
      */
-     public static String post(String url) throws IOException{
+     public static String post(String url) throws Exception{
          CloseableHttpClient client = HttpClients.createDefault();
          HttpPost httpPost = new HttpPost(url);
          httpPost.setHeader("Accept", "application/json");
@@ -92,7 +92,7 @@ public class HttpUtil {
      * @return
      * @throws IOException
      */
-    public static String post(String url,Map<String,String> params) throws IOException{
+    public static String post(String url,Map<String,String> params) throws Exception{
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
         //将Map转为Json

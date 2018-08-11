@@ -32,10 +32,10 @@ public class UserOrderInfoController {
 	 * 只有直接下单才进入此方法，
 	 */
 	@RequestMapping(value="/userOrderOper", method = RequestMethod.POST)
-	public ResponseBody<TeaOrderInfo>  userOrderOper(@RequestBody CustOrderInfoVo custOrderInfoVo) throws MilkTeaException{
+	public ResponseBody<CustOrderInfoVo>  userOrderOper(@RequestBody CustOrderInfoVo custOrderInfoVo) throws MilkTeaException{
 		ResponseBody responseBody = new ResponseBody();
-		TeaOrderInfo teaOrderInfo = this.userOrderInfoService.userOrderOper(custOrderInfoVo);
-		responseBody.setData(teaOrderInfo);
+		CustOrderInfoVo CustOrderInfoVo = this.userOrderInfoService.userOrderOper(custOrderInfoVo);
+		responseBody.setData(CustOrderInfoVo);
 		return responseBody;
 	}
 	
