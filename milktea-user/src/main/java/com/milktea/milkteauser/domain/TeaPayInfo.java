@@ -17,6 +17,8 @@ public class TeaPayInfo {
 
     private Date updateTime;
 
+    private String payType;
+
     public String getPayId() {
         return payId;
     }
@@ -71,5 +73,13 @@ public class TeaPayInfo {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType == null ? null : payType.trim();
     }
 }

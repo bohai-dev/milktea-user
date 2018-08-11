@@ -15,7 +15,7 @@ public enum MilkTeaErrorConstant {
     MILETEA_SHOP_FAILURE("00004","后台返回数据异常","Get mileteashop failure"),
     SMS_FAILURE("00005","手机短消息异常","SMS failure"),
     SMS_RESPONSE_FAILURE("00006","手机短消息请求异常","SMS RESPONSE failure"),
-    
+    PAY_FAIL("00007","",""),
    
     
     
