@@ -67,6 +67,7 @@ public class PayInoServiceImpl implements PayInfoService {
         }finally {
             //无论支付成功还是失败，都插入支付记录
             mapper.insertSelective(teaPayInfo);
+
         }
 
 
