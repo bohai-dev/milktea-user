@@ -181,7 +181,7 @@ public class UserLoginController {
 	
 	//得到所有店铺LIST
 	@RequestMapping(value="/storelist", method = RequestMethod.GET)
-	public ResponseBody<JSONObject>  getStoreList() throws MilkTeaException{
+	public ResponseBody<JSONObject>  getStoreList(@RequestParam("lang") String lang) throws MilkTeaException{
 		BufferedReader in = null;
 		String result = "";
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
@@ -192,7 +192,13 @@ public class UserLoginController {
         //所有商铺 
 //		param = "appid=" + weiXinAppid +"&" + "secret=" + weiXinSecret + "&" + "code=" + code + "&" + "grant_type=authorization_code";
         String url = "http://localhost:8081/queryStores";
-        String urlNameString = url ;
+        String urlNameString = "" ;
+        if("".equals(lang)){
+        	 urlNameString = url ;
+        } else {
+        	urlNameString = url + "/" +lang;
+        }
+        
         
         try {
 	        URL realUrl = new URL(urlNameString);
@@ -274,9 +280,9 @@ public class UserLoginController {
 		return responseBody;
 	}
 	
-	//取得店铺内的商品
+	//取得轮播图
 		@RequestMapping(value="/getCarouselFigure")
-		public ResponseBody<JSONObject>  getCarouselFigure(@RequestParam("storeNo") String storeNo) throws MilkTeaException{
+		public ResponseBody<JSONObject>  getCarouselFigure(@RequestParam("storeNo") String storeNo,@RequestParam("lang") String lang) throws MilkTeaException{
 			BufferedReader in = null;
 			String result = "";
 			Logger logger = LoggerFactory.getLogger(UserLoginController.class);
@@ -284,14 +290,16 @@ public class UserLoginController {
 			JSONObject jsonObject = new JSONObject();
 			JsonObject message = new JsonObject();
 			PrintWriter out = null;
-			String path = "http://localhost:8081/queryCarouselFigure"; 
+			String path = "http://localhost:8081/queryCarouselFigureNation"; 
 		        
 			try {
 
 				HttpUtil HttpUtil = new HttpUtil();
 				Map<String,String> mapParam = new HashMap<String,String>();
 				mapParam.put("storeNo", storeNo);
+				mapParam.put("lang", lang);
 				String retStr = HttpUtil.post(path, mapParam);
+				
 				System.out.println(retStr);
 				jsonObject = JSON.parseObject(retStr);
 		        responseBody.setData(jsonObject);

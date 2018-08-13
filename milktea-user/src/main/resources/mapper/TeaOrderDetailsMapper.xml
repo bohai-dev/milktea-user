@@ -6,12 +6,14 @@
     <result column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
     <result column="GOODS_ID" jdbcType="VARCHAR" property="goodsId" />
     <result column="ORIG_PRICE" jdbcType="DECIMAL" property="origPrice" />
+    <result column="ATTR_PRICE" jdbcType="DECIMAL" property="attrPrice" />
     <result column="DISCOUNT" jdbcType="DECIMAL" property="discount" />
     <result column="ORDER_PRICE" jdbcType="DECIMAL" property="orderPrice" />
     <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    ORDER_DETAIL_ID, ORDER_NO, GOODS_ID, ORIG_PRICE, DISCOUNT, ORDER_PRICE, UPDATE_TIME
+    ORDER_DETAIL_ID, ORDER_NO, GOODS_ID, ORIG_PRICE, ATTR_PRICE, DISCOUNT, ORDER_PRICE, 
+    UPDATE_TIME
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -25,11 +27,11 @@
   </delete>
   <insert id="insert" parameterType="com.milktea.milkteauser.domain.TeaOrderDetails">
     insert into TEA_ORDER_DETAILS (ORDER_DETAIL_ID, ORDER_NO, GOODS_ID, 
-      ORIG_PRICE, DISCOUNT, ORDER_PRICE, 
-      UPDATE_TIME)
+      ORIG_PRICE, ATTR_PRICE, DISCOUNT, 
+      ORDER_PRICE, UPDATE_TIME)
     values (#{orderDetailId,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, 
-      #{origPrice,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, #{orderPrice,jdbcType=DECIMAL}, 
-      #{updateTime,jdbcType=VARCHAR})
+      #{origPrice,jdbcType=DECIMAL}, #{attrPrice,jdbcType=DECIMAL}, #{discount,jdbcType=DECIMAL}, 
+      #{orderPrice,jdbcType=DECIMAL}, #{updateTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaOrderDetails">
     insert into TEA_ORDER_DETAILS
@@ -45,6 +47,9 @@
       </if>
       <if test="origPrice != null">
         ORIG_PRICE,
+      </if>
+      <if test="attrPrice != null">
+        ATTR_PRICE,
       </if>
       <if test="discount != null">
         DISCOUNT,
@@ -69,6 +74,9 @@
       <if test="origPrice != null">
         #{origPrice,jdbcType=DECIMAL},
       </if>
+      <if test="attrPrice != null">
+        #{attrPrice,jdbcType=DECIMAL},
+      </if>
       <if test="discount != null">
         #{discount,jdbcType=DECIMAL},
       </if>
@@ -92,6 +100,9 @@
       <if test="origPrice != null">
         ORIG_PRICE = #{origPrice,jdbcType=DECIMAL},
       </if>
+      <if test="attrPrice != null">
+        ATTR_PRICE = #{attrPrice,jdbcType=DECIMAL},
+      </if>
       <if test="discount != null">
         DISCOUNT = #{discount,jdbcType=DECIMAL},
       </if>
@@ -109,6 +120,7 @@
     set ORDER_NO = #{orderNo,jdbcType=VARCHAR},
       GOODS_ID = #{goodsId,jdbcType=VARCHAR},
       ORIG_PRICE = #{origPrice,jdbcType=DECIMAL},
+      ATTR_PRICE = #{attrPrice,jdbcType=DECIMAL},
       DISCOUNT = #{discount,jdbcType=DECIMAL},
       ORDER_PRICE = #{orderPrice,jdbcType=DECIMAL},
       UPDATE_TIME = #{updateTime,jdbcType=VARCHAR}

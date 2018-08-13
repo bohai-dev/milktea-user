@@ -1,5 +1,7 @@
 package com.milktea.milkteauser.dao;
 
+import org.apache.ibatis.annotations.Select;
+
 import com.milktea.milkteauser.domain.TeaOrderDetails;
 
 public interface TeaOrderDetailsMapper {
@@ -14,4 +16,7 @@ public interface TeaOrderDetailsMapper {
     int updateByPrimaryKeySelective(TeaOrderDetails record);
 
     int updateByPrimaryKey(TeaOrderDetails record);
+    
+    @Select("select TEA_ORDERDETAILS_SEQ.nextval from dual")
+    String getOrderDetailsSeq();
 }

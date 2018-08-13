@@ -16,39 +16,6 @@ import com.milktea.milkteauser.domain.TeaOrderDetails;
 public class CustOrderInfoVo {
     
     //客户下单信息
-	/*private TeaOrderInfo teaOrderInfo;
-	
-	public TeaOrderInfo getTeaOrderInfo() {
-		return teaOrderInfo;
-	}
-
-	public void setTeaOrderInfo(TeaOrderInfo teaOrderInfo) {
-		this.teaOrderInfo = teaOrderInfo;
-	}
-
-	public List<TeaOrderDetails> getListTeaOrderDetails() {
-		return listTeaOrderDetails;
-	}
-
-	public void setListTeaOrderDetails(List<TeaOrderDetails> listTeaOrderDetails) {
-		this.listTeaOrderDetails = listTeaOrderDetails;
-	}
-
-	
-
-	//客户下单明细
-	private List<TeaOrderDetails> listTeaOrderDetails;
-	
-	//客户辅料明细
-	private List<TeaOrderDetailsAttr> listTeaOrderDetailsAttr;
-
-	public List<TeaOrderDetailsAttr> getListTeaOrderDetailsAttr() {
-		return listTeaOrderDetailsAttr;
-	}
-
-	public void setListTeaOrderDetailsAttr(List<TeaOrderDetailsAttr> listTeaOrderDetailsAttr) {
-		this.listTeaOrderDetailsAttr = listTeaOrderDetailsAttr;
-	}*/
 	
 	private String orderNo;
 
@@ -86,7 +53,19 @@ public class CustOrderInfoVo {
 
     private Date updateTime;
     
+    private String storeNo;
+    
     private List<TeaOrderDetails> listTeaOrderDetails;
+    
+    
+
+	public String getStoreNo() {
+		return storeNo;
+	}
+
+	public void setStoreNo(String storeNo) {
+		this.storeNo = storeNo;
+	}
 
 	public String getOrderNo() {
 		return orderNo;

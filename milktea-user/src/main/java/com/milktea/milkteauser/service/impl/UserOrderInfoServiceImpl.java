@@ -4,14 +4,19 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.milktea.milkteauser.dao.TeaOrderDetailsAttrMapper;
+import com.milktea.milkteauser.dao.TeaOrderDetailsMapper;
 import com.milktea.milkteauser.dao.TeaOrderInfoMapper;
 import com.milktea.milkteauser.domain.TeaOrderDetails;
+import com.milktea.milkteauser.domain.TeaOrderDetailsAttr;
 import com.milktea.milkteauser.domain.TeaOrderInfo;
+import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.UserOrderInfoService;
 import com.milktea.milkteauser.util.CalaPrice;
@@ -23,24 +28,21 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 	
 	@Autowired
 	TeaOrderInfoMapper teaOrderInfoMapper;
+	@Autowired
+	TeaOrderDetailsMapper teaOrderDetailsMapper;
+	@Autowired
+	TeaOrderDetailsAttrMapper teaOrderDetailsAttrMapper;
+	
+	
 	
 	static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
 
 	@Override
-	public TeaOrderInfo userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException {
+	public CustOrderInfoVo userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException {
 		TeaOrderInfo retTeaOrderInfo = new TeaOrderInfo();
 		//客户订单解析
 		CustOrderInfoVo CustOrderInfoTemp = new CustOrderInfoVo();
 		CustOrderInfoTemp = custOrderInfoVo;
-		
-		//客户基础信息
-		
-		
-		//客户订单信息 客户辅料附加信息
-		List<TeaOrderDetails> listTeaOrderDetails = new ArrayList<TeaOrderDetails>();
-		listTeaOrderDetails = CustOrderInfoTemp.getListTeaOrderDetails();
-		
-		//
 		
 		
 //		TeaGoodsInfo dest = new TeaGoodsInfo();
@@ -62,7 +64,8 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		CalaPrice calaPrice = new CalaPrice();
 		BigDecimal origPrice = new BigDecimal(0);
 		BigDecimal discount = new BigDecimal(0);
-		origPrice = calaPrice.balanceAccount(custOrderInfoVo);
+		CustOrderInfoTemp = calaPrice.balanceAccount(custOrderInfoVo);
+		origPrice = CustOrderInfoTemp.getOrderPrice();
 		CustOrderInfoTemp.setOrigPrice(origPrice);
 		
 		
@@ -71,11 +74,8 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		
 		String promotionId = "";
 		//TODO: 取得活动优惠内容
-		discount = calaPrice.promotionBalanceAccount(custOrderInfoVo,promotionId);
-		CustOrderInfoTemp.setDiscount(discount);
-		
-		//最终订单价格
-		CustOrderInfoTemp.setOrderPrice(origPrice.subtract(discount));
+		promotionId = custOrderInfoVo.getPromotionId();
+		CustOrderInfoTemp = calaPrice.promotionBalanceAccount(CustOrderInfoTemp,promotionId);
 		
 		//订单状态 0:已下单 1：制作完成 2:取货完成 3:外送 4:撤销
 		CustOrderInfoTemp.setOrderStatus("0");
@@ -91,7 +91,41 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		
 		//其余参数等其他状态改变时再设置
 		
-		return retTeaOrderInfo;
+		
+		//订单插入数据库
+		TeaOrderInfo dest = new TeaOrderInfo();
+	      try {
+	          BeanUtils.copyProperties(dest, CustOrderInfoTemp);
+	          this.teaOrderInfoMapper.insert(dest);
+	      } catch (Exception e) {
+	          logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
+	          throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
+	      }
+	      
+	    //TeaOrderDetails insert
+	      List<TeaOrderDetails> listTeaOrderDetails = custOrderInfoVo.getListTeaOrderDetails();
+	      for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
+	    	  teaOrderDetails.setOrderNo(CustOrderInfoTemp.getOrderNo());
+	    	  teaOrderDetailsMapper.insert(teaOrderDetails);
+	    	  
+	    	  List<TeaOrderDetailsAttr> listTeaOrderDetailsAttr = new ArrayList<TeaOrderDetailsAttr>();
+			  listTeaOrderDetailsAttr = teaOrderDetails.getListTeaOrderDetailsAttr();
+			// TODO:如果每一天都要连番从一开始则要重置SEQ
+				String orderDetailIdSeq = teaOrderDetailsMapper.getOrderDetailsSeq();
+				teaOrderDetails.setOrderDetailId(orderDetailIdSeq);
+			  
+			  for (TeaOrderDetailsAttr teaOrderDetailsAttr : listTeaOrderDetailsAttr) {
+				  teaOrderDetailsAttr.setOrderDetailId(orderDetailIdSeq);
+				  
+				  teaOrderDetailsAttrMapper.insert(teaOrderDetailsAttr);
+				
+			}
+			  
+			  
+	    	  
+		}
+		
+		return CustOrderInfoTemp;
 	}
 
 

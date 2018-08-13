@@ -3,6 +3,7 @@ package com.milktea.milkteauser.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,10 +32,10 @@ public class UserOrderInfoController {
 	 * 只有直接下单才进入此方法，
 	 */
 	@RequestMapping(value="/userOrderOper", method = RequestMethod.POST)
-	public ResponseBody<TeaOrderInfo>  userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException{
+	public ResponseBody<CustOrderInfoVo>  userOrderOper(@RequestBody CustOrderInfoVo custOrderInfoVo) throws MilkTeaException{
 		ResponseBody responseBody = new ResponseBody();
-		TeaOrderInfo teaOrderInfo = this.userOrderInfoService.userOrderOper(custOrderInfoVo);
-		responseBody.setData(teaOrderInfo);
+		CustOrderInfoVo CustOrderInfoVo = this.userOrderInfoService.userOrderOper(custOrderInfoVo);
+		responseBody.setData(CustOrderInfoVo);
 		return responseBody;
 	}
 	
