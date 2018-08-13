@@ -1,7 +1,5 @@
 package com.milktea.milkteauser.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -9,10 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.milktea.milkteauser.dao.TeaSmsRegisterMapper;
 import com.milktea.milkteauser.dao.TeaUserInfoMapper;
+import com.milktea.milkteauser.domain.TeaSmsRegister;
 import com.milktea.milkteauser.domain.TeaUserInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
+import com.milktea.milkteauser.service.SmsService;
 import com.milktea.milkteauser.service.UserRegisterService;
+import com.milktea.milkteauser.vo.ResponseBody;
 
 
 @Service("userRegisterService")
@@ -20,6 +22,12 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 
 	@Autowired
 	TeaUserInfoMapper TeaUserInfoMapper;
+	
+	@Autowired
+	TeaSmsRegisterMapper teaSmsRegisterMapper;
+	
+	//@Autowired
+	//SmsService smsService;
 	
 	static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
 	
@@ -59,31 +67,36 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	}
 
 	@Override
-	public String getPollCode(TeaUserInfo teaUserInfo) throws MilkTeaException {
-		String returnStr = ""; 
-		
-		//调用短消息发送
-		//生成随机码 4位
-		long t = System.currentTimeMillis();
-		Random r1 = new Random(t);
-		int i;
-		i=r1.nextInt(10);
-		returnStr = returnStr + String.valueOf(i);
-		i=r1.nextInt(10);
-		returnStr = returnStr + String.valueOf(i);
-		i=r1.nextInt(10);
-		returnStr = returnStr + String.valueOf(i);
-		i=r1.nextInt(10);
-		returnStr = returnStr + String.valueOf(i);
-		
+	public int createPollCode(TeaUserInfo teaUserInfo) throws MilkTeaException {
+
 		//调用阿里云短信发送
 		// TODO: 调用阿里云短信发送 参数 电话号码 验证码为随机数
+		//SMS_134326005 是认证模板号
+		ResponseBody<String> responseStr = new ResponseBody<String>();
+		//responseStr = smsService.sendVerCodeSMS(teaUserInfo.getTelephone(),"SMS_134326005");
+		
+		//写入数据库
+		teaSmsRegisterMapper.insertSMSReg(teaUserInfo.getTelephone(), responseStr.getData());
+		
+		return 1;
+		
+	}
+
+	@Override
+	public int comparePollCode(TeaSmsRegister teaSmsRegister) throws MilkTeaException {
+		int retInt =0;
+		//比较验证码是否正确
+		String CodeStr = teaSmsRegisterMapper.getIdentifyCode(teaSmsRegister.getTelephone());
+		if(!teaSmsRegister.getIdentifyCode().equals(CodeStr)){
+			//验证码不一致
+			return 99;
+		}
+		
+		//60分钟过期 测试时为2分钟
+		retInt = teaSmsRegisterMapper.checkIdentifyTime(teaSmsRegister.getTelephone());
 		
 		
-		//TODO：写入数据库 ？？？？
-		
-		return returnStr;
-		
+		return retInt;
 	}
 
 

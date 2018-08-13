@@ -25,17 +25,11 @@
         </dependency>
 
         <!--oracle jar 请修改成本地maven 仓库的-->
-
-       <!-- <dependency>
-	           <groupId>ojdbc6</groupId>
-	           <artifactId>ojdbc6</artifactId>
-	           <version>6</version>
-           </dependency>
-      -->
+        
         <dependency>
-            <groupId>com.oracle</groupId>
+            <groupId>ojdbc6</groupId>
             <artifactId>ojdbc6</artifactId>
-            <version>11.2.0</version>
+            <version>6</version>
         </dependency>
         <!--  Apache IO、文件工具类-->
         <dependency>
@@ -90,6 +84,29 @@
             <groupId>com.milktea</groupId>
             <artifactId>wxpay-sdk</artifactId>
         </dependency>
+         <dependency>
+			<groupId>com.vaadin.external.google</groupId>
+			<artifactId>android-json</artifactId>
+			<version>0.0.20131108.vaadin1</version>
+		</dependency>
+        <!-- HTTPS -->
+       <!--  <dependency>
+        <groupId>org.apache.solr</groupId> 
+			<artifactId>solr-solrj</artifactId> 
+			<version>4.10.2</version> 
+        </dependency>
+         -->
+        <dependency>
+		    <groupId>org.apache.httpcomponents</groupId>
+		    <artifactId>httpclient</artifactId>
+		    <version>4.5.6</version>
+		</dependency>
+        
+        <!-- <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.5</version>
+        </dependency> -->
 
 
     </dependencies>
