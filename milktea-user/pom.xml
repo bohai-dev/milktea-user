@@ -91,9 +91,9 @@
 		</dependency>
         <!-- HTTPS -->
        <!--  <dependency>
-        <groupId>org.apache.solr</groupId> 
-			<artifactId>solr-solrj</artifactId> 
-			<version>4.10.2</version> 
+        <groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>4.10.2</version>
         </dependency>
          -->
         <dependency>
@@ -101,7 +101,7 @@
 		    <artifactId>httpclient</artifactId>
 		    <version>4.5.6</version>
 		</dependency>
-        
+
         <!-- <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
