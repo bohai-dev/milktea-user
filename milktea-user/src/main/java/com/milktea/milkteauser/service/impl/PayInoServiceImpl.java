@@ -22,8 +22,11 @@ import java.util.Map;
 public class PayInoServiceImpl implements PayInfoService {
     @Autowired
     TeaPayInfoMapper mapper;
+    @Autowired
+    UserOrderInfoServiceImpl orderService;
     private static final Logger LOGGER = LoggerFactory.getLogger(PayInoServiceImpl.class);
-    private static final String STRIPE_KEY="sk_live_dNCjtQTOeP6W4hn9b93sKDVK";
+  //  private static final String STRIPE_KEY="sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   正式key
+    private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
 
     public  void  stripePay(StripeBean stripeBean) throws MilkTeaException{
       //  ResponseBody<String> responseBody=new ResponseBody<>();
@@ -47,10 +50,11 @@ public class PayInoServiceImpl implements PayInfoService {
             //发起支付
             Charge charge = Charge.create(params);
             //充值成功，处理业务逻辑
-           //TODO:更新订单  支付状态 1 成功
+            //TODO:更新订单  支付状态 1 成功
+            orderService.modifyOrderStatus(stripeBean.getOrderNum(),"1");
+
             teaPayInfo.setPaySerialNo(charge.getId());
             teaPayInfo.setPayStatus("1");                    //支付状态 1支付成功 2支付失败
-
 
 
         } catch (Exception e) {
@@ -58,11 +62,14 @@ public class PayInoServiceImpl implements PayInfoService {
             teaPayInfo.setPayStatus("2");
             teaPayInfo.setErrorMsg(e.getMessage());
             //TODO:更新订单  支付状态 2 失败
+            orderService.modifyOrderStatus(stripeBean.getOrderNum(),"2");
             throw  new MilkTeaException(MilkTeaErrorConstant.PAY_FAIL.getErrorCode(),e.getMessage(),e.getMessage(),e);
+        }finally {
+            //无论支付成功还是失败，都插入支付记录
+            mapper.insertSelective(teaPayInfo);
         }
 
-        //插入支付信息
-        mapper.insertSelective(teaPayInfo);
+
     }
 
 }

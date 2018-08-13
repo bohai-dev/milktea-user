@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-	<link rel="stylesheet" th:href="@{/css/common.css}" />
 	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-	<link rel="stylesheet" th:href="@{/css/home.css}" />    
 </head>
 <body>
 <!--方式1简单-->
@@ -48,7 +46,8 @@
      		initData:function(){
      			 var _this = this;
      		     handler = StripeCheckout.configure({
-     		        key: 'pk_live_3aqw1J17VC1gcSxl29khgL3u',
+					 key:'pk_test_ujKHOw9xZM2QYfJwDZIt890W',  //测试key
+     		         //key: 'pk_live_3aqw1J17VC1gcSxl29khgL3u',  //TODO:正式key,正式发布时替换
      		        image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
      		        locale: 'auto',
      		        token: function(token) {
@@ -57,8 +56,21 @@
      		            console.log(token)
      		            //TODO:发起http请求，将token、amount、description等参数发送给服务器
      		            // 接口地址/stripe/charge
-     		           _this.$http.post("/stripe/charge",token).then((res) => {
-     		        	  _this.$message({message:"支付成功！",type:"success"});
+						var data={
+     		                token:token.id,
+							amount:100,
+							description:'商品信息',
+                            orderNum:'000000000000000001'   //订单编号
+						}
+     		           _this.$http.post("/stripe/charge",data).then((res) => {
+     		               console.log(res)
+						   var data=res.body;
+     		               if(data.rspCode=='00000'){
+                            _this.$message({message:"支付成功！",type:"success"});
+						    }else{
+                             _this.$message({message:"支付失败！"+data.cnErrorMsg,type:"warning"});
+						    }
+
      					}).catch((res) => {
      					   _this.$message({message:"支付失败！",type:"warning"});
      					})   		        
@@ -70,7 +82,7 @@
      	            name: '网站名称(请替换)',
      	            description: '商品信息(请替换)',
      	            currency: 'usd',
-     	            amount: 2000   //TODO:金额，单位分，变量
+     	            amount: 100   //TODO:金额，单位分，变量
      	        });
      		}
      	}

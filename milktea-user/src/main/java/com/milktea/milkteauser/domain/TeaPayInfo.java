@@ -1,5 +1,7 @@
 package com.milktea.milkteauser.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class TeaPayInfo {
