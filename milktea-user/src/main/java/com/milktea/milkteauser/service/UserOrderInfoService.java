@@ -11,11 +11,20 @@ public interface UserOrderInfoService {
 	
 	
  /**
+  * 客户下单操作
  * @param CustOrderInfoVo
- * @return
+ * @return CustOrderInfoVo
  * @throws MilkTeaException
  */
 public CustOrderInfoVo userOrderOper(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException;
+
+/**
+ * 更新订单状态
+* @param orderStatus
+* @return Integer
+* @throws MilkTeaException
+*/
+public Integer modifyOrderStatus(String orderNo,String orderStatus) throws MilkTeaException;
    
   
    

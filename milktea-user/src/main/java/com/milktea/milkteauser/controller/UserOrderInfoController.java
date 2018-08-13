@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.milktea.milkteauser.domain.TeaOrderInfo;
@@ -37,6 +38,13 @@ public class UserOrderInfoController {
 		CustOrderInfoVo CustOrderInfoVo = this.userOrderInfoService.userOrderOper(custOrderInfoVo);
 		responseBody.setData(CustOrderInfoVo);
 		return responseBody;
+	}
+	
+	@RequestMapping(value="/modfiyOrderStatus", method = RequestMethod.GET)
+	public ResponseHeader  modfiyOrderStatus(@RequestParam("orderNo") String orderNo,@RequestParam("orderStatus") String orderStatus) throws MilkTeaException{
+		ResponseHeader responseHeader = new ResponseHeader();
+		this.userOrderInfoService.modifyOrderStatus(orderNo, orderStatus);
+		return responseHeader;
 	}
 	
 	

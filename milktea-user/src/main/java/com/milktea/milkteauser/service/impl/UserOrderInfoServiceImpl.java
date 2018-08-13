@@ -128,6 +128,16 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		return CustOrderInfoTemp;
 	}
 
+	@Override
+	public Integer modifyOrderStatus(String orderNo,String orderStatus) throws MilkTeaException {
+		//更新订单状态
+		
+		teaOrderInfoMapper.modifyOrderStatus(orderNo, orderStatus);
+		
+		
+		return 1;
+	}
+
 
 
 	

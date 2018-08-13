@@ -1,8 +1,11 @@
 package com.milktea.milkteauser.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.milktea.milkteauser.domain.TeaOrderInfo;
+import com.milktea.milkteauser.domain.TeaUserInfo;
 
 public interface TeaOrderInfoMapper {
     int deleteByPrimaryKey(String orderNo);
@@ -19,4 +22,8 @@ public interface TeaOrderInfoMapper {
     
     @Select("select to_char(sysdate,'YYYYMMDD_') || 'A_' ||TEA_CUSTORDER_SEQ.nextval from dual")
     String getCustOrderSeq();
+    
+    @Update("update TEA_ORDER_INFO set ORDER_STATUS = #{orderStatus} where ORDER_NO = #{orderNo}")
+    String modifyOrderStatus(@Param("orderNo") String orderNo,@Param("orderStatus") String orderStatus);
+
 }
