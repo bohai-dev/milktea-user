@@ -2,6 +2,7 @@ package com.milktea.milkteauser.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -67,6 +68,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		CustOrderInfoTemp = calaPrice.balanceAccount(custOrderInfoVo);
 		origPrice = CustOrderInfoTemp.getOrderPrice();
 		CustOrderInfoTemp.setOrigPrice(origPrice);
+		CustOrderInfoTemp.setOrderTime(new Date());
 		
 		
 		//优惠价格 DISCOUNT 看参与的PROMOTION_ID 活动ID的详细信息

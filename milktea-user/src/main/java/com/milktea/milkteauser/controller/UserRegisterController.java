@@ -27,6 +27,7 @@ public class UserRegisterController {
 
 	@Autowired
 	UserInfoService userInfoService;
+	@Autowired
 	UserRegisterService userRegisterService;
 	
 	
@@ -41,6 +42,20 @@ public class UserRegisterController {
 		ResponseHeader header = new ResponseHeader();
 		this.userInfoService.insert(teaUserInfo);
 		return header;
+	}
+	
+	/**
+	 * 客户登入验证
+	 * @param telephone
+	 * @param userPassword
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping(value="/userLogin", method = RequestMethod.GET)
+	public ResponseBody<TeaUserInfo>  userLogin(@RequestParam("telephone") String telephone,@RequestParam("userPassword") String userPassword) throws MilkTeaException{
+		ResponseBody<TeaUserInfo> responseBody = new ResponseBody<>();
+		responseBody.setData(this.userRegisterService.userLogin(telephone,userPassword));
+		return responseBody;
 	}
 	
 	
@@ -91,15 +106,15 @@ public class UserRegisterController {
 	 * @return
 	 * @throws MilkTeaException
 	 */
-	@RequestMapping(value="/createPollCode", method = RequestMethod.POST)
-	public int createPollCode(@RequestBody TeaUserInfo teaUserInfo) throws MilkTeaException{
+	@RequestMapping(value="/createPollCode", method = RequestMethod.GET)
+	public int createPollCode(@RequestParam("telephone") String telephone) throws MilkTeaException{
 		int retInt = 0;
-		retInt = this.userRegisterService.createPollCode(teaUserInfo);
+		retInt = this.userRegisterService.createPollCode(telephone);
 		return retInt;
 	}
 	
 	/**
-	 * 认证号码生成（生产时设置60分钟过期，测试时2分钟过期）
+	 * 认证号码认证（生产时设置60分钟过期，测试时2分钟过期）
 	 * @param teaUserInfo
 	 * @return 1为成功，0为失败，99为验证码错误，98为时间过期 
 	 * @throws MilkTeaException
