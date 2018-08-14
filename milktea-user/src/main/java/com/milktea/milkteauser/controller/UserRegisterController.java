@@ -27,6 +27,7 @@ public class UserRegisterController {
 
 	@Autowired
 	UserInfoService userInfoService;
+	@Autowired
 	UserRegisterService userRegisterService;
 	
 	
