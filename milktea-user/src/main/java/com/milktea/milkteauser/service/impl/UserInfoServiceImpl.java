@@ -24,7 +24,7 @@ public  class UserInfoServiceImpl implements UserInfoService {
 		String custNoSeq = teaUserInfoMapper.getNewCustSeq();
 		teaUserInfo.setUserNo(custNoSeq);
 		teaUserInfo.setRegisterDate(new Date());
-		teaUserInfoMapper.insert(teaUserInfo);
+		teaUserInfoMapper.insertSelective(teaUserInfo);
 		return 1;
 	}
 

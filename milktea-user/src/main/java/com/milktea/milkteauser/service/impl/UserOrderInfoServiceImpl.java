@@ -98,7 +98,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		TeaOrderInfo dest = new TeaOrderInfo();
 	      try {
 	          BeanUtils.copyProperties(dest, CustOrderInfoTemp);
-	          this.teaOrderInfoMapper.insert(dest);
+	          this.teaOrderInfoMapper.insertSelective(dest);
 	      } catch (Exception e) {
 	          logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
 	          throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -108,7 +108,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 	      List<TeaOrderDetails> listTeaOrderDetails = custOrderInfoVo.getListTeaOrderDetails();
 	      for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
 	    	  teaOrderDetails.setOrderNo(CustOrderInfoTemp.getOrderNo());
-	    	  teaOrderDetailsMapper.insert(teaOrderDetails);
+	    	  teaOrderDetailsMapper.insertSelective(teaOrderDetails);
 	    	  
 	    	  List<TeaOrderDetailsAttr> listTeaOrderDetailsAttr = new ArrayList<TeaOrderDetailsAttr>();
 			  listTeaOrderDetailsAttr = teaOrderDetails.getListTeaOrderDetailsAttr();
@@ -119,7 +119,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 			  for (TeaOrderDetailsAttr teaOrderDetailsAttr : listTeaOrderDetailsAttr) {
 				  teaOrderDetailsAttr.setOrderDetailId(orderDetailIdSeq);
 				  
-				  teaOrderDetailsAttrMapper.insert(teaOrderDetailsAttr);
+				  teaOrderDetailsAttrMapper.insertSelective(teaOrderDetailsAttr);
 				
 			}
 			  
