@@ -26,8 +26,8 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	@Autowired
 	TeaSmsRegisterMapper teaSmsRegisterMapper;
 	
-	//@Autowired
-	//SmsService smsService;
+	@Autowired
+	SmsService smsService;
 	
 	static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
 	
@@ -39,8 +39,6 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 		//微信登入的场合返回客户已经登入的信息，如果返回空则说明没有注册过
 		teaUserInfoRet = TeaUserInfoMapper.selectByWeixinOpenId(weixinOpenid);
 
-		
-		
 		return teaUserInfoRet;
 		
 	}
@@ -49,7 +47,7 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	public void bindOpenidTel(TeaUserInfo teaUserInfo) throws MilkTeaException {
 		
 		//当手机号已经存在时 新的微信号和手机号绑定
-		TeaUserInfoMapper.bindTelephoneWeixinOpenid(teaUserInfo.getTelephone(),teaUserInfo.getWeixinOpenid(),teaUserInfo.getWeixinId());
+		TeaUserInfoMapper.bindTelephoneWeixinOpenid(teaUserInfo.getTelephone(),teaUserInfo.getWeixinOpenid());
 		
 	}
 
@@ -66,16 +64,19 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	}
 
 	@Override
-	public int createPollCode(TeaUserInfo teaUserInfo) throws MilkTeaException {
+	public int createPollCode(String telephone) throws MilkTeaException {
 
 		//调用阿里云短信发送
 		// TODO: 调用阿里云短信发送 参数 电话号码 验证码为随机数
 		//SMS_134326005 是认证模板号
 		ResponseBody<String> responseStr = new ResponseBody<String>();
-		//responseStr = smsService.sendVerCodeSMS(teaUserInfo.getTelephone(),"SMS_134326005");
+		//海外
+//		responseStr = smsService.sendVerCodeSMS(telephone,"SMS_134326005");
+		//国内
+		responseStr = smsService.sendVerCodeSMS(telephone,"SMS_111715045");
 		
 		//写入数据库
-		teaSmsRegisterMapper.insertSMSReg(teaUserInfo.getTelephone(), responseStr.getData());
+		teaSmsRegisterMapper.insertSMSReg(telephone, responseStr.getData());
 		
 		return 1;
 		
@@ -96,6 +97,14 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 		
 		
 		return retInt;
+	}
+
+	@Override
+	public TeaUserInfo userLogin(String telephone, String userPassword) throws MilkTeaException {
+		TeaUserInfo teaUserInfo = new TeaUserInfo();
+		
+		teaUserInfo = TeaUserInfoMapper.checkUserLogin(telephone,userPassword);
+		return teaUserInfo;
 	}
 
 

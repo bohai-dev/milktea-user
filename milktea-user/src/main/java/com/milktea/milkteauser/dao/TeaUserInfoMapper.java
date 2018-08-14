@@ -21,12 +21,18 @@ public interface TeaUserInfoMapper {
 
     int updateByPrimaryKey(TeaUserInfo record);
     
+    @Select("select * from TEA_USER_INFO where TELEPHONE = #{telephone} and USER_PASSWORD = #{userPassword}")
+    TeaUserInfo checkUserLogin(@Param("telephone") String telephone,@Param("userPassword") String userPassword);
+    
+    @Select("select TEA_CUSTNO_SEQ.nextval from dual")
+    String getNewCustSeq();
+    
     @Select("select * from TEA_USER_INFO where TELEPHONE = #{telephone}")
     TeaUserInfo selectByTelephone(@Param("telephone") String telephone);
     
     @Select("select * from TEA_USER_INFO where WEIXIN_OPENID = #{weixinOpenId}")
     TeaUserInfo selectByWeixinOpenId(@Param("weixinOpenId") String weixinOpenId);
     
-    @Update("update TEA_USER_INFO set WEIXIN_OPENID = #{weixinOpenId},WEIXIN_ID = #{weixinId} where TELEPHONE = #{telephone}")
-    TeaUserInfo bindTelephoneWeixinOpenid(@Param("telephone") String telephone,@Param("weixinOpenId") String weixinOpenId,@Param("weixinId") String weixinId);
+    @Update("update TEA_USER_INFO set WEIXIN_OPENID = #{weixinOpenId} where TELEPHONE = #{telephone}")
+    TeaUserInfo bindTelephoneWeixinOpenid(@Param("telephone") String telephone,@Param("weixinOpenId") String weixinOpenId);
 }
