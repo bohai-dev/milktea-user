@@ -16,6 +16,9 @@ public enum MilkTeaErrorConstant {
     SMS_FAILURE("00005","手机短消息异常","SMS failure"),
     SMS_RESPONSE_FAILURE("00006","手机短消息请求异常","SMS RESPONSE failure"),
     PAY_FAIL("00007","",""),
+    SMS_REGISTEFAILURE("00008","短消息验证失败","SMS registe failure"),
+    SMS_OUTTIME("00009","短消息验证超时","SMS OUTTIME"),
+    
    
     
     

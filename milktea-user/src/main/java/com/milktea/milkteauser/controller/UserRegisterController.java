@@ -107,10 +107,10 @@ public class UserRegisterController {
 	 * @throws MilkTeaException
 	 */
 	@RequestMapping(value="/createPollCode", method = RequestMethod.GET)
-	public int createPollCode(@RequestParam("telephone") String telephone) throws MilkTeaException{
-		int retInt = 0;
-		retInt = this.userRegisterService.createPollCode(telephone);
-		return retInt;
+	public ResponseHeader createPollCode(@RequestParam("telephone") String telephone) throws MilkTeaException{
+		ResponseHeader header = new ResponseHeader();
+		this.userRegisterService.createPollCode(telephone);
+		return header;
 	}
 	
 	/**
@@ -121,10 +121,12 @@ public class UserRegisterController {
 	 * 
 	 */
 	@RequestMapping(value="/comparePollCode", method = RequestMethod.POST)
-	public int comparePollCode(@RequestBody TeaSmsRegister teaSmsRegister) throws MilkTeaException{
-		int retInt = 0;
-		retInt = this.userRegisterService.comparePollCode(teaSmsRegister);
-		return retInt;
+	public ResponseHeader comparePollCode(@RequestBody TeaSmsRegister teaSmsRegister) throws MilkTeaException{
+		ResponseHeader header = new ResponseHeader();
+
+		this.userRegisterService.comparePollCode(teaSmsRegister);
+
+		return header;
 	}
 	
 	

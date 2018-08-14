@@ -11,6 +11,7 @@ import com.milktea.milkteauser.dao.TeaSmsRegisterMapper;
 import com.milktea.milkteauser.dao.TeaUserInfoMapper;
 import com.milktea.milkteauser.domain.TeaSmsRegister;
 import com.milktea.milkteauser.domain.TeaUserInfo;
+import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.SmsService;
 import com.milktea.milkteauser.service.UserRegisterService;
@@ -89,11 +90,18 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 		String CodeStr = teaSmsRegisterMapper.getIdentifyCode(teaSmsRegister.getTelephone());
 		if(!teaSmsRegister.getIdentifyCode().equals(CodeStr)){
 			//验证码不一致
-			return 99;
+			throw new MilkTeaException(MilkTeaErrorConstant.SMS_REGISTEFAILURE);
+			
 		}
 		
 		//60分钟过期 测试时为2分钟
 		retInt = teaSmsRegisterMapper.checkIdentifyTime(teaSmsRegister.getTelephone());
+		
+		if(retInt == 0){
+			throw new MilkTeaException(MilkTeaErrorConstant.SMS_RESPONSE_FAILURE);
+		} else if(retInt == 98){
+			throw new MilkTeaException(MilkTeaErrorConstant.SMS_OUTTIME);
+		}
 		
 		
 		return retInt;
