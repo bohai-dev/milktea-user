@@ -33,6 +33,9 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 	TeaOrderDetailsMapper teaOrderDetailsMapper;
 	@Autowired
 	TeaOrderDetailsAttrMapper teaOrderDetailsAttrMapper;
+	@Autowired
+	CalaPrice calaPrice;
+	
 	
 	
 	
@@ -62,7 +65,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		CustOrderInfoTemp.setOrderNo(custOrderSeq);
 		//用户编号 用户手机号 微信ID 活动ID 客户下单备注 下单时间  STORE_NO 由前端提供
 		//原始价格计算 ORIG_PRICE
-		CalaPrice calaPrice = new CalaPrice();
+		
 		BigDecimal origPrice = new BigDecimal(0);
 		BigDecimal discount = new BigDecimal(0);
 		CustOrderInfoTemp = calaPrice.balanceAccount(custOrderInfoVo);

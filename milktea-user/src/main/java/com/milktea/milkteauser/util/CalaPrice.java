@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
@@ -20,7 +21,7 @@ import com.milktea.milkteauser.domain.TeaOrderDetailsAttr;
 import com.milktea.milkteauser.vo.CustOrderInfoVo;
 import com.milktea.milkteauser.vo.PromotionVo;
 import com.milktea.milkteauser.vo.ResponseBody;
-
+@Service("calaPrice")
 public class CalaPrice {
 	
 	@Autowired
