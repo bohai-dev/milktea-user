@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +100,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		//订单插入数据库
 		TeaOrderInfo dest = new TeaOrderInfo();
 	      try {
-	          BeanUtils.copyProperties(dest, CustOrderInfoTemp);
+	          BeanUtils.copyProperties(CustOrderInfoTemp,dest);
 	          this.teaOrderInfoMapper.insertSelective(dest);
 	      } catch (Exception e) {
 	          logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
