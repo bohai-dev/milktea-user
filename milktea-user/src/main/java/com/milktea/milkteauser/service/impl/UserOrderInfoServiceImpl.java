@@ -111,13 +111,15 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 	      List<TeaOrderDetails> listTeaOrderDetails = custOrderInfoVo.getListTeaOrderDetails();
 	      for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
 	    	  teaOrderDetails.setOrderNo(CustOrderInfoTemp.getOrderNo());
+	    	// TODO:如果每一天都要连番从一开始则要重置SEQ
+				String orderDetailIdSeq = teaOrderDetailsMapper.getOrderDetailsSeq();
+				teaOrderDetails.setOrderDetailId(orderDetailIdSeq);
+	    	  
 	    	  teaOrderDetailsMapper.insertSelective(teaOrderDetails);
 	    	  
 	    	  List<TeaOrderDetailsAttr> listTeaOrderDetailsAttr = new ArrayList<TeaOrderDetailsAttr>();
 			  listTeaOrderDetailsAttr = teaOrderDetails.getListTeaOrderDetailsAttr();
-			// TODO:如果每一天都要连番从一开始则要重置SEQ
-				String orderDetailIdSeq = teaOrderDetailsMapper.getOrderDetailsSeq();
-				teaOrderDetails.setOrderDetailId(orderDetailIdSeq);
+			
 			  
 			  for (TeaOrderDetailsAttr teaOrderDetailsAttr : listTeaOrderDetailsAttr) {
 				  teaOrderDetailsAttr.setOrderDetailId(orderDetailIdSeq);

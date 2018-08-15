@@ -137,6 +137,11 @@ public class CalaPrice {
     	int maxCap = 0;
     	maxCap = listTeaOrderDetails.size() / 2 ;
     	
+    	if(listTeaOrderDetails.size() < 2){
+    		custOrderInfoVo.setDiscount(new BigDecimal(0));
+    		return custOrderInfoVo;
+    	}
+    	
     	int i = 0;
     	for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
     		listInt.add(teaOrderDetails.getOrigPrice());
