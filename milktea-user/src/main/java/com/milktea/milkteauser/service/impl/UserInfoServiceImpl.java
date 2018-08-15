@@ -21,14 +21,19 @@ public  class UserInfoServiceImpl implements UserInfoService {
 
 	@Override
 	public Integer insert(TeaUserInfo teaUserInfo) throws MilkTeaException {
-		// TODO Auto-generated method stub
-		return null;
+		String custNoSeq = teaUserInfoMapper.getNewCustSeq();
+		teaUserInfo.setUserNo(custNoSeq);
+		teaUserInfo.setRegisterDate(new Date());
+		teaUserInfoMapper.insertSelective(teaUserInfo);
+		return 1;
 	}
 
 	@Override
 	public TeaUserInfo selectByUserId(String userNo) throws MilkTeaException {
-		// TODO Auto-generated method stub
-		return null;
+		TeaUserInfo retTeaUserInfo = new TeaUserInfo();
+		retTeaUserInfo = teaUserInfoMapper.selectByPrimaryKey(userNo);
+		return retTeaUserInfo;
+		
 	}
 
 	@Override

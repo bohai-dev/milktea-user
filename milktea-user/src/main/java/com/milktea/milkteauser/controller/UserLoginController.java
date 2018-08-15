@@ -312,7 +312,40 @@ public class UserLoginController {
 	        
 			return responseBody;
 		}
-	
+		
+//		http://localhost:8088/queryPromotionByStoreNoNation
+		@RequestMapping(value="/queryPromotionByStoreNoNation", method = RequestMethod.GET)
+		public ResponseBody<JSONObject>  getPromotionByStoreNoNation(@RequestParam("storeNo") String storeNo,@RequestParam("lang") String lang) throws MilkTeaException{
+			BufferedReader in = null;
+			String result = "";
+			Logger logger = LoggerFactory.getLogger(UserLoginController.class);
+			ResponseBody<JSONObject> responseBody = new ResponseBody<JSONObject>();
+			JSONObject jsonObject = new JSONObject();
+			JsonObject message = new JsonObject();
+			PrintWriter out = null;
+			String path = "http://localhost:8081/queryPromotionByStoreNoNation"; 
+		        
+			try {
+
+				HttpUtil HttpUtil = new HttpUtil();
+				Map<String,String> mapParam = new HashMap<String,String>();
+				mapParam.put("storeNo", storeNo);
+				mapParam.put("lang", lang);
+				String retStr = HttpUtil.post(path, mapParam);
+				
+				System.out.println(retStr);
+				jsonObject = JSON.parseObject(retStr);
+		        responseBody.setData(jsonObject);
+			
+	          
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}  
+	        
+			return responseBody;
+			
+		}
 	
 	
 	

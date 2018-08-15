@@ -43,6 +43,8 @@
       #{expireTime,jdbcType=TIMESTAMP}, #{token,jdbcType=VARCHAR}, #{tokenExpireTime,jdbcType=TIMESTAMP}, 
       #{deliveryAddress,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
+  
+  
   <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaUserInfo">
     insert into TEA_USER_INFO
     <trim prefix="(" suffix=")" suffixOverrides=",">

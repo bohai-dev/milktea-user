@@ -2,9 +2,10 @@ package com.milktea.milkteauser.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 	TeaOrderDetailsMapper teaOrderDetailsMapper;
 	@Autowired
 	TeaOrderDetailsAttrMapper teaOrderDetailsAttrMapper;
+	@Autowired
+	CalaPrice calaPrice;
+	
 	
 	
 	
@@ -61,12 +65,13 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		CustOrderInfoTemp.setOrderNo(custOrderSeq);
 		//用户编号 用户手机号 微信ID 活动ID 客户下单备注 下单时间  STORE_NO 由前端提供
 		//原始价格计算 ORIG_PRICE
-		CalaPrice calaPrice = new CalaPrice();
+		
 		BigDecimal origPrice = new BigDecimal(0);
 		BigDecimal discount = new BigDecimal(0);
 		CustOrderInfoTemp = calaPrice.balanceAccount(custOrderInfoVo);
 		origPrice = CustOrderInfoTemp.getOrderPrice();
 		CustOrderInfoTemp.setOrigPrice(origPrice);
+		CustOrderInfoTemp.setOrderTime(new Date());
 		
 		
 		//优惠价格 DISCOUNT 看参与的PROMOTION_ID 活动ID的详细信息
@@ -95,8 +100,8 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		//订单插入数据库
 		TeaOrderInfo dest = new TeaOrderInfo();
 	      try {
-	          BeanUtils.copyProperties(dest, CustOrderInfoTemp);
-	          this.teaOrderInfoMapper.insert(dest);
+	          BeanUtils.copyProperties(CustOrderInfoTemp,dest);
+	          this.teaOrderInfoMapper.insertSelective(dest);
 	      } catch (Exception e) {
 	          logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
 	          throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
@@ -106,18 +111,20 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 	      List<TeaOrderDetails> listTeaOrderDetails = custOrderInfoVo.getListTeaOrderDetails();
 	      for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
 	    	  teaOrderDetails.setOrderNo(CustOrderInfoTemp.getOrderNo());
-	    	  teaOrderDetailsMapper.insert(teaOrderDetails);
+	    	// TODO:如果每一天都要连番从一开始则要重置SEQ
+				String orderDetailIdSeq = teaOrderDetailsMapper.getOrderDetailsSeq();
+				teaOrderDetails.setOrderDetailId(orderDetailIdSeq);
+	    	  
+	    	  teaOrderDetailsMapper.insertSelective(teaOrderDetails);
 	    	  
 	    	  List<TeaOrderDetailsAttr> listTeaOrderDetailsAttr = new ArrayList<TeaOrderDetailsAttr>();
 			  listTeaOrderDetailsAttr = teaOrderDetails.getListTeaOrderDetailsAttr();
-			// TODO:如果每一天都要连番从一开始则要重置SEQ
-				String orderDetailIdSeq = teaOrderDetailsMapper.getOrderDetailsSeq();
-				teaOrderDetails.setOrderDetailId(orderDetailIdSeq);
+			
 			  
 			  for (TeaOrderDetailsAttr teaOrderDetailsAttr : listTeaOrderDetailsAttr) {
 				  teaOrderDetailsAttr.setOrderDetailId(orderDetailIdSeq);
 				  
-				  teaOrderDetailsAttrMapper.insert(teaOrderDetailsAttr);
+				  teaOrderDetailsAttrMapper.insertSelective(teaOrderDetailsAttr);
 				
 			}
 			  
@@ -132,10 +139,10 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 	public Integer modifyOrderStatus(String orderNo,String orderStatus) throws MilkTeaException {
 		//更新订单状态
 		
-		int result=teaOrderInfoMapper.modifyOrderStatus(orderNo, orderStatus);
+		String result=teaOrderInfoMapper.modifyOrderStatus(orderNo, orderStatus);
 		
 		
-		return result;
+		return 1;
 	}
 
 

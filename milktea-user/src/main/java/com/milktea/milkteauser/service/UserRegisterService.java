@@ -36,7 +36,7 @@ public interface UserRegisterService {
 	 * @param teaUserInfo
 	 * @throws MilkTeaException
 	*/
-	public int createPollCode(TeaUserInfo teaUserInfo) throws MilkTeaException;
+	public int createPollCode(String telephone) throws MilkTeaException;
 	
 	
 	/**
@@ -45,6 +45,16 @@ public interface UserRegisterService {
 	 * @throws MilkTeaException
 	*/
 	public int comparePollCode(TeaSmsRegister teaSmsRegister) throws MilkTeaException;
+	
+	/**
+	 * 用户登入CHECK
+	 * @param telephone
+	 * @param userPassword
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	public TeaUserInfo userLogin(String telephone,String userPassword) throws MilkTeaException;
+	
    
    
 }
