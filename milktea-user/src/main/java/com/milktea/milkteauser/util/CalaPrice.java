@@ -58,15 +58,15 @@ public class CalaPrice {
 				TeaAttributesInfo teaAttributesInfo = new TeaAttributesInfo();
 				
 				teaAttributesInfo = teaAttributesInfoMapper.selectByPrimaryKey(teaOrderDetailsAttr.getAttrId());
-				attrBookTotalAccount.add(teaAttributesInfo.getAttrPrice());
+				attrBookTotalAccount = attrBookTotalAccount.add(teaAttributesInfo.getAttrPrice());
 				
 			}
 			
 			//配料价格再计算
 			teaOrderDetails.setAttrPrice(attrBookTotalAccount);
 			
-			bookTotalAccount.add(teaGoodsInfo.getGoodsPrice());
-			bookTotalAccount.add(attrBookTotalAccount);
+			bookTotalAccount = bookTotalAccount.add(teaGoodsInfo.getGoodsPrice());
+			bookTotalAccount = bookTotalAccount.add(attrBookTotalAccount);
 		}
 		
 		
@@ -157,7 +157,7 @@ public class CalaPrice {
     			//在优惠价格以下的商品
     			countpromtion = countpromtion + 1;
     			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
-    			promotionTotalValue.add(teaOrderDetails.getDiscount());
+    			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
     			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
     		}
 			
@@ -169,7 +169,7 @@ public class CalaPrice {
     				//等于优惠价格的商品
         			countpromtion = countpromtion + 1;
         			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
-        			promotionTotalValue.add(teaOrderDetails.getDiscount());
+        			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
         			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
     			}
     			
