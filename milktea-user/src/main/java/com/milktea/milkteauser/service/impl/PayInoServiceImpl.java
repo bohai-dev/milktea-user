@@ -50,18 +50,19 @@ public class PayInoServiceImpl implements PayInfoService {
             //发起支付
             Charge charge = Charge.create(params);
             //充值成功，处理业务逻辑
-            //TODO:更新订单  支付状态 1 成功
+            //更新订单  支付状态 1 成功
             orderService.modifyOrderStatus(stripeBean.getOrderNum(),"1");
 
             teaPayInfo.setPaySerialNo(charge.getId());
             teaPayInfo.setPayStatus("1");                    //支付状态 1支付成功 2支付失败
 
+            //TODO:通知订单后台，有新新订单
 
         } catch (Exception e) {
             LOGGER.error("支付发生错误:"+e.getMessage(),e);
             teaPayInfo.setPayStatus("2");
             teaPayInfo.setErrorMsg(e.getMessage());
-            //TODO:更新订单  支付状态 2 失败
+            //更新订单  支付状态 2 失败
             orderService.modifyOrderStatus(stripeBean.getOrderNum(),"2");
             throw  new MilkTeaException(MilkTeaErrorConstant.PAY_FAIL.getErrorCode(),e.getMessage(),e.getMessage(),e);
         }finally {
