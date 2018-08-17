@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>websocket测试</title>
+</head>
+<body>
+   <script>
+       $(function () {
+
+
+           var href = document.referrer;
+           // console.log(href);
+           var addr = href.split("?");
+           var addrVal = addr[1].split("=");
+           var storeNumber = addrVal[1];
+           // console.log("storeNo="+storeNumber);
+           var ws;
+           var url = "ws://47.89.247.54:8081/shop/websocket";
+           if ('WebSocket' in window) {
+               ws = new WebSocket(url);
+           } else if ('MozWebSocket' in window) {
+               ws = new MozWebSocket(url);
+           } else {
+               alert('WebSocket is not supported by this browser.');
+               return;
+           }
+           ws.onopen = function () {
+               // 使用 send() 方法发送数据
+               ws.send("D00006");
+               // alert("数据发送中...");
+           };
+           ws.onmessage=function(data){
+               alert(data);
+
+               /*var str = "<table class='tb' id='list'>";
+               str += "<tr><th>编号</th><th>手机号</th><th>微信号</th><th>下单时间</th><th>取货号</th></tr>"
+
+                 if(data.orderType == 1){
+                   str += "<tr class='opener'><td>"+data.orderNo+"</td><td>"+data.telephone+"</td><td>"+data.weixinId+"</td><td>"+data.orderTime+"</td><td>"+data.takeNo+"</td></tr>";
+                   str +="</table>";
+                   $("#order-table").append(str);
+                   console.log("WebSocket:收到一条消息");
+                   // show("您有新的消息！！！");
+                   // setTimeout("closeDiv()",2000);
+
+                 }else if(data.orderType == 0){
+                   str += "<tr class='opener'><td>"+data.orderNo+"</td><td>"+data.telephone+"</td><td>"+data.weixinId+"</td><td>"+data.orderTime+"</td><td>"+data.takeNo+"</td></tr>";
+                   str +="</table>";
+                   $("#preorder-table").append(str);
+                   console.log("WebSocket:收到一条消息",event.data);
+                   // show("您有新的消息！！！");
+                   // setTimeout("closeDiv()",2000);
+                 }*/
+
+           }
+           ws.onclose = function() {
+               console.log("websocket连接关闭");
+           }
+           //发生了错误事件
+           ws.onerror = function() {
+               alert("Socket发生了错误");
+           }
+
+           // $('#dialog').dialog({
+           //    title: "订单详情",
+           //    autoOpen: false,//如果设置为true，则默认页面加载完毕后，就自动弹出对话框；相反则处理hidden状态。
+           //    bgiframe: true, //解决ie6中遮罩层盖不住select的问题
+           //    width: 1000,
+           //    height: 200,
+           //    modal:false,//这个就是遮罩效果
+           //    buttons: {
+           //     "返回": function() {
+           //      $(this).dialog("close");
+           //     }
+           //    }
+           //   });
+
+           // $(".opener").click(function(){
+           //  $("#dialog").dialog("open");
+           //  return false;
+           // });
+
+           // $('#dialog1').dialog({
+           //    title: "订单详情",
+           //    autoOpen: false,//如果设置为true，则默认页面加载完毕后，就自动弹出对话框；相反则处理hidden状态。
+           //    bgiframe: true, //解决ie6中遮罩层盖不住select的问题
+           //    width: 1000,
+           //    height: 200,
+           //    modal:false,//这个就是遮罩效果
+           //    buttons: {
+           //     // "确认修改": submitForm,
+           //     // "确认修改": function() {
+           //     //  // submitForm();//在这里调用函数
+           //     //  $("#txtCount").value = $("selectVal").val();
+           //     //  $(this).dialog("close");
+           //     // },
+           //     "返回": function() {
+           //      $(this).dialog("close");
+           //     }
+           //    }
+           //   });
+
+           // $(".opener1").click(function(){
+           //  $("#dialog1").dialog("open");
+           //  console.log("dff");
+           //  return false;
+           // });
+
+       })
+
+
+   </script>
+</body>
+</html>

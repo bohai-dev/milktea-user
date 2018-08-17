@@ -5,6 +5,8 @@ import com.milktea.milkteauser.domain.TeaPayInfo;
 import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.PayInfoService;
+import com.milktea.milkteauser.service.UserOrderInfoService;
+import com.milktea.milkteauser.util.HttpUtil;
 import com.milktea.milkteauser.vo.ResponseBody;
 import com.milktea.milkteauser.vo.StripeBean;
 import com.stripe.Stripe;
@@ -23,11 +25,12 @@ public class PayInoServiceImpl implements PayInfoService {
     @Autowired
     TeaPayInfoMapper mapper;
     @Autowired
-    UserOrderInfoServiceImpl orderService;
+    UserOrderInfoService orderService;
     private static final Logger LOGGER = LoggerFactory.getLogger(PayInoServiceImpl.class);
   //  private static final String STRIPE_KEY="sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   正式key
     private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
 
+    private static final String NOTIFY_ORDER_URL="http://localhost:8081/handleOrder";  //推送订单url
     public  void  stripePay(StripeBean stripeBean) throws MilkTeaException{
       //  ResponseBody<String> responseBody=new ResponseBody<>();
 
@@ -51,19 +54,24 @@ public class PayInoServiceImpl implements PayInfoService {
             Charge charge = Charge.create(params);
             //充值成功，处理业务逻辑
             //更新订单  支付状态 1 成功
-            orderService.modifyOrderStatus(stripeBean.getOrderNum(),"1");
+            orderService.updatePayStatus(stripeBean.getOrderNum(),"1");
 
             teaPayInfo.setPaySerialNo(charge.getId());
             teaPayInfo.setPayStatus("1");                    //支付状态 1支付成功 2支付失败
 
-            //TODO:通知订单后台，有新新订单
+            //TODO:通知订单后台，有新订单
+            Map<String,String> map=new HashMap<>();
+            map.put("orderNo",stripeBean.getOrderNum());
+            map.put("messageType","0");
+            String response=HttpUtil.post(NOTIFY_ORDER_URL,map);
+
 
         } catch (Exception e) {
             LOGGER.error("支付发生错误:"+e.getMessage(),e);
             teaPayInfo.setPayStatus("2");
             teaPayInfo.setErrorMsg(e.getMessage());
             //更新订单  支付状态 2 失败
-            orderService.modifyOrderStatus(stripeBean.getOrderNum(),"2");
+            orderService.updatePayStatus(stripeBean.getOrderNum(),"2");
             throw  new MilkTeaException(MilkTeaErrorConstant.PAY_FAIL.getErrorCode(),e.getMessage(),e.getMessage(),e);
         }finally {
             //无论支付成功还是失败，都插入支付记录

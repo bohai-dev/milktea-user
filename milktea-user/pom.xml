@@ -25,7 +25,6 @@
         </dependency>
 
         <!--oracle jar 请修改成本地maven 仓库的-->
-        
         <dependency>
             <groupId>ojdbc6</groupId>
             <artifactId>ojdbc6</artifactId>
