@@ -152,14 +152,16 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		if("".equals(orderTime) || null == orderTime){
 			//直接下单
 			orderType = "1";
+			return teaOrderInfoMapper.finishPayModfiyOrder2(orderNo, remark,orderType);
 		} else {
 			//预约单
 			orderType = "0";
+			return teaOrderInfoMapper.finishPayModfiyOrder1(orderNo, remark,orderTime,orderType);
 		}
 
 				
 				
-		return teaOrderInfoMapper.finishPayModfiyOrder(orderNo, remark,orderTime,orderType);
+		
 	}
 
 
