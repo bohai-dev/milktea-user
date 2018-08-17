@@ -24,6 +24,6 @@ public interface TeaOrderInfoMapper {
     String getCustOrderSeq();
 
     @Update("update TEA_ORDER_INFO set ORDER_STATUS = #{orderStatus},UPDATE_TIME = sysdate where ORDER_NO = #{orderNo}")
-    String modifyOrderStatus(@Param("orderNo") String orderNo,@Param("orderStatus") String orderStatus);
+    int modifyOrderStatus(@Param("orderNo") String orderNo,@Param("orderStatus") String orderStatus);
     
 }
