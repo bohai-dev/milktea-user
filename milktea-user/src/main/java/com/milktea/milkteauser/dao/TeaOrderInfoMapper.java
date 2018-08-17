@@ -27,7 +27,7 @@ public interface TeaOrderInfoMapper {
     @Update("update TEA_ORDER_INFO set ORDER_STATUS = #{orderStatus},UPDATE_TIME = sysdate where ORDER_NO = #{orderNo}")
     int modifyOrderStatus(@Param("orderNo") String orderNo,@Param("orderStatus") String orderStatus);
     
-    @Update("update TEA_ORDER_INFO set ORDER_TIME = to_date(#{orderTime},'yyyy/mm/dd hh24:mi:ss'),REMARK = #{remark},ORDER_TYPE = #{orderType} where ORDER_NO = #{orderNo}")
+    @Update("update TEA_ORDER_INFO set BOOK_TIME = to_date(#{orderTime},'yyyy/mm/dd hh24:mi:ss'),REMARK = #{remark},ORDER_TYPE = #{orderType} where ORDER_NO = #{orderNo}")
     int finishPayModfiyOrder1(@Param("orderNo") String orderNo,@Param("remark") String remark,@Param("orderTime") String orderTime,@Param("orderType") String orderType);
     
     @Update("update TEA_ORDER_INFO set REMARK = #{remark},ORDER_TYPE = #{orderType} where ORDER_NO = #{orderNo}")
