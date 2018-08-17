@@ -5,6 +5,7 @@ import com.milktea.milkteauser.domain.TeaPayInfo;
 import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.PayInfoService;
+import com.milktea.milkteauser.util.HttpUtil;
 import com.milktea.milkteauser.vo.ResponseBody;
 import com.milktea.milkteauser.vo.StripeBean;
 import com.stripe.Stripe;
@@ -28,6 +29,7 @@ public class PayInoServiceImpl implements PayInfoService {
   //  private static final String STRIPE_KEY="sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   正式key
     private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
 
+    private static final String NOTIFY_ORDER_URL="http://localhost:8081/handleOrder";  //推送订单url
     public  void  stripePay(StripeBean stripeBean) throws MilkTeaException{
       //  ResponseBody<String> responseBody=new ResponseBody<>();
 
@@ -56,7 +58,12 @@ public class PayInoServiceImpl implements PayInfoService {
             teaPayInfo.setPaySerialNo(charge.getId());
             teaPayInfo.setPayStatus("1");                    //支付状态 1支付成功 2支付失败
 
-            //TODO:通知订单后台，有新新订单
+            //TODO:通知订单后台，有新订单
+            Map<String,String> map=new HashMap<>();
+            map.put("orderNo",stripeBean.getOrderNum());
+            map.put("messageType","0");
+            String response=HttpUtil.post(NOTIFY_ORDER_URL,map);
+
 
         } catch (Exception e) {
             LOGGER.error("支付发生错误:"+e.getMessage(),e);

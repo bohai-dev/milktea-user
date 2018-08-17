@@ -139,10 +139,10 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 	public Integer modifyOrderStatus(String orderNo,String orderStatus) throws MilkTeaException {
 		//更新订单状态
 		
-		String result=teaOrderInfoMapper.modifyOrderStatus(orderNo, orderStatus);
+		int result=teaOrderInfoMapper.modifyOrderStatus(orderNo, orderStatus);
 		
 		
-		return 1;
+		return result;
 	}
 
 

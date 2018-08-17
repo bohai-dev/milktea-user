@@ -23,7 +23,7 @@ public interface TeaOrderInfoMapper {
     @Select("select to_char(sysdate,'YYYYMMDD_') || 'A_' ||TEA_CUSTORDER_SEQ.nextval from dual")
     String getCustOrderSeq();
 
-    @Update("update TEA_ORDER_INFO set ORDER_STATUS = #{orderStatus},UPDATE_TIME = sysdate where ORDER_NO = #{orderNo}")
-    String modifyOrderStatus(@Param("orderNo") String orderNo,@Param("orderStatus") String orderStatus);
+    @Update("update TEA_ORDER_INFO set PAY_STATUS = #{orderStatus},UPDATE_TIME = sysdate where ORDER_NO = #{orderNo}")
+    int modifyOrderStatus(@Param("orderNo") String orderNo,@Param("orderStatus") String orderStatus);
     
 }
