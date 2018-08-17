@@ -145,6 +145,23 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		return result;
 	}
 
+	@Override
+	public Integer finishPayModfiyOrder(String orderNo, String remark, String orderTime) throws MilkTeaException {
+		//更新订单状态
+		String orderType = "";
+		if("".equals(orderTime) || null == orderTime){
+			//直接下单
+			orderType = "1";
+		} else {
+			//预约单
+			orderType = "0";
+		}
+
+				
+				
+		return teaOrderInfoMapper.finishPayModfiyOrder(orderNo, remark,orderTime,orderType);
+	}
+
 
 
 	
