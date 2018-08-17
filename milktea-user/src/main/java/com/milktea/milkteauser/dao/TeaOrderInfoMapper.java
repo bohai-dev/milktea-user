@@ -23,7 +23,14 @@ public interface TeaOrderInfoMapper {
     @Select("select to_char(sysdate,'YYYYMMDD_') || 'A_' ||TEA_CUSTORDER_SEQ.nextval from dual")
     String getCustOrderSeq();
 
+
     @Update("update TEA_ORDER_INFO set ORDER_STATUS = #{orderStatus},UPDATE_TIME = sysdate where ORDER_NO = #{orderNo}")
     int modifyOrderStatus(@Param("orderNo") String orderNo,@Param("orderStatus") String orderStatus);
     
+    @Update("update TEA_ORDER_INFO set ORDER_TIME = to_date(#{orderTime},'yyyy/mm/dd hh24:mi:ss'),REMARK = #{remark},ORDER_TYPE = #{orderType} where ORDER_NO = #{orderNo}")
+    int finishPayModfiyOrder(@Param("orderNo") String orderNo,@Param("remark") String remark,@Param("orderTime") String orderTime,@Param("orderType") String orderType);
+
+    //更新订单的支付状态
+    @Update("update TEA_ORDER_INFO set PAY_STATUS = #{payStatus},UPDATE_TIME = sysdate where ORDER_NO = #{orderNo}")
+    int updatePayStatus(@Param("orderNo")String orderNo,@Param("payStatus")String payStatus);
 }

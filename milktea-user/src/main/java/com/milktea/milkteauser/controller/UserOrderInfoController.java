@@ -40,12 +40,41 @@ public class UserOrderInfoController {
 		return responseBody;
 	}
 	
+	
+	
+	/**
+	 * 改变订单状态
+	 * @param orderNo
+	 * @param orderStatus
+	 * @return
+	 * @throws MilkTeaException
+	 */
 	@RequestMapping(value="/modfiyOrderStatus", method = RequestMethod.GET)
 	public ResponseHeader  modfiyOrderStatus(@RequestParam("orderNo") String orderNo,@RequestParam("orderStatus") String orderStatus) throws MilkTeaException{
 		ResponseHeader responseHeader = new ResponseHeader();
 		this.userOrderInfoService.modifyOrderStatus(orderNo, orderStatus);
 		return responseHeader;
 	}
+	
+	
+	/**
+	 * 订单结算单生成后，再次改变 备注及订单类型属性
+	 * @param orderNo
+	 * @param orderStatus
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping(value="/finishPayModfiyOrder", method = RequestMethod.GET)
+	public ResponseHeader  finishPayModfiyOrder(@RequestParam("orderNo") String orderNo,@RequestParam("remark") String remark,@RequestParam("orderTime") String orderTime) throws MilkTeaException{
+		ResponseHeader responseHeader = new ResponseHeader();
+		this.userOrderInfoService.finishPayModfiyOrder(orderNo, remark,orderTime);
+		return responseHeader;
+	}
+	
+	
+
+	
+	
 	
 	
 	

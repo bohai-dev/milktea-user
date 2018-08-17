@@ -27,6 +27,15 @@ public CustOrderInfoVo userOrderOper(CustOrderInfoVo custOrderInfoVo) throws Mil
 public Integer modifyOrderStatus(String orderNo,String orderStatus) throws MilkTeaException;
    
   
-   
-   
+/**
+ * 支付后状态改变
+ * @param orderNo
+ * @param remark
+ * @param orderTime
+ * @return
+ * @throws MilkTeaException
+ */
+public Integer finishPayModfiyOrder(String orderNo,String remark,String orderTime) throws MilkTeaException;
+
+
 }
