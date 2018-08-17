@@ -5,6 +5,7 @@ import com.milktea.milkteauser.domain.TeaPayInfo;
 import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.PayInfoService;
+import com.milktea.milkteauser.service.UserOrderInfoService;
 import com.milktea.milkteauser.util.HttpUtil;
 import com.milktea.milkteauser.vo.ResponseBody;
 import com.milktea.milkteauser.vo.StripeBean;
@@ -24,7 +25,7 @@ public class PayInoServiceImpl implements PayInfoService {
     @Autowired
     TeaPayInfoMapper mapper;
     @Autowired
-    UserOrderInfoServiceImpl orderService;
+    UserOrderInfoService orderService;
     private static final Logger LOGGER = LoggerFactory.getLogger(PayInoServiceImpl.class);
   //  private static final String STRIPE_KEY="sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   正式key
     private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
@@ -70,7 +71,7 @@ public class PayInoServiceImpl implements PayInfoService {
             teaPayInfo.setPayStatus("2");
             teaPayInfo.setErrorMsg(e.getMessage());
             //更新订单  支付状态 2 失败
-            orderService.modifyOrderStatus(stripeBean.getOrderNum(),"2");
+            orderService.updatePayStatus(stripeBean.getOrderNum(),"2");
             throw  new MilkTeaException(MilkTeaErrorConstant.PAY_FAIL.getErrorCode(),e.getMessage(),e.getMessage(),e);
         }finally {
             //无论支付成功还是失败，都插入支付记录

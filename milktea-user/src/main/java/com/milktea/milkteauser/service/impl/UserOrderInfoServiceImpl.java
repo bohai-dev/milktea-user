@@ -144,7 +144,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		
 		return result;
 	}
-	
+	@Override
 	public Integer updatePayStatus(String orderNo,String payStatus)throws MilkTeaException{
 	    //更新订单的支付状态
 		int result=teaOrderInfoMapper.updatePayStatus(orderNo, payStatus);
