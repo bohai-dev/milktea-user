@@ -54,18 +54,18 @@ public class UserLoginController {
 	
 	//微信客户登入
 	@RequestMapping(value="/weixin", method = RequestMethod.GET)
-	public ResponseBody<TeaLoginWeixin>  userInfoLogin(String parmCode,String parmAccessToken,String parmOpenId) throws MilkTeaException{
+	public ResponseBody<TeaLoginWeixin>  userInfoLogin(String code,String accessToken,String openId) throws MilkTeaException{
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 		
 		ResponseBody<TeaLoginWeixin> responseBody = new ResponseBody<TeaLoginWeixin>();
 		
-		if("".equals(parmAccessToken)){
+		if("".equals(accessToken)){
 			// 第一次登入
-			TeaLoginWeixin retTeaLoginWeixin = userLoginService.getTokenOpenId(parmCode);
+			TeaLoginWeixin retTeaLoginWeixin = userLoginService.getTokenOpenId(code);
 			responseBody.setData(retTeaLoginWeixin);
 		} else {
 			//后续登入
-			TeaLoginWeixin retTeaLoginWeixin = userLoginService.getWeixinCheck(parmCode,parmAccessToken,parmOpenId);
+			TeaLoginWeixin retTeaLoginWeixin = userLoginService.getWeixinCheck(code,accessToken,openId);
 			responseBody.setData(retTeaLoginWeixin);
 			
 		}
