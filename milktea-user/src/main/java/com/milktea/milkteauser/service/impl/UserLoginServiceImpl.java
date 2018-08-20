@@ -303,22 +303,64 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
 	              String errCode = "";
 	              errCode = json.getString("errcode");
 	              if(!"".equals(errCode)){
-	            	  //TOKEN出错了。
+	            	  //GETTOKEN出错了。三十日过期
 	            	  return this.getTokenOpenId(code);
 	              }
 	              
-	              teaLoginWeixin.setWeixinOpenid(json.getString("openid"));
-	              teaLoginWeixin.setWeixinNickname(json.getString("nickname"));
-	              teaLoginWeixin.setWeixinSex(json.getString("sex"));
-	              teaLoginWeixin.setPrivilege(json.getString("privilege"));
-	              teaLoginWeixin.setCity(json.getString("city"));
-	              teaLoginWeixin.setCountry(json.getString("country"));
-	              teaLoginWeixin.setHeadimgurl(json.getString("headimgurl"));
-	              teaLoginWeixin.setWeixinProvince(json.getString("province"));
-	              teaLoginWeixin.setAccessToken(accessToken);
-	              this.insert(teaLoginWeixin);
+	              //得到新的TOKEN 
+	              accessToken = json.getString("access_token");
 	              
-	              return teaLoginWeixin;
+	              url = "https://api.weixin.qq.com/sns/userinfo";
+	        		param = "access_token=" + accessToken +"&" + "openid=" + openId + "&" + "lang=zh_CN";
+	        		result = "";
+	      	    in = null;
+	                    urlNameString = url + "?" + param;
+	                    realUrl = new URL(urlNameString);
+	                    // 打开和URL之间的连接
+	                    connection = realUrl.openConnection();
+	                    // 设置通用的请求属性
+	                    connection.setRequestProperty("accept", "*/*");
+	                    connection.setRequestProperty("connection", "Keep-Alive");
+	                    connection.setRequestProperty("user-agent",
+	                            "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+	                    // 建立实际的连接
+	                    connection.connect();
+	                    // 获取所有响应头字段
+	                    map = connection.getHeaderFields();
+	                    // 遍历所有的响应头字段
+	                    for (String key : map.keySet()) {
+	                        System.out.println(key + "--->" + map.get(key));
+	                    }
+	                    // 定义 BufferedReader输入流来读取URL的响应
+	                    in = new BufferedReader(new InputStreamReader(
+	                            connection.getInputStream()));
+	                    line = "";
+	                    while ((line = in.readLine()) != null) {
+	                        result += line;
+	                    }
+	                    teaLoginWeixin = new TeaLoginWeixin();
+	                    json = JSON.parseObject(result);
+	                    //如果是TOKEN过期要重新刷新TOKEN
+	                    errCode = "";
+	                    errCode = json.getString("errcode");
+	                    if(!"".equals(errCode)){
+	                  	  //TOKEN出错了。
+	                  	  return this.getrefreshToken(code,accessToken,openId);
+	                    }
+	                    
+	                    teaLoginWeixin.setWeixinOpenid(json.getString("openid"));
+	                    teaLoginWeixin.setWeixinNickname(json.getString("nickname"));
+	                    teaLoginWeixin.setWeixinSex(json.getString("sex"));
+	                    teaLoginWeixin.setPrivilege(json.getString("privilege"));
+	                    teaLoginWeixin.setCity(json.getString("city"));
+	                    teaLoginWeixin.setCountry(json.getString("country"));
+	                    teaLoginWeixin.setHeadimgurl(json.getString("headimgurl"));
+	                    teaLoginWeixin.setWeixinProvince(json.getString("province"));
+	                    teaLoginWeixin.setAccessToken(accessToken);
+	                    this.insert(teaLoginWeixin);
+	                    
+	                    return teaLoginWeixin;
+
 	          } catch (Exception e) {
 	        	  logger.error(MilkTeaErrorConstant.WEIXIN_REFRESHTOKEN_FAILURE.getCnErrorMsg(), e);
 	              throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_REFRESHTOKEN_FAILURE, e);
