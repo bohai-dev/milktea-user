@@ -53,7 +53,7 @@ public class UserLoginController {
     private UserLoginService userLoginService;
 	
 	//微信客户登入
-	@RequestMapping(value="/weixin", method = RequestMethod.POST)
+	@RequestMapping(value="/weixin", method = RequestMethod.GET)
 	public ResponseBody<TeaLoginWeixin>  userInfoLogin(String code) throws MilkTeaException{
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 		
@@ -153,7 +153,7 @@ public class UserLoginController {
                   teaLoginWeixin.setCountry(json.getString("country"));
                   teaLoginWeixin.setHeadimgurl(json.getString("headimgurl"));
                   teaLoginWeixin.setWeixinProvince(json.getString("province"));
-                  this.userLoginService.insert(teaLoginWeixin);
+                  userLoginService.insert(teaLoginWeixin);
                   
                   responseBody.setData(teaLoginWeixin);
                   
