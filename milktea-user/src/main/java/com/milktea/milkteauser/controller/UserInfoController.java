@@ -2,6 +2,7 @@ package com.milktea.milkteauser.controller;
 
 import java.util.List;
 
+import com.milktea.milkteauser.domain.TeaAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,7 +53,14 @@ public class UserInfoController {
 		responseBody.setData(this.userInfoService.selectByUserId(userNo));
 		return responseBody;
 	}
-	
+
+	@RequestMapping("/getauser")
+	public TeaAdmin  findOne(){
+		TeaAdmin teaAdmin=new TeaAdmin();
+		teaAdmin.setUserName("cxy");
+		teaAdmin.setPasswd("123456");
+		return  teaAdmin;
+	}
 
 	
 	

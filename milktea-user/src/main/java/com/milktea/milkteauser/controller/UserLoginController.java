@@ -53,7 +53,7 @@ public class UserLoginController {
     private UserLoginService userLoginService;
 	
 	//微信客户登入
-	@RequestMapping(value="/weixin", method = RequestMethod.POST)
+	@RequestMapping(value="/weixin", method = RequestMethod.GET)
 	public ResponseBody<TeaLoginWeixin>  userInfoLogin(String code) throws MilkTeaException{
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 		
@@ -153,7 +153,7 @@ public class UserLoginController {
                   teaLoginWeixin.setCountry(json.getString("country"));
                   teaLoginWeixin.setHeadimgurl(json.getString("headimgurl"));
                   teaLoginWeixin.setWeixinProvince(json.getString("province"));
-                  this.userLoginService.insert(teaLoginWeixin);
+                  userLoginService.insert(teaLoginWeixin);
                   
                   responseBody.setData(teaLoginWeixin);
                   
@@ -181,7 +181,7 @@ public class UserLoginController {
 	
 	//得到所有店铺LIST
 	@RequestMapping(value="/storelist", method = RequestMethod.GET)
-	public ResponseBody<JSONObject>  getStoreList() throws MilkTeaException{
+	public ResponseBody<JSONObject>  getStoreList(@RequestParam("lang") String lang) throws MilkTeaException{
 		BufferedReader in = null;
 		String result = "";
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
@@ -192,7 +192,13 @@ public class UserLoginController {
         //所有商铺 
 //		param = "appid=" + weiXinAppid +"&" + "secret=" + weiXinSecret + "&" + "code=" + code + "&" + "grant_type=authorization_code";
         String url = "http://localhost:8081/queryStores";
-        String urlNameString = url ;
+        String urlNameString = "" ;
+        if("".equals(lang)){
+        	 urlNameString = url ;
+        } else {
+        	urlNameString = url + "/" +lang;
+        }
+        
         
         try {
 	        URL realUrl = new URL(urlNameString);
@@ -274,9 +280,9 @@ public class UserLoginController {
 		return responseBody;
 	}
 	
-	//取得店铺内的商品
+	//取得轮播图
 		@RequestMapping(value="/getCarouselFigure")
-		public ResponseBody<JSONObject>  getCarouselFigure(@RequestParam("storeNo") String storeNo) throws MilkTeaException{
+		public ResponseBody<JSONObject>  getCarouselFigure(@RequestParam("storeNo") String storeNo,@RequestParam("lang") String lang) throws MilkTeaException{
 			BufferedReader in = null;
 			String result = "";
 			Logger logger = LoggerFactory.getLogger(UserLoginController.class);
@@ -284,14 +290,16 @@ public class UserLoginController {
 			JSONObject jsonObject = new JSONObject();
 			JsonObject message = new JsonObject();
 			PrintWriter out = null;
-			String path = "http://localhost:8081/queryCarouselFigure"; 
+			String path = "http://localhost:8081/queryCarouselFigureNation"; 
 		        
 			try {
 
 				HttpUtil HttpUtil = new HttpUtil();
 				Map<String,String> mapParam = new HashMap<String,String>();
 				mapParam.put("storeNo", storeNo);
+				mapParam.put("lang", lang);
 				String retStr = HttpUtil.post(path, mapParam);
+				
 				System.out.println(retStr);
 				jsonObject = JSON.parseObject(retStr);
 		        responseBody.setData(jsonObject);
@@ -304,7 +312,40 @@ public class UserLoginController {
 	        
 			return responseBody;
 		}
-	
+		
+//		http://localhost:8088/queryPromotionByStoreNoNation
+		@RequestMapping(value="/queryPromotionByStoreNoNation", method = RequestMethod.GET)
+		public ResponseBody<JSONObject>  getPromotionByStoreNoNation(@RequestParam("storeNo") String storeNo,@RequestParam("lang") String lang) throws MilkTeaException{
+			BufferedReader in = null;
+			String result = "";
+			Logger logger = LoggerFactory.getLogger(UserLoginController.class);
+			ResponseBody<JSONObject> responseBody = new ResponseBody<JSONObject>();
+			JSONObject jsonObject = new JSONObject();
+			JsonObject message = new JsonObject();
+			PrintWriter out = null;
+			String path = "http://localhost:8081/queryPromotionByStoreNoNation"; 
+		        
+			try {
+
+				HttpUtil HttpUtil = new HttpUtil();
+				Map<String,String> mapParam = new HashMap<String,String>();
+				mapParam.put("storeNo", storeNo);
+				mapParam.put("lang", lang);
+				String retStr = HttpUtil.post(path, mapParam);
+				
+				System.out.println(retStr);
+				jsonObject = JSON.parseObject(retStr);
+		        responseBody.setData(jsonObject);
+			
+	          
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}  
+	        
+			return responseBody;
+			
+		}
 	
 	
 	

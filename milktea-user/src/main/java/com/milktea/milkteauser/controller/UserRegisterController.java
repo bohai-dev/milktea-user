@@ -1,8 +1,10 @@
 package com.milktea.milkteauser.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.milktea.milkteauser.domain.TeaSmsRegister;
@@ -25,6 +27,7 @@ public class UserRegisterController {
 
 	@Autowired
 	UserInfoService userInfoService;
+	@Autowired
 	UserRegisterService userRegisterService;
 	
 	
@@ -35,10 +38,24 @@ public class UserRegisterController {
 	 * 新用户插入
 	 */
 	@RequestMapping(value="/insert", method = RequestMethod.POST)
-	public ResponseHeader  insert(TeaUserInfo teaUserInfo) throws MilkTeaException{
+	public ResponseHeader  insert(@RequestBody TeaUserInfo teaUserInfo) throws MilkTeaException{
 		ResponseHeader header = new ResponseHeader();
 		this.userInfoService.insert(teaUserInfo);
 		return header;
+	}
+	
+	/**
+	 * 客户登入验证
+	 * @param telephone
+	 * @param userPassword
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping(value="/userLogin", method = RequestMethod.GET)
+	public ResponseBody<TeaUserInfo>  userLogin(@RequestParam("telephone") String telephone,@RequestParam("userPassword") String userPassword) throws MilkTeaException{
+		ResponseBody<TeaUserInfo> responseBody = new ResponseBody<>();
+		responseBody.setData(this.userRegisterService.userLogin(telephone,userPassword));
+		return responseBody;
 	}
 	
 	
@@ -48,10 +65,10 @@ public class UserRegisterController {
 	 * @return TeaUserInfo
 	 * @throws MilkTeaException
 	 */
-	@RequestMapping(value="/findUserByWeixinOpenid", method = RequestMethod.POST)
-	public ResponseBody<TeaUserInfo> findUserByWeixinOpenid(TeaUserInfo teaUserInfo) throws MilkTeaException{
+	@RequestMapping(value="/findUserByWeixinOpenid", method = RequestMethod.GET)
+	public ResponseBody<TeaUserInfo> findUserByWeixinOpenid(@RequestParam("weixinOpenid") String weixinOpenid) throws MilkTeaException{
 		ResponseBody<TeaUserInfo> responseBody = new ResponseBody<>();
-		responseBody.setData(this.userRegisterService.findRegisterOpenid(teaUserInfo));
+		responseBody.setData(this.userRegisterService.findRegisterOpenid(weixinOpenid));
 		return responseBody;
 	}
 	
@@ -61,10 +78,10 @@ public class UserRegisterController {
 	 * @return TeaUserInfo
 	 * @throws MilkTeaException
 	 */
-	@RequestMapping(value="/findUserByTelephone", method = RequestMethod.POST)
-	public ResponseBody<TeaUserInfo> findUserByTelephone(TeaUserInfo teaUserInfo) throws MilkTeaException{
+	@RequestMapping(value="/findUserByTelephone", method = RequestMethod.GET)
+	public ResponseBody<TeaUserInfo> findUserByTelephone(@RequestParam("telephone") String telephone) throws MilkTeaException{
 		ResponseBody<TeaUserInfo> responseBody = new ResponseBody<>();
-		responseBody.setData(this.userRegisterService.findRegisterTelephone(teaUserInfo));
+		responseBody.setData(this.userRegisterService.findRegisterTelephone(telephone));
 		return responseBody;
 	}
 	
@@ -77,7 +94,7 @@ public class UserRegisterController {
 	 * 当手机比微信先注册时 绑定微信号和手机号
 	 */
 	@RequestMapping(value="/bindOpenidTel", method = RequestMethod.POST)
-	public ResponseHeader bindOpenidTel(TeaUserInfo teaUserInfo) throws MilkTeaException{
+	public ResponseHeader bindOpenidTel(@RequestBody TeaUserInfo teaUserInfo) throws MilkTeaException{
 		ResponseHeader header = new ResponseHeader();
 		this.userRegisterService.bindOpenidTel(teaUserInfo);
 		return header;
@@ -89,25 +106,27 @@ public class UserRegisterController {
 	 * @return
 	 * @throws MilkTeaException
 	 */
-	@RequestMapping(value="/createPollCode", method = RequestMethod.POST)
-	public int createPollCode(TeaUserInfo teaUserInfo) throws MilkTeaException{
-		int retInt = 0;
-		retInt = this.userRegisterService.createPollCode(teaUserInfo);
-		return retInt;
+	@RequestMapping(value="/createPollCode", method = RequestMethod.GET)
+	public ResponseHeader createPollCode(@RequestParam("telephone") String telephone) throws MilkTeaException{
+		ResponseHeader header = new ResponseHeader();
+		this.userRegisterService.createPollCode(telephone);
+		return header;
 	}
 	
 	/**
-	 * 认证号码生成（生产时设置60分钟过期，测试时2分钟过期）
+	 * 认证号码认证（生产时设置60分钟过期，测试时2分钟过期）
 	 * @param teaUserInfo
 	 * @return 1为成功，0为失败，99为验证码错误，98为时间过期 
 	 * @throws MilkTeaException
 	 * 
 	 */
 	@RequestMapping(value="/comparePollCode", method = RequestMethod.POST)
-	public int comparePollCode(TeaSmsRegister teaSmsRegister) throws MilkTeaException{
-		int retInt = 0;
-		retInt = this.userRegisterService.comparePollCode(teaSmsRegister);
-		return retInt;
+	public ResponseHeader comparePollCode(@RequestBody TeaSmsRegister teaSmsRegister) throws MilkTeaException{
+		ResponseHeader header = new ResponseHeader();
+
+		this.userRegisterService.comparePollCode(teaSmsRegister);
+
+		return header;
 	}
 	
 	

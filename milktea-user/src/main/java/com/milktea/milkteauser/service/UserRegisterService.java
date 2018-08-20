@@ -14,14 +14,14 @@ public interface UserRegisterService {
      * @param figureVo
      * @throws MilkTeaException
      */
-   public TeaUserInfo findRegisterOpenid(TeaUserInfo teaUserInfo) throws MilkTeaException;
+   public TeaUserInfo findRegisterOpenid(String weixinOpenid) throws MilkTeaException;
    
    /**
     * 认证用户信息TELEPHONE
     * @param figureVo
     * @throws MilkTeaException
     */
-  public TeaUserInfo findRegisterTelephone(TeaUserInfo teaUserInfo) throws MilkTeaException;
+  public TeaUserInfo findRegisterTelephone(String telephone) throws MilkTeaException;
    
    
     /**
@@ -36,7 +36,7 @@ public interface UserRegisterService {
 	 * @param teaUserInfo
 	 * @throws MilkTeaException
 	*/
-	public int createPollCode(TeaUserInfo teaUserInfo) throws MilkTeaException;
+	public int createPollCode(String telephone) throws MilkTeaException;
 	
 	
 	/**
@@ -45,6 +45,16 @@ public interface UserRegisterService {
 	 * @throws MilkTeaException
 	*/
 	public int comparePollCode(TeaSmsRegister teaSmsRegister) throws MilkTeaException;
+	
+	/**
+	 * 用户登入CHECK
+	 * @param telephone
+	 * @param userPassword
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	public TeaUserInfo userLogin(String telephone,String userPassword) throws MilkTeaException;
+	
    
    
 }

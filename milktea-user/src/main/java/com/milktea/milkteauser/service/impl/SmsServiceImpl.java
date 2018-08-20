@@ -3,8 +3,7 @@ package com.milktea.milkteauser.service.impl;
 
 import java.util.Random;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.aliyuncs.DefaultAcsClient;
@@ -82,16 +81,10 @@ public class SmsServiceImpl implements SmsService {
 		returnStr = returnStr + String.valueOf(i);
 		 String code=returnStr;
 		 JSONObject param=new JSONObject();
-		 try {			 
-			 //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
-			 //友情提示:如果JSON中需要带换行符,请参照标准的JSON协议对换行符的要求,比如短信内容中包含\r\n的情况在JSON中需要表示成\\r\\n,否则会导致JSON在服务端解析失败
-			 param.put("code", code);
-			 request.setTemplateParam(param.toString());
-			 
-		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		//可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
+		//友情提示:如果JSON中需要带换行符,请参照标准的JSON协议对换行符的要求,比如短信内容中包含\r\n的情况在JSON中需要表示成\\r\\n,否则会导致JSON在服务端解析失败
+		param.put("code", code);
+		request.setTemplateParam(param.toString());
 		 
 		 
 		 //可选-上行短信扩展码(扩展码字段控制在7位或以下，无特殊需求用户请忽略此字段)

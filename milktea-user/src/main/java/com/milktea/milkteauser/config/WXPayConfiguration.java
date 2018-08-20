@@ -25,11 +25,14 @@ public class WXPayConfiguration  extends WXPayConfig {
         certStream.read(this.certData);
         certStream.close();
     }
+
+    //公众账号ID
     @Override
     public String getAppID() {
         return null;
     }
 
+    //商户号
     @Override
     public String getMchID() {
         return null;

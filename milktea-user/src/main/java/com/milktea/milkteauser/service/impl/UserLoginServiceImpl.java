@@ -24,9 +24,9 @@ public  class UserLoginServiceImpl implements UserLoginService {
 		
 		TeaLoginWeixin teaLoginWeixintemp = new TeaLoginWeixin();
 		teaLoginWeixintemp = this.selectByopenId(teaLoginWeixin.getWeixinOpenid());
-		if(null == teaLoginWeixintemp.getWeixinOpenid()){
+		if(null == teaLoginWeixintemp){
 			//如果openid不存在则插入
-			teaLoginWeixinMapper.insert(teaLoginWeixin);
+			teaLoginWeixinMapper.insertSelective(teaLoginWeixin);
 		} else {
 			//如果openID已经存在则更新
 			teaLoginWeixinMapper.updateByPrimaryKey(teaLoginWeixin);
