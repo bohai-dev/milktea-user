@@ -313,7 +313,7 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
 	              url = "https://api.weixin.qq.com/sns/userinfo";
 	        		param = "access_token=" + accessToken +"&" + "openid=" + openId + "&" + "lang=zh_CN";
 	        		result = "";
-	      	    in = null;
+	      	        in = null;
 	                    urlNameString = url + "?" + param;
 	                    realUrl = new URL(urlNameString);
 	                    // 打开和URL之间的连接
