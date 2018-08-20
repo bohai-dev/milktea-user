@@ -59,7 +59,7 @@ public class UserLoginController {
 		
 		ResponseBody<TeaLoginWeixin> responseBody = new ResponseBody<TeaLoginWeixin>();
 		
-		if("".equals(accessToken)){
+		if("".equals(accessToken) || null == accessToken){
 			// 第一次登入
 			TeaLoginWeixin retTeaLoginWeixin = userLoginService.getTokenOpenId(code);
 			responseBody.setData(retTeaLoginWeixin);
@@ -70,12 +70,6 @@ public class UserLoginController {
 			
 		}
 		
-		
-		
-		
-        
-        
-
 		return responseBody;
 	}
 	
