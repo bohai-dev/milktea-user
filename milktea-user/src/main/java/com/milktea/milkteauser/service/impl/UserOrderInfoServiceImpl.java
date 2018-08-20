@@ -170,6 +170,15 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		
 	}
 
+	@Override
+	public List<CustOrderInfoVo> findOrderByTelephone(String telephone, String flag) throws MilkTeaException {
+		//FLAG 0:为全部  1为完成订单 2为未完成订单
+		List<TeaOrderInfo> listTeaOrderInfo = new ArrayList<TeaOrderInfo>();
+		listTeaOrderInfo = teaOrderInfoMapper.findOrderByTelephone(telephone,flag);
+		
+		return null;
+	}
+
 
 
 	

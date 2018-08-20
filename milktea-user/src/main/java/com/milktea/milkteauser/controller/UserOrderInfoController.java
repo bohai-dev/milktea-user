@@ -40,6 +40,14 @@ public class UserOrderInfoController {
 		return responseBody;
 	}
 	
+	@RequestMapping(value="/findOrderByTelephone", method = RequestMethod.GET)
+	public ResponseBody<List<CustOrderInfoVo>>  findOrderByTelephone(@RequestParam("telephone") String telephone,@RequestParam("flag") String flag) throws MilkTeaException{
+		ResponseBody responseBody = new ResponseBody();
+		List<CustOrderInfoVo> listCustOrderInfoVo = this.userOrderInfoService.findOrderByTelephone(telephone,flag);
+		responseBody.setData(listCustOrderInfoVo);
+		return responseBody;
+	}
+	
 	
 	
 	/**

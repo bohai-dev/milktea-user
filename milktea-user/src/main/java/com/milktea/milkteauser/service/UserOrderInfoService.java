@@ -1,5 +1,7 @@
 package com.milktea.milkteauser.service;
 
+import java.util.List;
+
 import com.milktea.milkteauser.domain.TeaOrderInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.vo.CustOrderInfoVo;
@@ -37,6 +39,15 @@ Integer updatePayStatus(String orderNo,String payStatus)throws MilkTeaException;
  * @throws MilkTeaException
  */
 public Integer finishPayModfiyOrder(String orderNo,String remark,String orderTime) throws MilkTeaException;
+
+
+/**
+ * 根据电话号码查询订单
+ * @param telephone
+ * @param flag
+ * @throws MilkTeaException
+ */
+public List<CustOrderInfoVo> findOrderByTelephone(String telephone,String flag) throws MilkTeaException;
 
 
 }
