@@ -35,4 +35,8 @@ public interface TeaUserInfoMapper {
     
     @Update("update TEA_USER_INFO set WEIXIN_OPENID = #{weixinOpenId} where TELEPHONE = #{telephone}")
     TeaUserInfo bindTelephoneWeixinOpenid(@Param("telephone") String telephone,@Param("weixinOpenId") String weixinOpenId);
+    
+    @Update("update TEA_USER_INFO set USER_PASSWORD = #{userPassword} where TELEPHONE = #{telephone}")
+    TeaUserInfo modifyUserPassword(@Param("telephone") String telephone,@Param("userPassword") String userPassword);
+    
 }

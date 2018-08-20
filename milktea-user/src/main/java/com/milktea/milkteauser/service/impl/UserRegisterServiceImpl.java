@@ -115,6 +115,12 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 		return teaUserInfo;
 	}
 
+	@Override
+	public int modifyUserPassword(String telephone, String userPassword) throws MilkTeaException {
+		TeaUserInfoMapper.modifyUserPassword(telephone,userPassword);
+		return 1;
+	}
+
 
 
 	
