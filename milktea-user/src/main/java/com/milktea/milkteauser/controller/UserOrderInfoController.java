@@ -121,8 +121,15 @@ public class UserOrderInfoController {
 			mapParam.put("orderType", requestVo.getOrderType());
 			mapParam.put("orderStatus", requestVo.getOrderStatus());
 			mapParam.put("payStatus", requestVo.getPayStatus());
-			mapParam.put("beginDate", requestVo.getBeginDate().toString());
-			mapParam.put("endDate", requestVo.getEndDate().toString());
+			if(null != requestVo.getBeginDate())
+			{
+				mapParam.put("beginDate", requestVo.getBeginDate().toString());
+			}
+			if(null != requestVo.getEndDate())
+			{
+				mapParam.put("endDate", requestVo.getEndDate().toString());
+			}
+			
 			String retStr = HttpUtil.post(path, mapParam);
 			
 			System.out.println(retStr);
