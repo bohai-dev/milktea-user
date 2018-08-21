@@ -68,7 +68,7 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
 
 	@Override
 	public Integer update(TeaLoginWeixin teaLoginWeixin) throws MilkTeaException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -106,6 +106,13 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
 	            result += line;
 	        }
 	        JSONObject json = JSON.parseObject(result);
+	        //如果是TOKEN过期要重新刷新TOKEN
+            String errCode = "";
+            errCode = json.getString("errcode");
+            if(!"".equals(errCode)){
+          	  //TOKEN出错了。
+            	throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_ACCESSTOKENMISSING_FAILURE);
+            }
 	        access_token = json.getString("access_token");
 	        openid = json.getString("openid");
 	        System.out.println(result);
