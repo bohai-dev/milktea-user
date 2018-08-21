@@ -124,7 +124,7 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
         //如果是TOKEN过期要重新刷新TOKEN
         String errCode = "";
         errCode = json.getString("errcode");
-        if(!"".equals(errCode)){
+        if(null != errCode){
       	  //TOKEN出错了。
         	throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_ACCESSTOKENMISSING_FAILURE);
         }
