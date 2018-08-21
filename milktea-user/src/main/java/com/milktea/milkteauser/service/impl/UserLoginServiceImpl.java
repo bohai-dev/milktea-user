@@ -105,20 +105,7 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
 	        while ((line = in.readLine()) != null) {
 	            result += line;
 	        }
-	        JSONObject json = JSON.parseObject(result);
-	        //如果是TOKEN过期要重新刷新TOKEN
-            String errCode = "";
-            errCode = json.getString("errcode");
-            if(!"".equals(errCode)){
-          	  //TOKEN出错了。
-            	throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_ACCESSTOKENMISSING_FAILURE);
-            }
-	        access_token = json.getString("access_token");
-	        openid = json.getString("openid");
-	        System.out.println(result);
-	        TeaLoginWeixin teaLoginWeixin = new TeaLoginWeixin();
-	        teaLoginWeixin.setWeixinOpenid(openid);
-
+	        
 	    } catch (Exception e) {
 	    	logger.error(MilkTeaErrorConstant.WEIXIN_ACCESSTOKEN_FAILURE.getCnErrorMsg(), e);
 	        throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_ACCESSTOKEN_FAILURE, e);
@@ -133,6 +120,21 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
 	            e2.printStackTrace();
 	        }
 	    }
+        JSONObject json = JSON.parseObject(result);
+        //如果是TOKEN过期要重新刷新TOKEN
+        String errCode = "";
+        errCode = json.getString("errcode");
+        if(!"".equals(errCode)){
+      	  //TOKEN出错了。
+        	throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_ACCESSTOKENMISSING_FAILURE);
+        }
+        access_token = json.getString("access_token");
+        openid = json.getString("openid");
+        System.out.println(result);
+        TeaLoginWeixin teaLoginWeixin = new TeaLoginWeixin();
+        teaLoginWeixin.setWeixinOpenid(openid);
+
+	    
 	    
 	    
 	   //获取access_token后，拉取用户信息 https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
@@ -165,8 +167,8 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
 	              while ((line = in.readLine()) != null) {
 	                  result += line;
 	              }
-	              TeaLoginWeixin teaLoginWeixin = new TeaLoginWeixin();
-	              JSONObject json = JSON.parseObject(result);
+	              teaLoginWeixin = new TeaLoginWeixin();
+	              json = JSON.parseObject(result);
 	              teaLoginWeixin.setWeixinOpenid(json.getString("openid"));
 	              teaLoginWeixin.setWeixinNickname(json.getString("nickname"));
 	              teaLoginWeixin.setWeixinSex(json.getString("sex"));
