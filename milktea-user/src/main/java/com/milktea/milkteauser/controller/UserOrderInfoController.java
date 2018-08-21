@@ -92,7 +92,7 @@ public class UserOrderInfoController {
 	
 
 	/**
-	 * 根据客户查询订单
+	 * 根据客户号条件查询订单
 	 * @param requestVo
 	 * @return
 	 * @throws MilkTeaException

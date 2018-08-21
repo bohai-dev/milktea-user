@@ -1,7 +1,7 @@
 package com.milktea.milkteauser.service;
 
+import java.math.BigDecimal;
 import java.util.List;
-
 
 import com.milktea.milkteauser.domain.TeaUserInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
@@ -40,6 +40,16 @@ public interface UserInfoService {
     * @throws MilkTeaException
     */
    public List<TeaUserInfo> selectAll() throws MilkTeaException;
+   
+   
+   /**
+    * 根据用户号 改变积分
+ * @param USER_NO
+ * @param point
+ * @return
+ * @throws MilkTeaException
+ */
+public int modifyPoint(String USER_NO,BigDecimal point) throws MilkTeaException;
    
    
 }

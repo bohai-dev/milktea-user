@@ -50,4 +50,13 @@ public Integer finishPayModfiyOrder(String orderNo,String remark,String orderTim
 public List<CustOrderInfoVo> findOrderByTelephone(String telephone,String flag) throws MilkTeaException;
 
 
+/**
+ * 根据订单号查询订单
+ * @param telephone
+ * @param flag
+ * @throws MilkTeaException
+ */
+public TeaOrderInfo findOrderByOrderNo(String orderNo) throws MilkTeaException;
+
+
 }

@@ -179,6 +179,13 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		return null;
 	}
 
+	@Override
+	public TeaOrderInfo findOrderByOrderNo(String orderNo) throws MilkTeaException {
+		TeaOrderInfo teaOrderInfo = new TeaOrderInfo();
+		teaOrderInfo = teaOrderInfoMapper.selectByPrimaryKey(orderNo);
+		return teaOrderInfo;
+	}
+
 
 
 	

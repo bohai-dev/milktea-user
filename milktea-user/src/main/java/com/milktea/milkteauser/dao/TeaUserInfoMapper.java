@@ -1,6 +1,6 @@
 package com.milktea.milkteauser.dao;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -38,5 +38,8 @@ public interface TeaUserInfoMapper {
     
     @Update("update TEA_USER_INFO set USER_PASSWORD = #{userPassword} where TELEPHONE = #{telephone}")
     TeaUserInfo modifyUserPassword(@Param("telephone") String telephone,@Param("userPassword") String userPassword);
+    
+    @Update("update TEA_USER_INFO set POINTS = POINTS + #{point} where USER_NO = #{userNo}")
+    int modifyPoint(@Param("userNo") String userNo,@Param("point") BigDecimal point);
     
 }
