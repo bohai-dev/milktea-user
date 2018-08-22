@@ -161,7 +161,7 @@ public class CalaPrice {
     	
     	int countpromtion = 0;
     	for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
-    		if(teaOrderDetails.getOrigPrice().compareTo(promotionValue) < 0){
+    		if(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()).compareTo(promotionValue) < 0){
     			//在优惠价格以下的商品
     			countpromtion = countpromtion + 1;
     			//一杯奶茶总价优惠
@@ -177,7 +177,7 @@ public class CalaPrice {
 		}
     	
     	for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
-    		if(teaOrderDetails.getOrigPrice().compareTo(promotionValue) == 0){
+    		if(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()).compareTo(promotionValue) == 0){
     			if(countpromtion < maxCap){
     				//等于优惠价格的商品
         			countpromtion = countpromtion + 1;
