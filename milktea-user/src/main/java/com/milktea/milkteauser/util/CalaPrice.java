@@ -145,7 +145,7 @@ public class CalaPrice {
     	int i = 0;
     	for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
     		//一杯奶茶总价优惠
-    		listInt.add(teaOrderDetails.getOrderPrice());
+    		listInt.add(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()));
     		//仅奶茶优惠
 //    		listInt.add(teaOrderDetails.getOrigPrice());
 			
@@ -165,7 +165,7 @@ public class CalaPrice {
     			//在优惠价格以下的商品
     			countpromtion = countpromtion + 1;
     			//一杯奶茶总价优惠
-    			teaOrderDetails.setDiscount(teaOrderDetails.getOrderPrice().divide(new BigDecimal(2)));
+    			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()).divide(new BigDecimal(2)));
     			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
     			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()));
     			//仅奶茶优惠
@@ -182,7 +182,7 @@ public class CalaPrice {
     				//等于优惠价格的商品
         			countpromtion = countpromtion + 1;
         			//一杯奶茶总价优惠
-        			teaOrderDetails.setDiscount(teaOrderDetails.getOrderPrice().divide(new BigDecimal(2)));
+        			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()).divide(new BigDecimal(2)));
         			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
         			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()));
         			//仅奶茶优惠
