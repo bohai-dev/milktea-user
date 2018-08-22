@@ -75,7 +75,7 @@ public class UserRegisterController {
 	
 	
 	/**
-	 * 微信OPENID查找，返回客户信息，如果为NULL返回TeaUserInfo
+	 * 微信OPENID查找，返回客户微信信息，如果为NULL返回TeaUserInfo
 	 * @param teaUserInfo
 	 * @return TeaUserInfo
 	 * @throws MilkTeaException

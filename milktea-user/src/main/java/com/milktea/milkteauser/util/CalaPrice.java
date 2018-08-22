@@ -144,7 +144,10 @@ public class CalaPrice {
     	
     	int i = 0;
     	for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
-    		listInt.add(teaOrderDetails.getOrigPrice());
+    		//一杯奶茶总价优惠
+    		listInt.add(teaOrderDetails.getOrderPrice());
+    		//仅奶茶优惠
+//    		listInt.add(teaOrderDetails.getOrigPrice());
 			
 		}
     	
@@ -161,9 +164,14 @@ public class CalaPrice {
     		if(teaOrderDetails.getOrigPrice().compareTo(promotionValue) < 0){
     			//在优惠价格以下的商品
     			countpromtion = countpromtion + 1;
-    			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
+    			//一杯奶茶总价优惠
+    			teaOrderDetails.setDiscount(teaOrderDetails.getOrderPrice().divide(new BigDecimal(2)));
     			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
-    			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
+    			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()));
+    			//仅奶茶优惠
+//    			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
+//    			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
+//    			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
     		}
 			
 		}
@@ -173,9 +181,14 @@ public class CalaPrice {
     			if(countpromtion < maxCap){
     				//等于优惠价格的商品
         			countpromtion = countpromtion + 1;
-        			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
+        			//一杯奶茶总价优惠
+        			teaOrderDetails.setDiscount(teaOrderDetails.getOrderPrice().divide(new BigDecimal(2)));
         			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
-        			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
+        			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()));
+        			//仅奶茶优惠
+//        			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
+//        			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
+//        			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
     			}
     			
     		}
