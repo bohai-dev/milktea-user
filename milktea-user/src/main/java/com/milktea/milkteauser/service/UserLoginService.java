@@ -54,6 +54,16 @@ public interface UserLoginService {
  * @throws MilkTeaException
  */
 public TeaLoginWeixin getWeixinCheck(String code,String accessToken,String openId) throws MilkTeaException;
+
+/**
+ * 用微信全局ACCESS_TOKEN取得用户信息
+* @param code
+* @param accessToken
+* @param openId
+* @return
+* @throws MilkTeaException
+*/
+public TeaLoginWeixin getGlobalToken(String code,String accessToken,String openId) throws MilkTeaException;
    
    
 }

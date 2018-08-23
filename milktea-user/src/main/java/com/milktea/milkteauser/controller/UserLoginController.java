@@ -65,7 +65,7 @@ public class UserLoginController {
 			responseBody.setData(retTeaLoginWeixin);
 		} else {
 			//后续登入
-			TeaLoginWeixin retTeaLoginWeixin = userLoginService.getWeixinCheck(code,accessToken,openId);
+			TeaLoginWeixin retTeaLoginWeixin = userLoginService.getGlobalToken(code,accessToken,openId);
 			responseBody.setData(retTeaLoginWeixin);
 			
 		}

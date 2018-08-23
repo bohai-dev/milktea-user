@@ -1,5 +1,8 @@
 package com.milktea.milkteauser.dao;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Select;
+
 import com.milktea.milkteauser.domain.TeaGlobalToken;
 
 public interface TeaGlobalTokenMapper {
@@ -14,4 +17,10 @@ public interface TeaGlobalTokenMapper {
     int updateByPrimaryKeySelective(TeaGlobalToken record);
 
     int updateByPrimaryKey(TeaGlobalToken record);
+    
+    @Delete("delete from TEA_GLOBAL_TOKEN")
+    int deleteAll();
+    
+    @Select("select * from TEA_GLOBAL_TOKEN where rownum = 1")
+    TeaGlobalToken getGlobalToken();
 }

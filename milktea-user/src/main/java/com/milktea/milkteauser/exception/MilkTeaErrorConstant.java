@@ -20,6 +20,7 @@ public enum MilkTeaErrorConstant {
     SMS_OUTTIME("00009","短消息验证超时","SMS OUTTIME"),
     WEIXIN_REFRESHTOKEN_FAILURE("00010", "微信TOKEN刷新错误" , "Get refreshToken failure"),
     WEIXIN_ACCESSTOKENMISSING_FAILURE("41001","微信内部错误","access_token missing"),
+    WEIXIN_GLOBALTOKENMISSING_FAILURE("00011","微信全局TOKEN取得错误","Get global_token failure"),
     
    
     
