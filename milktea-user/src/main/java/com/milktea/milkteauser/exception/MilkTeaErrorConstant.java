@@ -21,6 +21,7 @@ public enum MilkTeaErrorConstant {
     WEIXIN_REFRESHTOKEN_FAILURE("00010", "微信TOKEN刷新错误" , "Get refreshToken failure"),
     WEIXIN_ACCESSTOKENMISSING_FAILURE("41001","微信内部错误","access_token missing"),
     WEIXIN_GLOBALTOKENMISSING_FAILURE("00011","微信全局TOKEN取得错误","Get global_token failure"),
+    WEIXIN_USEGLOBALTOKEN_FAILURE("00012","使用微信全局TOKEN取客户信息错误","Use global_token get user info failure"),
     
    
     

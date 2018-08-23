@@ -435,7 +435,8 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
               errCode = json.getString("errcode");
               if(null != errCode){
             	  //TOKEN出错了。
-            	  return this.getrefreshToken(code,accessToken,openId);
+            	  logger.error(MilkTeaErrorConstant.WEIXIN_USEGLOBALTOKEN_FAILURE.getCnErrorMsg());
+                  throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_USEGLOBALTOKEN_FAILURE);
               }
               
               teaLoginWeixin.setWeixinOpenid(json.getString("openid"));
@@ -452,8 +453,8 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
               return teaLoginWeixin;
              
           } catch (Exception e) {
-        	  logger.error(MilkTeaErrorConstant.WEIXIN_GETUSERINFO_FAILURE.getCnErrorMsg(), e);
-              throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_GETUSERINFO_FAILURE, e);
+        	  logger.error(MilkTeaErrorConstant.WEIXIN_USEGLOBALTOKEN_FAILURE.getCnErrorMsg(), e);
+              throw new MilkTeaException(MilkTeaErrorConstant.WEIXIN_USEGLOBALTOKEN_FAILURE, e);
         	  
         	  
         	  
