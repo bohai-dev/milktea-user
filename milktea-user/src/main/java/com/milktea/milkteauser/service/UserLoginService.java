@@ -35,6 +35,25 @@ public interface UserLoginService {
    public Integer  update(TeaLoginWeixin teaLoginWeixin) throws MilkTeaException;
    
    
+   /**
+    * 第一次登入用CODE查询
+ * @param code
+ * @return
+ * @throws MilkTeaException
+ */
+   public TeaLoginWeixin getTokenOpenId(String code) throws MilkTeaException;
+   
+   
+   
+   /**
+    * 后续用TOKEN做CHECK
+ * @param code
+ * @param accessToken
+ * @param openId
+ * @return
+ * @throws MilkTeaException
+ */
+public TeaLoginWeixin getWeixinCheck(String code,String accessToken,String openId) throws MilkTeaException;
    
    
 }

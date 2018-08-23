@@ -20,8 +20,18 @@ public class TeaLoginWeixin {
     private String privilege;
 
     private String unionid;
+    
+    private String accessToken;
 
-    public String getWeixinOpenid() {
+    public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public String getWeixinOpenid() {
         return weixinOpenid;
     }
 

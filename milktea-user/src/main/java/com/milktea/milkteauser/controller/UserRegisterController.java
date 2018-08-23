@@ -60,7 +60,22 @@ public class UserRegisterController {
 	
 	
 	/**
-	 * 微信OPENID查找，返回客户信息，如果为NULL返回TeaUserInfo
+	 * 根据手机号改修密码
+	 * @param telephone
+	 * @param userPassword
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping(value="/modifyUserPassword", method = RequestMethod.GET)
+	public ResponseHeader  modifyUserPassword(@RequestParam("telephone") String telephone,@RequestParam("userPassword") String userPassword) throws MilkTeaException{
+		ResponseHeader header = new ResponseHeader();
+		this.userRegisterService.modifyUserPassword(telephone,userPassword);
+		return header;
+	}
+	
+	
+	/**
+	 * 微信OPENID查找，返回客户微信信息，如果为NULL返回TeaUserInfo
 	 * @param teaUserInfo
 	 * @return TeaUserInfo
 	 * @throws MilkTeaException

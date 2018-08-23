@@ -18,6 +18,8 @@ public enum MilkTeaErrorConstant {
     PAY_FAIL("00007","",""),
     SMS_REGISTEFAILURE("00008","短消息验证失败","SMS registe failure"),
     SMS_OUTTIME("00009","短消息验证超时","SMS OUTTIME"),
+    WEIXIN_REFRESHTOKEN_FAILURE("00010", "微信TOKEN刷新错误" , "Get refreshToken failure"),
+    WEIXIN_ACCESSTOKENMISSING_FAILURE("41001","微信内部错误","access_token missing"),
     
    
     

@@ -55,6 +55,9 @@ public interface UserRegisterService {
 	 */
 	public TeaUserInfo userLogin(String telephone,String userPassword) throws MilkTeaException;
 	
+	
+	public int modifyUserPassword(String telephone,String userPassword) throws MilkTeaException;
+	
    
    
 }
