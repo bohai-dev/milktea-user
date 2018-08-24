@@ -103,8 +103,8 @@ public class UserOrderInfoController {
 	 * @return
 	 * @throws MilkTeaException
 	 */
-	@RequestMapping(value="/queryOrdersByUserNoPage", method = RequestMethod.POST)
-	public ResponseBody<JSONObject>  queryOrdersByUserNoPage(@RequestBody PageRequestVo<QueryOrdersRequestVo> requestVo) throws MilkTeaException{
+	@RequestMapping(value="/queryOrdersByUserNoPage", method = RequestMethod.GET)
+	public ResponseBody<JSONObject>  queryOrdersByUserNoPage(@RequestParam("jsonStr") String jsonStr) throws MilkTeaException{
 		BufferedReader in = null;
 		String result = "";
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
@@ -112,7 +112,7 @@ public class UserOrderInfoController {
 		JSONObject jsonObject = new JSONObject();
 		JsonObject message = new JsonObject();
 		PrintWriter out = null;
-		String path = "http://localhost:8081/queryOrdersByUserNo";
+		String path = "http://localhost:8081/queryOrderPage";
 	        
 		try {
 
@@ -140,7 +140,8 @@ public class UserOrderInfoController {
 	        HttpPost httpPost = new HttpPost(path);
 	        //将Map转为Json
 	        Gson gson = new Gson();
-	        String json = gson.toJson(requestVo);
+//	        String json = gson.toJson(requestVo);
+	        String json =jsonStr;
 	        StringEntity entity = new StringEntity(json);
 	        httpPost.setEntity(entity);
 	        httpPost.setHeader("Accept", "application/json");
