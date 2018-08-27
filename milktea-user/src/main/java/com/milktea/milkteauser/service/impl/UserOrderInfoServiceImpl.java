@@ -231,7 +231,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 				mapParam.put("volume", "1");
 				String retStr = HttpUtil.post(path, mapParam);
 				System.out.println(retStr);
-				JSONObject json = JSON.parseObject(result);
+				JSONObject json = JSON.parseObject(retStr);
 				String retCode = json.getString("rspCode");
 				if(!"00000".equals(retCode)){
 					// 库存或者其他错误 减一库存失败
@@ -272,7 +272,7 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 					mapParam.put("volume", "-1");
 					String retStr = HttpUtil.post(path, mapParam);
 					System.out.println(retStr);
-					JSONObject json = JSON.parseObject(result);
+					JSONObject json = JSON.parseObject(retStr);
 					String retCode = json.getString("rspCode");
 		          
 				} catch (Exception e) {
