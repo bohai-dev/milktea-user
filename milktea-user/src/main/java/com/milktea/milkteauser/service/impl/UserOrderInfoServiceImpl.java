@@ -1,16 +1,24 @@
 package com.milktea.milkteauser.service.impl;
 
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.beans.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
+import com.milktea.milkteauser.controller.UserLoginController;
 import com.milktea.milkteauser.dao.TeaOrderDetailsAttrMapper;
 import com.milktea.milkteauser.dao.TeaOrderDetailsMapper;
 import com.milktea.milkteauser.dao.TeaOrderInfoMapper;
@@ -21,7 +29,9 @@ import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.UserOrderInfoService;
 import com.milktea.milkteauser.util.CalaPrice;
+import com.milktea.milkteauser.util.HttpUtil;
 import com.milktea.milkteauser.vo.CustOrderInfoVo;
+import com.milktea.milkteauser.vo.ResponseBody;
 
 
 @Service("userOrderInfoService")
@@ -57,6 +67,13 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 //            logger.error(MilkTeaErrorConstant.UNKNOW_EXCEPTION.getCnErrorMsg(), e);
 //            throw new MilkTeaException(MilkTeaErrorConstant.UNKNOW_EXCEPTION, e);
 //        }
+		//CHECK 奶茶数量 是否能下单 因为没有冻结及待支付状态，只能直减，不支付的就不能自动返回
+		int retCheckNum = checkNum(custOrderInfoVo);
+		if(retCheckNum == 1){
+			logger.error(MilkTeaErrorConstant.LAZY_WEIGHT.getCnErrorMsg());
+	         throw new MilkTeaException(MilkTeaErrorConstant.LAZY_WEIGHT);
+		}
+		
 		
 		//得到新的订单编号 YYYYMMDD_A_000000
 		// TODO:如果每一天都要连番从一开始则要重置SEQ
@@ -185,6 +202,98 @@ public  class UserOrderInfoServiceImpl implements UserOrderInfoService {
 		teaOrderInfo = teaOrderInfoMapper.selectByPrimaryKey(orderNo);
 		return teaOrderInfo;
 	}
+	
+	public int checkNum(CustOrderInfoVo custOrderInfoVo) throws MilkTeaException{
+		//返回0 为正常 1为扣除数量失败
+		//TODO
+		List<TeaOrderDetails> listTeaOrderDetails = new ArrayList<TeaOrderDetails>();
+		List<String> listGoodsId = new ArrayList<String>();
+		int retflg = 0;
+		
+//		ListTeaOrderDetails ListTeaOrderDetails = new ListTeaOrderDetails();
+		listTeaOrderDetails = custOrderInfoVo.getListTeaOrderDetails();
+		for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
+			//判断是否有库存 扣减商品库存
+			//deductGoodsStock DeductGoodsStockRequestVo goodsId volume
+			
+			BufferedReader in = null;
+			String result = "";
+			Logger logger = LoggerFactory.getLogger(UserLoginController.class);
+			ResponseBody<JSONObject> responseBody = new ResponseBody<JSONObject>();
+			JsonObject message = new JsonObject();
+			PrintWriter out = null;
+			String path = "http://localhost:8081/deductGoodsStock"; 
+			try {
+
+				HttpUtil HttpUtil = new HttpUtil();
+				Map<String,String> mapParam = new HashMap<String,String>();
+				mapParam.put("goodsId", teaOrderDetails.getGoodsId());
+				mapParam.put("volume", "1");
+				String retStr = HttpUtil.post(path, mapParam);
+				System.out.println(retStr);
+				JSONObject json = JSON.parseObject(result);
+				String retCode = json.getString("rspCode");
+				if(!"00000".equals(retCode)){
+					// 库存或者其他错误 减一库存失败
+					retflg = 1;
+					break;
+				}
+		      
+		        
+	          
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}  
+			
+			if(retflg == 0){
+				//list保存当前已有的库存，用于回退，因为没有冻结
+				listGoodsId.add(teaOrderDetails.getGoodsId());
+			}
+			
+		}
+		
+		if(retflg == 1){
+			//因为没有冻结,所以还回去
+			
+			for (String goodsId : listGoodsId) {
+				BufferedReader in = null;
+				String result = "";
+				Logger logger = LoggerFactory.getLogger(UserLoginController.class);
+				ResponseBody<JSONObject> responseBody = new ResponseBody<JSONObject>();
+				JsonObject message = new JsonObject();
+				PrintWriter out = null;
+				String path = "http://localhost:8081/deductGoodsStock"; 
+				try {
+
+					HttpUtil HttpUtil = new HttpUtil();
+					Map<String,String> mapParam = new HashMap<String,String>();
+					mapParam.put("goodsId", goodsId);
+					mapParam.put("volume", "-1");
+					String retStr = HttpUtil.post(path, mapParam);
+					System.out.println(retStr);
+					JSONObject json = JSON.parseObject(result);
+					String retCode = json.getString("rspCode");
+		          
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}  
+			}
+			return 1;
+			
+			
+		}
+		
+		
+		
+		
+		return 0;
+	}
+	
+	
+	
+	
 
 
 
