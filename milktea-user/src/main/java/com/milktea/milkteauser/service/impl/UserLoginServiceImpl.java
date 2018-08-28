@@ -78,6 +78,7 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
 
 	@Override
 	public TeaLoginWeixin getTokenOpenId(String code) throws MilkTeaException {
+		url = "https://api.weixin.qq.com/sns/oauth2/access_token";
 		//获取code后，请求以下链接获取access_token https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
 		param = "appid=" + weiXinAppid +"&" + "secret=" + weiXinSecret + "&" + "code=" + code + "&" + "grant_type=authorization_code";
 		String result = "";
