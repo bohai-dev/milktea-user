@@ -23,6 +23,7 @@ public enum MilkTeaErrorConstant {
     WEIXIN_GLOBALTOKENMISSING_FAILURE("00011","微信全局TOKEN取得错误","Get global_token failure"),
     WEIXIN_USEGLOBALTOKEN_FAILURE("00012","使用微信全局TOKEN取客户信息错误","Use global_token get user info failure"),
     LAZY_WEIGHT("00013","非常抱歉！所选奶茶数量不足！","I'm Sorry,the MilkTea so hot!Out of stock!"),
+    LOGIN_ERROR("00014","用户名，密码错误！","I'm Sorry,password error!"),
     
    
     

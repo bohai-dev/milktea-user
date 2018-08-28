@@ -112,6 +112,9 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 		TeaUserInfo teaUserInfo = new TeaUserInfo();
 		
 		teaUserInfo = TeaUserInfoMapper.checkUserLogin(telephone,userPassword);
+		if(teaUserInfo == null) {
+			throw new MilkTeaException(MilkTeaErrorConstant.LOGIN_ERROR);
+		}
 		return teaUserInfo;
 	}
 
