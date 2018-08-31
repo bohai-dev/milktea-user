@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.milktea.milkteauser.domain.TeaLoginWeixin;
 import com.milktea.milkteauser.domain.TeaSmsRegister;
 import com.milktea.milkteauser.domain.TeaUserInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
@@ -55,6 +56,19 @@ public class UserRegisterController {
 	public ResponseBody<TeaUserInfo>  userLogin(@RequestParam("telephone") String telephone,@RequestParam("userPassword") String userPassword) throws MilkTeaException{
 		ResponseBody<TeaUserInfo> responseBody = new ResponseBody<>();
 		responseBody.setData(this.userRegisterService.userLogin(telephone,userPassword));
+		return responseBody;
+	}
+	
+	/**
+	 * 网页登入取得微信信息
+	 * @param telephone
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping(value="/getWeixinInfor", method = RequestMethod.GET)
+	public ResponseBody<TeaLoginWeixin>  getWeixinInfor(@RequestParam("weixinOpenId") String weixinOpenId) throws MilkTeaException{
+		ResponseBody<TeaLoginWeixin> responseBody = new ResponseBody<>();
+		responseBody.setData(this.userRegisterService.getWeixinInfor(weixinOpenId));
 		return responseBody;
 	}
 	
