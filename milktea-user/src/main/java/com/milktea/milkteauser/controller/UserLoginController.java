@@ -3,7 +3,6 @@ package com.milktea.milkteauser.controller;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
@@ -13,6 +12,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,12 +22,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import com.milktea.milkteauser.domain.TeaLoginWeixin;
+import com.milktea.milkteauser.domain.TeaSaveContactVo;
 import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.UserLoginService;
 import com.milktea.milkteauser.util.HttpUtil;
-import com.milktea.milkteauser.vo.ClassGoodsRequestVo;
 import com.milktea.milkteauser.vo.ResponseBody;
+import com.milktea.milkteauser.vo.ResponseHeader;
 
 
 
@@ -52,9 +53,17 @@ public class UserLoginController {
 	@Autowired
     private UserLoginService userLoginService;
 	
+	@RequestMapping(value="/saveContact", method = RequestMethod.POST)
+	public ResponseHeader saveContact(@RequestBody TeaSaveContactVo teaSaveContactVo) throws MilkTeaException{
+		ResponseHeader responseHeader = new ResponseHeader();
+		this.userLoginService.saveContact(teaSaveContactVo);
+		return responseHeader;
+	}
+	
+	
 	//微信客户登入
 	@RequestMapping(value="/weixin", method = RequestMethod.GET)
-	public ResponseBody<TeaLoginWeixin>  userInfoLogin(String code,String accessToken,String openId) throws MilkTeaException{
+	public ResponseBody<TeaLoginWeixin>  userInfoLogin(@RequestParam("code") String code,@RequestParam("accessToken")  String accessToken,@RequestParam("openId") String openId) throws MilkTeaException{
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 		
 		ResponseBody<TeaLoginWeixin> responseBody = new ResponseBody<TeaLoginWeixin>();

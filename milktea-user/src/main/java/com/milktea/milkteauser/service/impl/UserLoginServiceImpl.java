@@ -2,8 +2,10 @@ package com.milktea.milkteauser.service.impl;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,13 +16,18 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
+import com.milktea.milkteauser.controller.UserLoginController;
 import com.milktea.milkteauser.dao.TeaGlobalTokenMapper;
 import com.milktea.milkteauser.dao.TeaLoginWeixinMapper;
 import com.milktea.milkteauser.domain.TeaGlobalToken;
 import com.milktea.milkteauser.domain.TeaLoginWeixin;
+import com.milktea.milkteauser.domain.TeaSaveContactVo;
 import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.UserLoginService;
+import com.milktea.milkteauser.util.HttpUtil;
+import com.milktea.milkteauser.vo.ResponseBody;
 
 
 @Service("userLoginService")
@@ -470,6 +477,38 @@ public static String weiXinAppid = "wxbac9e1b7d8104470";
                   e2.printStackTrace();
               }
           }
+	}
+
+	@Override
+	public void saveContact(TeaSaveContactVo teaSaveContactVo) throws MilkTeaException {
+
+		
+		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
+		String path = "http://localhost:8081/saveContact"; 
+		try {
+
+			HttpUtil HttpUtil = new HttpUtil();
+			Map<String,String> mapParam = new HashMap<String,String>();
+			mapParam.put("name", teaSaveContactVo.getName());
+			mapParam.put("email",teaSaveContactVo.getEmail());
+			mapParam.put("telephone", teaSaveContactVo.getTelephone());
+			mapParam.put("context", teaSaveContactVo.getContext());
+			String retStr = HttpUtil.post(path, mapParam);
+			System.out.println(retStr);
+			JSONObject json = JSON.parseObject(retStr);
+			String retCode = json.getString("rspCode");
+			if(!"00000".equals(retCode)){
+				logger.error(MilkTeaErrorConstant.SAVEUSERINFOR_ERROR.getCnErrorMsg());
+	            throw new MilkTeaException(MilkTeaErrorConstant.SAVEUSERINFOR_ERROR);
+			}
+	      
+	        
+          
+		} catch (Exception e) {
+			logger.error(MilkTeaErrorConstant.SAVEUSERINFOR_ERROR.getCnErrorMsg(),e);
+            throw new MilkTeaException(MilkTeaErrorConstant.SAVEUSERINFOR_ERROR,e);
+		}  
+		
 	}
 	
 	
