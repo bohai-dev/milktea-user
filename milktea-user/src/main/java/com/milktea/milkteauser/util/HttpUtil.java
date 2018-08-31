@@ -112,9 +112,11 @@ public class HttpUtil {
         Gson gson = new Gson();
         String json = gson.toJson(params);
         StringEntity entity = new StringEntity(json);
+        entity.setContentEncoding("UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
         httpPost.setHeader("Content-type", "application/json");
+        
 
         CloseableHttpResponse response = client.execute(httpPost);
         int statusCode=response.getStatusLine().getStatusCode();
