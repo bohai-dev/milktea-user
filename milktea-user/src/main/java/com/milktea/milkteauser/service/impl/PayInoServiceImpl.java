@@ -31,8 +31,8 @@ public class PayInoServiceImpl implements PayInfoService {
     UserInfoService userInfoService;
     
     private static final Logger LOGGER = LoggerFactory.getLogger(PayInoServiceImpl.class);
-  //  private static final String STRIPE_KEY="sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   正式key
-    private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
+    private static final String STRIPE_KEY="sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   //正式key
+   // private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
 
     private static final String NOTIFY_ORDER_URL="http://localhost:8081/handleOrder";  //推送订单url
     public  void  stripePay(StripeBean stripeBean) throws MilkTeaException{
@@ -71,7 +71,7 @@ public class PayInoServiceImpl implements PayInfoService {
             
             //更新积分 得到客户信息 积分就是支付金额
             TeaOrderInfo teaOrderInfo = new TeaOrderInfo();
-            teaOrderInfo = orderService.findOrderByOrderNo(String.valueOf(stripeBean.getOrderNum()));
+            teaOrderInfo = orderService.findOrderByOrderNo(stripeBean.getOrderNum());
             userInfoService.modifyPoint(teaOrderInfo.getUserNo(), teaOrderInfo.getOrderPrice());
             
             
