@@ -95,21 +95,21 @@ public class UserLoginController {
         
         //所有商铺 
 //		param = "appid=" + weiXinAppid +"&" + "secret=" + weiXinSecret + "&" + "code=" + code + "&" + "grant_type=authorization_code";
-//        String url = "http://localhost:8081/queryStores";
-//        String urlNameString = "" ;
-//        if("".equals(lang)){
-//        	 urlNameString = url ;
-//        } else {
-//        	urlNameString = url + "/" +lang;
-//        }
-		String path = "http://localhost:8081/queryStores";
+        String url = "http://localhost:8081/queryStores";
+        String urlNameString = "" ;
+        if("".equals(lang)){
+        	 urlNameString = url ;
+        } else {
+        	urlNameString = url + "/" +lang;
+        }
+//		String path = "http://localhost:8081/queryStores";
         try {
 
 			HttpUtil HttpUtil = new HttpUtil();
 			Map<String,String> mapParam = new HashMap<String,String>();
-			mapParam.put("lang", lang);
+//			mapParam.put("lang", lang);
 
-			String retStr = HttpUtil.get(path, mapParam);
+			String retStr = HttpUtil.get(urlNameString);
 			System.out.println(retStr);
 			jsonObject = JSON.parseObject(retStr);
 	        responseBody.setData(jsonObject);
