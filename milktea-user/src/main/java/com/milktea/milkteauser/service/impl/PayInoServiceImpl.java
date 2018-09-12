@@ -31,8 +31,9 @@ public class PayInoServiceImpl implements PayInfoService {
     private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
 
     private static final String NOTIFY_ORDER_URL="http://localhost:8081/handleOrder";  //推送订单url
+
     public  void  stripePay(StripeBean stripeBean) throws MilkTeaException{
-      //  ResponseBody<String> responseBody=new ResponseBody<>();
+
 
         TeaPayInfo teaPayInfo=new TeaPayInfo();
         teaPayInfo.setPayId(mapper.generateClassId());
