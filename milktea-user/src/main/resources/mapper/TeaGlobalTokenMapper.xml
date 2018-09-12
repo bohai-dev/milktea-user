@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.milktea.milkteauser.dao.TeaGlobalTokenMapper">
+  <resultMap id="BaseResultMap" type="com.milktea.milkteauser.domain.TeaGlobalToken">
+    <id column="TOKEN" jdbcType="VARCHAR" property="token" />
+    <result column="INSERT_TIME" jdbcType="TIMESTAMP" property="insertTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TOKEN, INSERT_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TEA_GLOBAL_TOKEN
+    where TOKEN = #{token,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TEA_GLOBAL_TOKEN
+    where TOKEN = #{token,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.milktea.milkteauser.domain.TeaGlobalToken">
+    insert into TEA_GLOBAL_TOKEN (TOKEN, INSERT_TIME)
+    values (#{token,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.milktea.milkteauser.domain.TeaGlobalToken">
+    insert into TEA_GLOBAL_TOKEN
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="token != null">
+        TOKEN,
+      </if>
+      <if test="insertTime != null">
+        INSERT_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null">
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.milktea.milkteauser.domain.TeaGlobalToken">
+    update TEA_GLOBAL_TOKEN
+    <set>
+      <if test="insertTime != null">
+        INSERT_TIME = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where TOKEN = #{token,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.milktea.milkteauser.domain.TeaGlobalToken">
+    update TEA_GLOBAL_TOKEN
+    set INSERT_TIME = #{insertTime,jdbcType=TIMESTAMP}
+    where TOKEN = #{token,jdbcType=VARCHAR}
+  </update>
+</mapper>

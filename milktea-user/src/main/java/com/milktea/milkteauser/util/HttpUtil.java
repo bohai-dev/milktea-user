@@ -111,10 +111,11 @@ public class HttpUtil {
         //将Map转为Json
         Gson gson = new Gson();
         String json = gson.toJson(params);
-        StringEntity entity = new StringEntity(json);
+        StringEntity entity = new StringEntity(json,"UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
-        httpPost.setHeader("Content-type", "application/json");
+        httpPost.setHeader("Content-type", "application/json; charset=UTF-8");
+        
 
         CloseableHttpResponse response = client.execute(httpPost);
         int statusCode=response.getStatusLine().getStatusCode();

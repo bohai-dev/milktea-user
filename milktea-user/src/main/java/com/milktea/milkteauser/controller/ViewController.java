@@ -13,4 +13,8 @@ public class ViewController {
 
         return  "stripepaytest";
     }
+    @RequestMapping( "/index")
+    public String index(){
+        return "index";
+    }
 }

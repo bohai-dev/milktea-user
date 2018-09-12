@@ -1,34 +1,38 @@
 package com.milktea.milkteauser.service.impl;
 
-import com.milktea.milkteauser.dao.TeaPayInfoMapper;
-import com.milktea.milkteauser.domain.TeaPayInfo;
-import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
-import com.milktea.milkteauser.exception.MilkTeaException;
-import com.milktea.milkteauser.service.PayInfoService;
-import com.milktea.milkteauser.service.UserOrderInfoService;
-import com.milktea.milkteauser.util.HttpUtil;
-import com.milktea.milkteauser.vo.ResponseBody;
-import com.milktea.milkteauser.vo.StripeBean;
-import com.stripe.Stripe;
-import com.stripe.exception.*;
-import com.stripe.model.Charge;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import com.milktea.milkteauser.dao.TeaPayInfoMapper;
+import com.milktea.milkteauser.domain.TeaOrderInfo;
+import com.milktea.milkteauser.domain.TeaPayInfo;
+import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
+import com.milktea.milkteauser.exception.MilkTeaException;
+import com.milktea.milkteauser.service.PayInfoService;
+import com.milktea.milkteauser.service.UserInfoService;
+import com.milktea.milkteauser.service.UserOrderInfoService;
+import com.milktea.milkteauser.util.HttpUtil;
+import com.milktea.milkteauser.vo.StripeBean;
+import com.stripe.Stripe;
+import com.stripe.model.Charge;
 @Service
 public class PayInoServiceImpl implements PayInfoService {
     @Autowired
     TeaPayInfoMapper mapper;
     @Autowired
     UserOrderInfoService orderService;
+    @Autowired
+    UserInfoService userInfoService;
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(PayInoServiceImpl.class);
-  //  private static final String STRIPE_KEY="sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   正式key
-    private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
+    private static final String STRIPE_KEY="sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   //正式key
+   // private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
 
     private static final String NOTIFY_ORDER_URL="http://localhost:8081/handleOrder";  //推送订单url
 
@@ -65,6 +69,13 @@ public class PayInoServiceImpl implements PayInfoService {
             map.put("orderNo",stripeBean.getOrderNum());
             map.put("messageType","0");
             String response=HttpUtil.post(NOTIFY_ORDER_URL,map);
+            
+            //更新积分 得到客户信息 积分就是支付金额
+            TeaOrderInfo teaOrderInfo = new TeaOrderInfo();
+            teaOrderInfo = orderService.findOrderByOrderNo(stripeBean.getOrderNum());
+            userInfoService.modifyPoint(teaOrderInfo.getUserNo(), teaOrderInfo.getOrderPrice());
+            
+            
 
 
         } catch (Exception e) {

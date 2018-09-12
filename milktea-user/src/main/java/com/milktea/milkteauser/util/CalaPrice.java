@@ -144,7 +144,10 @@ public class CalaPrice {
     	
     	int i = 0;
     	for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
-    		listInt.add(teaOrderDetails.getOrigPrice());
+    		//一杯奶茶总价优惠
+    		listInt.add(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()));
+    		//仅奶茶优惠
+//    		listInt.add(teaOrderDetails.getOrigPrice());
 			
 		}
     	
@@ -158,24 +161,34 @@ public class CalaPrice {
     	
     	int countpromtion = 0;
     	for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
-    		if(teaOrderDetails.getOrigPrice().compareTo(promotionValue) < 0){
+    		if(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()).compareTo(promotionValue) < 0){
     			//在优惠价格以下的商品
     			countpromtion = countpromtion + 1;
-    			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
+    			//一杯奶茶总价优惠
+    			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()).divide(new BigDecimal(2)));
     			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
-    			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
+    			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()));
+    			//仅奶茶优惠
+//    			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
+//    			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
+//    			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
     		}
 			
 		}
     	
     	for (TeaOrderDetails teaOrderDetails : listTeaOrderDetails) {
-    		if(teaOrderDetails.getOrigPrice().compareTo(promotionValue) == 0){
+    		if(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()).compareTo(promotionValue) == 0){
     			if(countpromtion < maxCap){
     				//等于优惠价格的商品
         			countpromtion = countpromtion + 1;
-        			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
+        			//一杯奶茶总价优惠
+        			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().add(teaOrderDetails.getAttrPrice()).divide(new BigDecimal(2)));
         			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
-        			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
+        			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()));
+        			//仅奶茶优惠
+//        			teaOrderDetails.setDiscount(teaOrderDetails.getOrigPrice().divide(new BigDecimal(2)));
+//        			promotionTotalValue = promotionTotalValue.add(teaOrderDetails.getDiscount());
+//        			teaOrderDetails.setOrderPrice(teaOrderDetails.getOrigPrice().subtract(teaOrderDetails.getDiscount()).add(teaOrderDetails.getAttrPrice()));
     			}
     			
     		}

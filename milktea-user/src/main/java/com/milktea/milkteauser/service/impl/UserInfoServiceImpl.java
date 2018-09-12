@@ -1,5 +1,6 @@
 package com.milktea.milkteauser.service.impl;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +47,13 @@ public  class UserInfoServiceImpl implements UserInfoService {
 	public List<TeaUserInfo> selectAll() throws MilkTeaException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int modifyPoint(String userNo, BigDecimal point) throws MilkTeaException {
+		
+		teaUserInfoMapper.modifyPoint(userNo,point);
+		return 0;
 	}
 	
 	

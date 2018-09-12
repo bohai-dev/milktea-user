@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.milktea.milkteauser.domain.TeaLoginWeixin;
 import com.milktea.milkteauser.domain.TeaSmsRegister;
 import com.milktea.milkteauser.domain.TeaUserInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
@@ -58,9 +59,37 @@ public class UserRegisterController {
 		return responseBody;
 	}
 	
+	/**
+	 * 网页登入取得微信信息
+	 * @param telephone
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping(value="/getWeixinInfor", method = RequestMethod.GET)
+	public ResponseBody<TeaLoginWeixin>  getWeixinInfor(@RequestParam("weixinOpenId") String weixinOpenId) throws MilkTeaException{
+		ResponseBody<TeaLoginWeixin> responseBody = new ResponseBody<>();
+		responseBody.setData(this.userRegisterService.getWeixinInfor(weixinOpenId));
+		return responseBody;
+	}
+	
 	
 	/**
-	 * 微信OPENID查找，返回客户信息，如果为NULL返回TeaUserInfo
+	 * 根据手机号改修密码
+	 * @param telephone
+	 * @param userPassword
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping(value="/modifyUserPassword", method = RequestMethod.GET)
+	public ResponseHeader  modifyUserPassword(@RequestParam("telephone") String telephone,@RequestParam("userPassword") String userPassword) throws MilkTeaException{
+		ResponseHeader header = new ResponseHeader();
+		this.userRegisterService.modifyUserPassword(telephone,userPassword);
+		return header;
+	}
+	
+	
+	/**
+	 * 微信OPENID查找，返回客户微信信息，如果为NULL返回TeaUserInfo
 	 * @param teaUserInfo
 	 * @return TeaUserInfo
 	 * @throws MilkTeaException

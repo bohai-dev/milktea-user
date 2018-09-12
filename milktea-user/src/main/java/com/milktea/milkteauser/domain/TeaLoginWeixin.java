@@ -3,6 +3,8 @@ package com.milktea.milkteauser.domain;
 public class TeaLoginWeixin {
     private String weixinOpenid;
 
+    private String weixinAccesstoken;
+
     private String weixinNickname;
 
     private String weixinSex;
@@ -18,13 +20,31 @@ public class TeaLoginWeixin {
     private String privilege;
 
     private String unionid;
+    
+    private String accessToken;
 
-    public String getWeixinOpenid() {
+    public String getAccessToken() {
+		return accessToken;
+	}
+
+	public void setAccessToken(String accessToken) {
+		this.accessToken = accessToken;
+	}
+
+	public String getWeixinOpenid() {
         return weixinOpenid;
     }
 
     public void setWeixinOpenid(String weixinOpenid) {
         this.weixinOpenid = weixinOpenid == null ? null : weixinOpenid.trim();
+    }
+
+    public String getWeixinAccesstoken() {
+        return weixinAccesstoken;
+    }
+
+    public void setWeixinAccesstoken(String weixinAccesstoken) {
+        this.weixinAccesstoken = weixinAccesstoken == null ? null : weixinAccesstoken.trim();
     }
 
     public String getWeixinNickname() {

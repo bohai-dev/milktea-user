@@ -1,14 +1,14 @@
 package com.milktea.milkteauser.service.impl;
 
-import java.util.Random;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.milktea.milkteauser.dao.TeaLoginWeixinMapper;
 import com.milktea.milkteauser.dao.TeaSmsRegisterMapper;
 import com.milktea.milkteauser.dao.TeaUserInfoMapper;
+import com.milktea.milkteauser.domain.TeaLoginWeixin;
 import com.milktea.milkteauser.domain.TeaSmsRegister;
 import com.milktea.milkteauser.domain.TeaUserInfo;
 import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
@@ -29,6 +29,9 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	
 	@Autowired
 	SmsService smsService;
+	
+	@Autowired
+	TeaLoginWeixinMapper teaLoginWeixinMapper;
 	
 	static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
 	
@@ -112,7 +115,26 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 		TeaUserInfo teaUserInfo = new TeaUserInfo();
 		
 		teaUserInfo = TeaUserInfoMapper.checkUserLogin(telephone,userPassword);
+		if(teaUserInfo == null) {
+			throw new MilkTeaException(MilkTeaErrorConstant.LOGIN_ERROR);
+		}
 		return teaUserInfo;
+	}
+
+	@Override
+	public int modifyUserPassword(String telephone, String userPassword) throws MilkTeaException {
+		TeaUserInfoMapper.modifyUserPassword(telephone,userPassword);
+		return 1;
+	}
+
+	@Override
+	public TeaLoginWeixin getWeixinInfor(String weixinOpenId) throws MilkTeaException {
+		TeaLoginWeixin TeaLoginWeixin = new TeaLoginWeixin();
+		
+		TeaLoginWeixin = teaLoginWeixinMapper.selectByPrimaryKey(weixinOpenId);
+		
+		
+		return TeaLoginWeixin;
 	}
 
 

@@ -1,5 +1,6 @@
 package com.milktea.milkteauser.service;
 
+import com.milktea.milkteauser.domain.TeaLoginWeixin;
 import com.milktea.milkteauser.domain.TeaSmsRegister;
 import com.milktea.milkteauser.domain.TeaUserInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
@@ -54,6 +55,25 @@ public interface UserRegisterService {
 	 * @throws MilkTeaException
 	 */
 	public TeaUserInfo userLogin(String telephone,String userPassword) throws MilkTeaException;
+	
+	
+	/**
+	 * 更改用户密码
+	 * @param telephone
+	 * @param userPassword
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	public int modifyUserPassword(String telephone,String userPassword) throws MilkTeaException;
+	
+	
+	/**
+	 * 网页登入取得微信信息
+	 * @param weixinOpenId
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	public TeaLoginWeixin getWeixinInfor(String weixinOpenId) throws MilkTeaException;
 	
    
    
