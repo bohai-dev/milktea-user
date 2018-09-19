@@ -50,7 +50,7 @@ public class PayInoServiceImpl implements PayInfoService {
         LOGGER.info("获取到token："+token);
         Map<String, Object> params = new HashMap<>();
         params.put("amount", stripeBean.getAmount());         //充值金额，单位分
-        params.put("currency", "usd");   //货币类型 usd美元
+        params.put("currency", "cad");   //货币类型 usd美元
         params.put("description", stripeBean.getDescription());  //充值描述
         params.put("source", token);
         try {
