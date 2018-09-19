@@ -114,7 +114,8 @@ public class HttpUtil {
         StringEntity entity = new StringEntity(json,"UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
-        httpPost.setHeader("Content-type", "application/json; charset=UTF-8");
+        //表单形式
+        httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
         
 
         CloseableHttpResponse response = client.execute(httpPost);

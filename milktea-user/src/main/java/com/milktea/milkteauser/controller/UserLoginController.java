@@ -168,7 +168,7 @@ public class UserLoginController {
 	
 	//取得店铺内的商品
 	@RequestMapping(value="/getClassGoods")
-	public ResponseBody<JSONObject>  getClassGoods(@RequestParam("storeNo") String storeNo,@RequestParam("classType") String classType,@RequestParam("lang") String lang) throws MilkTeaException{
+	public ResponseBody<JSONObject>  getClassGoods(@RequestParam("storeNo") String storeNo,@RequestParam(value = "classType",required = false) String classType,@RequestParam("lang") String lang) throws MilkTeaException{
 		BufferedReader in = null;
 		String result = "";
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
