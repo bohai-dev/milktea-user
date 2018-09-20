@@ -26,7 +26,7 @@ import com.stripe.Stripe;
 import com.stripe.model.Charge;
 
 @Service
-public class PayInoServiceImpl implements PayInfoService {
+public class PayInfoServiceImpl implements PayInfoService {
     @Autowired
     TeaPayInfoMapper mapper;
     @Autowired
@@ -34,13 +34,13 @@ public class PayInoServiceImpl implements PayInfoService {
     @Autowired
     UserInfoService userInfoService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PayInoServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PayInfoServiceImpl.class);
     private static final String STRIPE_KEY = "sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   //正式key
     // private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
 
     private static final String NOTIFY_ORDER_URL = "http://localhost:8081/handleOrder";  //推送订单url
 
-    private static final String IOTPAY_URL = "https://pay.4jicao.com/api/pay/create_order";  //推送订单url
+    private static final String IOTPAY_URL = "https://pay.4jicao.com/api/pay/create_order";
 
     private static final String IOT_MCHID = "243228462";
     private static final String IOT_KEY = "hsN3Nge1KPtiVdL5zK9s3PKJAIId5Hrh";

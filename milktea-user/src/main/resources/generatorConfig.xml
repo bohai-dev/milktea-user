@@ -47,11 +47,11 @@
 
 
 
-		<table schema="" tableName="TEA_PAY_INFO" domainObjectName="TeaPayInfo"
+	<!--	<table schema="" tableName="TEA_PAY_INFO" domainObjectName="TeaPayInfo"
 			enableSelectByExample="false" enableDeleteByExample="false"
 			enableCountByExample="false" enableUpdateByExample="false"
 			selectByExampleQueryId="false">
-		</table>
+		</table>-->
 		
 	</context>
 
