@@ -107,7 +107,7 @@ public class PayInfoServiceImpl implements PayInfoService {
 
             String signature = WXPayUtil.generateSignature(map, IOT_KEY);
             map.put("sign", signature);
-            String response = HttpUtil.post(IOTPAY_URL, map);
+            String response = HttpUtil.postForm(IOTPAY_URL, map);
 
             System.out.println(response);
         } catch (Exception e) {

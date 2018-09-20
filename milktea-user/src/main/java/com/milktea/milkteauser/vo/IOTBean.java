@@ -5,6 +5,7 @@ package com.milktea.milkteauser.vo;
  */
 public class IOTBean {
     private static  final  String NOTIFY_URL="https://www.primes-thaitea.com/iotpay/notify";
+    private static final String REMOTE_IP="47.89.247.54";
     //订单编号
     private String orderNum;
     //渠道id
@@ -16,7 +17,7 @@ public class IOTBean {
     //客户端ip
     private String clientIp;
     //设备
-    private int device;
+    private String device;
     //支付结果回调URL
     private String notifyUrl;
 
@@ -70,11 +71,11 @@ public class IOTBean {
         this.amount = amount;
     }
 
-    public int getDevice() {
+    public String getDevice() {
         return device;
     }
 
-    public void setDevice(int device) {
+    public void setDevice(String device) {
         this.device = device;
     }
 
@@ -139,6 +140,6 @@ public class IOTBean {
     }
 
     public void setClientIp(String clientIp) {
-        this.clientIp = clientIp;
+        this.clientIp = REMOTE_IP;
     }
 }

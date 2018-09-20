@@ -115,6 +115,34 @@ public class HttpUtil {
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
         //表单形式
+        httpPost.setHeader("Content-type", "application/json");
+        
+
+        CloseableHttpResponse response = client.execute(httpPost);
+        int statusCode=response.getStatusLine().getStatusCode();
+        if (statusCode!=200){
+            throw new Exception("无法连接该地址");
+         }
+        HttpEntity resEntity=response.getEntity(); // 获取返回实体
+        String content=EntityUtils.toString(resEntity,"utf-8");
+      //  assertThat(response.getStatusLine().getStatusCode(), equalTo(200));
+        response.close();
+        client.close();
+
+        return content;
+
+    }
+    
+    public static String postForm(String url,Map<String,String> params) throws Exception{
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpPost httpPost = new HttpPost(url);
+        //将Map转为Json
+        Gson gson = new Gson();
+        String json = gson.toJson(params);
+        StringEntity entity = new StringEntity(json,"UTF-8");
+        httpPost.setEntity(entity);
+        httpPost.setHeader("Accept", "application/json");
+        //表单形式
         httpPost.setHeader("Content-type", "application/x-www-form-urlencoded");
         
 
