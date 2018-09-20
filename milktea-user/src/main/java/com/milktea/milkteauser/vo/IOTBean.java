@@ -5,9 +5,12 @@ package com.milktea.milkteauser.vo;
  */
 public class IOTBean {
     private static  final  String NOTIFY_URL="https://www.primes-thaitea.com/iotpay/notify";
-    private static final String REMOTE_IP="47.89.247.54";
+    private static final   String REMOTE_IP="47.89.247.54";
+    private static final   String MCHID="10000882";
+    //商户id
+    private String mchId;
     //订单编号
-    private String orderNum;
+    private String mchOrderNo;
     //渠道id
     private String channelId;
     //货币
@@ -30,21 +33,31 @@ public class IOTBean {
     private String param1;
     //扩展参数2
     private String param2;
-
-
-    //附加参数 特定渠道发起时额外参数
+    //附加参数
     private String extra;
-
     //签名
     private String sign;
 
-
-    public String getOrderNum() {
-        return orderNum;
+    public IOTBean() {
+        this.mchId=MCHID;
+        this.clientIp=REMOTE_IP;
+        this.notifyUrl=NOTIFY_URL;
     }
 
-    public void setOrderNum(String orderNum) {
-        this.orderNum = orderNum;
+    public String getMchId() {
+        return mchId;
+    }
+
+    public void setMchId(String mchId) {
+        this.mchId = mchId;
+    }
+
+    public String getMchOrderNo() {
+        return mchOrderNo;
+    }
+
+    public void setMchOrderNo(String mchOrderNo) {
+        this.mchOrderNo = mchOrderNo;
     }
 
     public String getChannelId() {
@@ -71,6 +84,13 @@ public class IOTBean {
         this.amount = amount;
     }
 
+    public String getClientIp() {
+        return clientIp;
+    }
+    public void setClientIp(String clientIp) {
+        this.clientIp = clientIp;
+    }
+
     public String getDevice() {
         return device;
     }
@@ -84,7 +104,7 @@ public class IOTBean {
     }
 
     public void setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = NOTIFY_URL;
+        this.notifyUrl = notifyUrl;
     }
 
     public String getSubject() {
@@ -133,13 +153,5 @@ public class IOTBean {
 
     public void setSign(String sign) {
         this.sign = sign;
-    }
-
-    public String getClientIp() {
-        return clientIp;
-    }
-
-    public void setClientIp(String clientIp) {
-        this.clientIp = REMOTE_IP;
     }
 }

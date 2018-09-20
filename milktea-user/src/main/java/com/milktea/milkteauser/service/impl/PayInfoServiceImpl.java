@@ -4,8 +4,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.milktea.milkteauser.util.Utils;
 import com.milktea.milkteauser.vo.IOTBean;
+import com.milktea.milkteauser.vo.ResponseBody;
 import com.milktea.milkteauser.wxpay.WXPayUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +27,8 @@ import com.milktea.milkteauser.util.HttpUtil;
 import com.milktea.milkteauser.vo.StripeBean;
 import com.stripe.Stripe;
 import com.stripe.model.Charge;
+import org.springframework.web.bind.annotation.RequestBody;
+import sun.rmi.runtime.Log;
 
 @Service
 public class PayInfoServiceImpl implements PayInfoService {
@@ -42,7 +47,6 @@ public class PayInfoServiceImpl implements PayInfoService {
 
     private static final String IOTPAY_URL = "https://pay.4jicao.com/api/pay/create_order";
 
-    private static final String IOT_MCHID = "243228462";
     private static final String IOT_KEY = "hsN3Nge1KPtiVdL5zK9s3PKJAIId5Hrh";
 
     public void stripePay(StripeBean stripeBean) throws MilkTeaException {
@@ -101,18 +105,38 @@ public class PayInfoServiceImpl implements PayInfoService {
 
     }
 
-    public void iotPay(IOTBean iotBean) {
+    public ResponseBody<String> iotPay(IOTBean iotBean) throws MilkTeaException{
+        ResponseBody<String> responseBody=new ResponseBody<>();
         try {
-            Map<String, String> map = Utils.objectToMap(iotBean);
-
-            String signature = WXPayUtil.generateSignature(map, IOT_KEY);
+            Map<String, Object> map = Utils.objectToMap(iotBean);
+            Map<String,String> paramsMap=new HashMap<>();
+            map.forEach((k,v)->{
+                if (v!=null){
+                    paramsMap.put(k,v.toString());
+                }else {
+                    paramsMap.put(k,null);
+                }
+            });
+            //获取签名
+            String signature = WXPayUtil.generateSignature(paramsMap, IOT_KEY);
             map.put("sign", signature);
-            String response = HttpUtil.postForm(IOTPAY_URL, map);
 
-            System.out.println(response);
+            Gson gson = new Gson();
+            String json = gson.toJson(map);
+            Map<String,String> params=new HashMap<>();
+            params.put("params",json);
+            String response = HttpUtil.postForm(IOTPAY_URL, params);
+
+            responseBody.setData(response);
+
+            LOGGER.info("支付结果:"+response);
         } catch (Exception e) {
-            e.printStackTrace();
+           // e.printStackTrace();
+            throw new MilkTeaException(MilkTeaErrorConstant.PAY_FAIL.getErrorCode(), e.getMessage(), e.getMessage(), e);
+
         }
+
+        return responseBody;
 
 
     }

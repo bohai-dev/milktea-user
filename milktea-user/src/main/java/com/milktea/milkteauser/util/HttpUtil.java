@@ -121,7 +121,7 @@ public class HttpUtil {
         CloseableHttpResponse response = client.execute(httpPost);
         int statusCode=response.getStatusLine().getStatusCode();
         if (statusCode!=200){
-            throw new Exception("无法连接该地址");
+            throw new Exception("无法连接该地址"+statusCode);
          }
         HttpEntity resEntity=response.getEntity(); // 获取返回实体
         String content=EntityUtils.toString(resEntity,"utf-8");
@@ -132,14 +132,24 @@ public class HttpUtil {
         return content;
 
     }
-    
+
+    /**
+     * post 表单
+     * @param url
+     * @param params
+     * @return
+     * @throws Exception
+     */
     public static String postForm(String url,Map<String,String> params) throws Exception{
         CloseableHttpClient client = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
-        //将Map转为Json
-        Gson gson = new Gson();
-        String json = gson.toJson(params);
-        StringEntity entity = new StringEntity(json,"UTF-8");
+        //将Map转为String
+        StringBuilder param=new StringBuilder();
+        params.forEach((k,v)->{
+            param.append(k).append("=").append(v).append("&");
+        });
+
+        StringEntity entity = new StringEntity(param.toString(),"UTF-8");
         httpPost.setEntity(entity);
         httpPost.setHeader("Accept", "application/json");
         //表单形式
@@ -149,7 +159,7 @@ public class HttpUtil {
         CloseableHttpResponse response = client.execute(httpPost);
         int statusCode=response.getStatusLine().getStatusCode();
         if (statusCode!=200){
-            throw new Exception("无法连接该地址");
+            throw new Exception("连接地址失败"+statusCode);
          }
         HttpEntity resEntity=response.getEntity(); // 获取返回实体
         String content=EntityUtils.toString(resEntity,"utf-8");

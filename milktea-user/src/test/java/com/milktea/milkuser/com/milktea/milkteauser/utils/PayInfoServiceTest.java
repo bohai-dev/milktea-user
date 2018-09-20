@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 public class PayInfoServiceTest {
-    private static final String IOTPAY_URL = "https://pay.4jicao.com/api/pay/create_order";
+
     @Autowired
     PayInfoService payInfoService;
 
@@ -23,10 +23,14 @@ public class PayInfoServiceTest {
     public void iotPayTest(){
         try {
             IOTBean iotBean=new IOTBean();
-            iotBean.setAmount(100);
-            iotBean.setBody("11111111");
-            iotBean.setChannelId("111111");
-            iotBean.setClientIp("111111");
+            iotBean.setMchOrderNo("100000004");
+            iotBean.setChannelId("ALIPAY_PC");
+            iotBean.setCurrency("CAD");
+            iotBean.setAmount(1000);
+            iotBean.setSubject("奶茶");
+            iotBean.setBody("奶茶一杯");
+            iotBean.setExtra("{}");
+
 
             payInfoService.iotPay(iotBean);
 

@@ -3,6 +3,7 @@ package com.milktea.milkteauser.util;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.beanutils.BeanUtils;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -34,11 +35,21 @@ public class Utils {
      * @param obj
      * @return
      */
-    public static Map<String, String> objectToMap(Object obj) {
-        if(obj == null)
+    public static Map<String, Object> objectToMap(Object obj) {
+        if(obj == null) {
             return null;
+        }
 
-        return new BeanMap(obj);
+        Map<String,Object> hashMap=new HashMap<>();
+        BeanMap beanMap=new BeanMap(obj);
+        beanMap.forEach((k,v)->{
+            if (!"class".equals(k)){
+               if (v!=null){
+                   hashMap.put(k.toString(),v);
+               }
+            }
+        });
+        return hashMap;
     }
 
 
