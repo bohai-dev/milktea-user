@@ -26,7 +26,7 @@ public class PayInfoServiceTest {
             iotBean.setMchOrderNo("100000004");
             iotBean.setChannelId("ALIPAY_PC");
             iotBean.setCurrency("CAD");
-            iotBean.setAmount(1000);
+            iotBean.setAmount(100);
             iotBean.setSubject("奶茶");
             iotBean.setBody("奶茶一杯");
             iotBean.setExtra("{}");

@@ -1,10 +1,7 @@
 package com.milktea.milkteauser.controller;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.PayInfoService;
-import com.milktea.milkteauser.vo.IOTBean;
-import com.milktea.milkteauser.vo.ResponseBody;
-import com.milktea.milkteauser.vo.ResponseHeader;
-import com.milktea.milkteauser.vo.StripeBean;
+import com.milktea.milkteauser.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +37,9 @@ public class PayController {
     }
 
     @RequestMapping("/iotpay/notify")
-    public void  notify(HttpServletRequest request, HttpServletResponse response){
-        PrintWriter out = null;
-        LOGGER.info("Iotpay异步接收通知");
+    public String  iotNotify(@RequestBody IotResponseBean responseBean){
+       /* PrintWriter out = null;
+        LOGGER.info("iotpay异步接收通知");
         StringBuilder sb = new StringBuilder();
         try {
             out=response.getWriter();
@@ -57,7 +54,10 @@ public class PayController {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
+       LOGGER.info(responseBean.toString());
+
+       return "success";
 
     }
 

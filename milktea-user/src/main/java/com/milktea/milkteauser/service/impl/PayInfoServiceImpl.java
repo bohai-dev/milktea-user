@@ -43,7 +43,7 @@ public class PayInfoServiceImpl implements PayInfoService {
     private static final String STRIPE_KEY = "sk_live_dNCjtQTOeP6W4hn9b93sKDVK";   //正式key
     // private static final String STRIPE_KEY="sk_test_yb8n1W1TWPZwhdZ6Su0vSVWt";    //测试key
 
-    private static final String NOTIFY_ORDER_URL = "http://localhost:8081/handleOrder";  //推送订单url
+    private static final String NOTIFY_ORDER_URL = "http://localhost:8081/handleOrder";  //后台推送订单url
 
     private static final String IOTPAY_URL = "https://pay.4jicao.com/api/pay/create_order";
 
