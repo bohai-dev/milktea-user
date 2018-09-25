@@ -55,6 +55,7 @@ public class PayController {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+    	LOGGER.info("----接收到通知------");
        LOGGER.info(responseBean.toString());
 
        return "success";
