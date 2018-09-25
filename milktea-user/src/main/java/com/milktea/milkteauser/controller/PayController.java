@@ -1,4 +1,5 @@
 package com.milktea.milkteauser.controller;
+import com.milktea.milkteauser.domain.TeaPayInfo;
 import com.milktea.milkteauser.exception.MilkTeaException;
 import com.milktea.milkteauser.service.PayInfoService;
 import com.milktea.milkteauser.vo.*;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 @RestController
 public class PayController {
@@ -37,28 +40,17 @@ public class PayController {
     }
 
     @RequestMapping("/iotpay/notify")
-    public String  iotNotify(@RequestBody IotResponseBean responseBean){
-       /* PrintWriter out = null;
-        LOGGER.info("iotpay异步接收通知");
-        StringBuilder sb = new StringBuilder();
+    public String  iotNotify(IotResponseBean responseBean){
+
+        LOGGER.info("支付通知"+responseBean.toString());
+        String result="";
         try {
-            out=response.getWriter();
-            BufferedReader reader=request.getReader();
-            String line=null;
-            while ((line=reader.readLine())!=null){
-                sb.append(line);
-            }
-            LOGGER.info("Iotpay接收到消息："+sb.toString());
-            //需要验证签名
-
-
-        } catch (IOException e) {
+            result=payInfoService.iotNotify(responseBean);
+        } catch (MilkTeaException e) {
             e.printStackTrace();
-        }*/
-    	LOGGER.info("----接收到通知------");
-       LOGGER.info(responseBean.toString());
-
-       return "success";
+            result="fail";
+        }
+        return result;
 
     }
 
