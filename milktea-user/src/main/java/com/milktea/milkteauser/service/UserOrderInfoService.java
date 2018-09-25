@@ -14,7 +14,6 @@ public interface UserOrderInfoService {
 	
  /**
   * 客户下单操作
- * @param CustOrderInfoVo
  * @return CustOrderInfoVo
  * @throws MilkTeaException
  */

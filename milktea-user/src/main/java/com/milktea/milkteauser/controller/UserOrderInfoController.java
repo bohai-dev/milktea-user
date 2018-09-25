@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.milktea.milkteauser.domain.TeaOrderInfo;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -228,6 +229,23 @@ public class UserOrderInfoController {
 		 
 		 
 		return responseBody;
+	}
+
+	/**
+	 * 根据订单编号查询订单
+	 * @param orderNo
+	 * @return
+	 * @throws MilkTeaException
+	 */
+	@RequestMapping("/selectbyorderno")
+	public ResponseBody<TeaOrderInfo> selectByOrderno(String orderNo) throws MilkTeaException{
+
+		TeaOrderInfo teaOrderInfo=userOrderInfoService.findOrderByOrderNo(orderNo);
+		ResponseBody<TeaOrderInfo> responseBody=new ResponseBody<>();
+		responseBody.setData(teaOrderInfo);
+
+		return responseBody;
+
 	}
 	
 
