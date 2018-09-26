@@ -39,31 +39,21 @@ public class PayController {
         return payInfoService.iotPay(iotBean);
     }
 
-   /* @RequestMapping("/iotpay/notify")
-    public String  iotNotify(IotResponseBean responseBean){
+    @RequestMapping("/iotpay/notify")
+    public String  iotNotify(@RequestParam("params") String params){
 
-        LOGGER.info("支付通知"+responseBean.toString());
+        LOGGER.info("支付通知"+params);
         String result="";
-        try {
+       /* try {
             result=payInfoService.iotNotify(responseBean);
         } catch (MilkTeaException e) {
             e.printStackTrace();
             result="fail";
-        }
-
-        return result;
-
-    }*/
-
-    @RequestMapping("/iotpay/notify")
-    public String  iotNotify(@RequestParam("payOrderId") String payOrderId){
-
-        LOGGER.info("支付通知"+payOrderId);
-        String result="success";
-
+        }*/
 
         return result;
 
     }
+
 
 }

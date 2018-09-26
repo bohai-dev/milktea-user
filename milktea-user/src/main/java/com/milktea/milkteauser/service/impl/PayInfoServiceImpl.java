@@ -152,7 +152,7 @@ public class PayInfoServiceImpl implements PayInfoService {
         String payOrderNum=iotResponseBean.getPayOrderId();
         //支付状态,0-订单生成,1-支付中,2-支付成功,3-业务处理完成
         int payStatus=iotResponseBean.getStatus();
-
+        teaPayInfo.setPayId(mapper.generateClassId());
         teaPayInfo.setOrderNo(selfOrderNum);
         teaPayInfo.setPaySerialNo(payOrderNum);
         teaPayInfo.setPayType("iotpay");
