@@ -39,7 +39,7 @@ public class PayController {
         return payInfoService.iotPay(iotBean);
     }
 
-   /* @RequestMapping("/iotpay/notify")
+    @RequestMapping("/iotpay/notify")
     public String  iotNotify(IotResponseBean responseBean){
 
         LOGGER.info("支付通知"+responseBean.toString());
@@ -52,9 +52,9 @@ public class PayController {
         }
         return result;
 
-    }*/
+    }
 
-    @RequestMapping("/iotpay/notify")
+   /* @RequestMapping("/iotpay/notify")
     public String  iotNotify(@RequestParam("payOrderId") String payOrderId){
 
         LOGGER.info("支付通知"+payOrderId);
@@ -63,6 +63,6 @@ public class PayController {
 
         return result;
 
-    }
+    }*/
 
 }
