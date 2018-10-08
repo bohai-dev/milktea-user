@@ -21,6 +21,7 @@ public class IotResponseBean {
     private long paySuccTime;
     private int backType;
     private String sign;
+    private String params;
 
     public String getPayOrderId() {
         return payOrderId;
@@ -157,27 +158,25 @@ public class IotResponseBean {
     public void setSign(String sign) {
         this.sign = sign;
     }
+    
+    
 
-    @Override
-    public String toString() {
-        return "IotResponseBean{" +
-                "payOrderId='" + payOrderId + '\'' +
-                ", mchId='" + mchId + '\'' +
-                ", mchOrderNo='" + mchOrderNo + '\'' +
-                ", channelId='" + channelId + '\'' +
-                ", currency='" + currency + '\'' +
-                ", amount=" + amount +
-                ", status=" + status +
-                ", clientIp='" + clientIp + '\'' +
-                ", device='" + device + '\'' +
-                ", subject='" + subject + '\'' +
-                ", body='" + body + '\'' +
-                ", channelOrderNo='" + channelOrderNo + '\'' +
-                ", param1='" + param1 + '\'' +
-                ", param2='" + param2 + '\'' +
-                ", paySuccTime=" + paySuccTime +
-                ", backType=" + backType +
-                ", sign='" + sign + '\'' +
-                '}';
-    }
+    public String getParams() {
+		return params;
+	}
+
+	public void setParams(String params) {
+		this.params = params;
+	}
+
+	@Override
+	public String toString() {
+		return "IotResponseBean [payOrderId=" + payOrderId + ", mchId=" + mchId + ", mchOrderNo=" + mchOrderNo
+				+ ", channelId=" + channelId + ", currency=" + currency + ", amount=" + amount + ", status=" + status
+				+ ", clientIp=" + clientIp + ", device=" + device + ", subject=" + subject + ", body=" + body
+				+ ", channelOrderNo=" + channelOrderNo + ", param1=" + param1 + ", param2=" + param2 + ", paySuccTime="
+				+ paySuccTime + ", backType=" + backType + ", sign=" + sign + ", params=" + params + "]";
+	}
+
+	
 }
