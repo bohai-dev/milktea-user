@@ -40,9 +40,12 @@ import com.milktea.milkteauser.vo.ResponseHeader;
 @RequestMapping("/userLogin")
 public class UserLoginController {
 
-	public static String weiXinAppid = "wxbac9e1b7d8104470";
+	//客户自己的APPID改修
+//	public static String weiXinAppid = "wxbac9e1b7d8104470";
+	public static String weiXinAppid = "wx69269e7475d50c74";
 	
-	public static String weiXinSecret = "08695399b120b9ed523db01ddd51d38d";
+//	public static String weiXinSecret = "08695399b120b9ed523db01ddd51d38d";
+	public static String weiXinSecret = "wbac1350038080";
 	
 	public static String weiXinGrantType = "authorization_code";
 	

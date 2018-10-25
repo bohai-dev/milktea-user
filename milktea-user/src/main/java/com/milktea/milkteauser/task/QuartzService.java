@@ -26,10 +26,12 @@ import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 @Component
 public class QuartzService {
 	static Logger log = LoggerFactory.getLogger(QuartzService.class);
+	//客户自己的APPID改修
+//	public static String weiXinAppid = "wxbac9e1b7d8104470";
+	public static String weiXinAppid = "wx69269e7475d50c74";
 	
-	public static String weiXinAppid = "wxbac9e1b7d8104470";
-	
-	public static String weiXinSecret = "08695399b120b9ed523db01ddd51d38d";
+//	public static String weiXinSecret = "08695399b120b9ed523db01ddd51d38d";
+	public static String weiXinSecret = "wbac1350038080";
 	
 	public static String weiXinGrantType = "authorization_code";
 	
@@ -42,7 +44,7 @@ public class QuartzService {
 	
 	
 	
-	@Scheduled(cron = "0 0/60 * * * ?")
+	@Scheduled(fixedRate =60*60*1000)
     public void timerToNow(){
 		//取得系统全局TOKEN 根据APPID及密码
 		//请求获得全局Access Token
