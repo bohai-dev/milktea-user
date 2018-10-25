@@ -107,6 +107,8 @@ public class PayInfoServiceImpl implements PayInfoService {
     }
 
     public ResponseBody<String> iotPay(IOTBean iotBean) throws MilkTeaException{
+    	  LOGGER.info("支付参数:"+iotBean.toString());
+    	  
         ResponseBody<String> responseBody=new ResponseBody<>();
         try {
             Map<String, Object> map = Utils.objectToMap(iotBean);
