@@ -42,7 +42,7 @@ public class QuartzService {
 	
 	
 	
-	@Scheduled(cron = "0 0/60 * * * ?")
+	@Scheduled(fixedRate =60*60*1000)
     public void timerToNow(){
 		//取得系统全局TOKEN 根据APPID及密码
 		//请求获得全局Access Token

@@ -154,4 +154,24 @@ public class IOTBean {
     public void setSign(String sign) {
         this.sign = sign;
     }
+
+    @Override
+    public String toString() {
+        return "IOTBean{" +
+                "mchId='" + mchId + '\'' +
+                ", mchOrderNo='" + mchOrderNo + '\'' +
+                ", channelId='" + channelId + '\'' +
+                ", currency='" + currency + '\'' +
+                ", amount=" + amount +
+                ", clientIp='" + clientIp + '\'' +
+                ", device='" + device + '\'' +
+                ", notifyUrl='" + notifyUrl + '\'' +
+                ", subject='" + subject + '\'' +
+                ", body='" + body + '\'' +
+                ", param1='" + param1 + '\'' +
+                ", param2='" + param2 + '\'' +
+                ", extra='" + extra + '\'' +
+                ", sign='" + sign + '\'' +
+                '}';
+    }
 }

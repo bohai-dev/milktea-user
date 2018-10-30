@@ -63,7 +63,7 @@ public class UserLoginController {
 	
 	//微信客户登入
 	@RequestMapping(value="/weixin", method = RequestMethod.GET)
-	public ResponseBody<TeaLoginWeixin>  userInfoLogin(@RequestParam("code") String code,@RequestParam("accessToken")  String accessToken,@RequestParam("openId") String openId) throws MilkTeaException{
+	public ResponseBody<TeaLoginWeixin>  userInfoLogin(@RequestParam("code") String code,@RequestParam(value = "accessToken",required = false)  String accessToken,@RequestParam( value = "openId",required = false) String openId) throws MilkTeaException{
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 		
 		ResponseBody<TeaLoginWeixin> responseBody = new ResponseBody<TeaLoginWeixin>();
