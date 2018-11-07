@@ -38,6 +38,9 @@ public class IOTBean {
     //签名
     private String sign;
 
+    //returnUrl
+    private String returnUrl;
+
     public IOTBean() {
         this.mchId=MCHID;
         this.clientIp=REMOTE_IP;
@@ -155,6 +158,14 @@ public class IOTBean {
         this.sign = sign;
     }
 
+    public String getReturnUrl() {
+        return returnUrl;
+    }
+
+    public void setReturnUrl(String returnUrl) {
+        this.returnUrl = returnUrl;
+    }
+
     @Override
     public String toString() {
         return "IOTBean{" +
@@ -172,6 +183,7 @@ public class IOTBean {
                 ", param2='" + param2 + '\'' +
                 ", extra='" + extra + '\'' +
                 ", sign='" + sign + '\'' +
+                ", returnUrl='" + returnUrl + '\'' +
                 '}';
     }
 }

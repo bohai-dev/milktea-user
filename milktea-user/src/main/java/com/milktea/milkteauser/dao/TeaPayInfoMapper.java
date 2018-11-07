@@ -1,8 +1,10 @@
 package com.milktea.milkteauser.dao;
 
 import com.milktea.milkteauser.domain.TeaPayInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+@Mapper
 public interface TeaPayInfoMapper {
     int deleteByPrimaryKey(String payId);
 

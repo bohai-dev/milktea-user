@@ -47,10 +47,17 @@ public class PayInfoServiceImpl implements PayInfoService {
     private static final String NOTIFY_ORDER_URL = "http://localhost:8081/handleOrder";  //后台推送订单url
 
     private static final String IOTPAY_URL = "https://pay.4jicao.com/api/pay/create_order";
+    private static final String IOTPAY_JSAPI_URL = "http://open.4jicao.com/goods/payForSubmit";
 
     private static final String IOT_KEY = "hsN3Nge1KPtiVdL5zK9s3PKJAIId5Hrh";
 
+    /**
+     * stripe支付
+     * @param stripeBean
+     * @throws MilkTeaException
+     */
     public void stripePay(StripeBean stripeBean) throws MilkTeaException {
+
 
 
         TeaPayInfo teaPayInfo = new TeaPayInfo();
@@ -106,6 +113,12 @@ public class PayInfoServiceImpl implements PayInfoService {
 
     }
 
+    /**
+     * IOT支付
+     * @param iotBean
+     * @return
+     * @throws MilkTeaException
+     */
     public ResponseBody<String> iotPay(IOTBean iotBean) throws MilkTeaException{
         LOGGER.info("支付参数:"+iotBean.toString());
         ResponseBody<String> responseBody=new ResponseBody<>();
@@ -127,7 +140,14 @@ public class PayInfoServiceImpl implements PayInfoService {
             String json = gson.toJson(map);
             Map<String,String> params=new HashMap<>();
             params.put("params",json);
-            String response = HttpUtil.postForm(IOTPAY_URL, params);
+
+            String response=null;
+            if (iotBean.getChannelId().equals("WX_JSAPI")){
+                response = HttpUtil.postForm(IOTPAY_JSAPI_URL, params);
+            }else{
+                response=HttpUtil.postForm(IOTPAY_URL,params);
+            }
+
 
             responseBody.setData(response);
 
@@ -143,6 +163,13 @@ public class PayInfoServiceImpl implements PayInfoService {
 
     }
 
+
+    /**
+     * Iot 异步通知
+     * @param iotResponseBean
+     * @return
+     * @throws MilkTeaException
+     */
     public String iotNotify(IotResponseBean iotResponseBean) throws MilkTeaException{
         TeaPayInfo teaPayInfo = new TeaPayInfo();
         String result=null;
