@@ -40,9 +40,12 @@ import com.milktea.milkteauser.vo.ResponseHeader;
 @RequestMapping("/userLogin")
 public class UserLoginController {
 
-	public static String weiXinAppid = "wxbac9e1b7d8104470";
+	//客户自己的APPID改修
+//	public static String weiXinAppid = "wxbac9e1b7d8104470";
+	public static String weiXinAppid = "wx69269e7475d50c74";
 	
-	public static String weiXinSecret = "08695399b120b9ed523db01ddd51d38d";
+//	public static String weiXinSecret = "08695399b120b9ed523db01ddd51d38d";
+	public static String weiXinSecret = "2c6da4cdca097baa4931bd5b2f0a4ec0";
 	
 	public static String weiXinGrantType = "authorization_code";
 	
@@ -63,7 +66,7 @@ public class UserLoginController {
 	
 	//微信客户登入
 	@RequestMapping(value="/weixin", method = RequestMethod.GET)
-	public ResponseBody<TeaLoginWeixin>  userInfoLogin(@RequestParam("code") String code,@RequestParam(value = "accessToken",required = false)  String accessToken,@RequestParam( value = "openId",required = false) String openId) throws MilkTeaException{
+	public ResponseBody<TeaLoginWeixin>  userInfoLogin(@RequestParam("code") String code,@RequestParam(value="accessToken",required = false)  String accessToken,@RequestParam(value="openId",required = false) String openId) throws MilkTeaException{
 		Logger logger = LoggerFactory.getLogger(UserLoginController.class);
 		
 		ResponseBody<TeaLoginWeixin> responseBody = new ResponseBody<TeaLoginWeixin>();

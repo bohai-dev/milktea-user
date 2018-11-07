@@ -26,10 +26,12 @@ import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 @Component
 public class QuartzService {
 	static Logger log = LoggerFactory.getLogger(QuartzService.class);
+	//客户自己的APPID改修
+//	public static String weiXinAppid = "wxbac9e1b7d8104470";
+	public static String weiXinAppid = "wx69269e7475d50c74";
 	
-	public static String weiXinAppid = "wxbac9e1b7d8104470";
-	
-	public static String weiXinSecret = "08695399b120b9ed523db01ddd51d38d";
+//	public static String weiXinSecret = "08695399b120b9ed523db01ddd51d38d";
+	public static String weiXinSecret = "2c6da4cdca097baa4931bd5b2f0a4ec0";
 	
 	public static String weiXinGrantType = "authorization_code";
 	
