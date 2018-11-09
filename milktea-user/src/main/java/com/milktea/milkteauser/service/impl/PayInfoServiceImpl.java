@@ -175,13 +175,21 @@ public class PayInfoServiceImpl implements PayInfoService {
         String result=null;
 
         //商户单号
-        String selfOrderNum=iotResponseBean.getMchOrderNo().split("@")[0];
+        String selfOrderNum=iotResponseBean.getMchOrderNo();
         //支付单号
         String payOrderNum=iotResponseBean.getPayOrderId();
         //支付状态,0-订单生成,1-支付中,2-支付成功,3-业务处理完成
         int payStatus=iotResponseBean.getStatus();
+        String channelId=iotResponseBean.getChannelId();
+        String param1=iotResponseBean.getParam1();
         teaPayInfo.setPayId(mapper.generateClassId());
-        teaPayInfo.setOrderNo(selfOrderNum);
+        if (channelId.equals("WX_JSAPI")){
+            teaPayInfo.setOrderNo(param1);
+        }else{
+            teaPayInfo.setOrderNo(selfOrderNum);
+        }
+
+
         teaPayInfo.setPaySerialNo(payOrderNum);
         teaPayInfo.setPayType("iotpay");
         teaPayInfo.setPayTime(new Date());

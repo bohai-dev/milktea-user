@@ -42,19 +42,39 @@ public class PayController {
     
 
    @RequestMapping("/iotpay/notify")
-    public String  iotNotify(IotResponseBean responseBean){
+    public void  iotNotify(HttpServletRequest request, HttpServletResponse response){
 
-        LOGGER.info("支付通知"+responseBean.toString());
-        String result="";
-        try {
-            result=payInfoService.iotNotify(responseBean);
-        } catch (MilkTeaException e) {
-            e.printStackTrace();
-            result="fail";
-        }
+       LOGGER.info("iot支付异步接收通知");
+       String payOrderId=request.getParameter("payOrderId");
+       String mchOrderNo=request.getParameter("mchOrderNo");
+       String status=request.getParameter("status");
+       String channelId=request.getParameter(" channelId");
+       String param1=request.getParameter("param1");
 
-        return result;
+       IotResponseBean responseBean=new IotResponseBean();
+       responseBean.setPayOrderId(payOrderId);
+       responseBean.setMchOrderNo(mchOrderNo);
+       responseBean.setStatus(Integer.parseInt(status));
+       responseBean.setChannelId(channelId);
+       responseBean.setParam1(param1);
+
+       String result="fail";
+       PrintWriter out =null;
+       try {
+           out=response.getWriter();
+           result=payInfoService.iotNotify(responseBean);
+           out.print(result);
+       } catch (Exception e) {
+           e.printStackTrace();
+           result="fail";
+           out.print(result);
+       }finally {
+           if (out!=null){
+               out.close();
+           }
+       }
 
     }
+
 
 }
