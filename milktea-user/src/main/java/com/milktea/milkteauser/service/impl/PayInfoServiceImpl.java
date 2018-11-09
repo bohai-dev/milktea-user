@@ -170,8 +170,10 @@ public class PayInfoServiceImpl implements PayInfoService {
      * @return
      * @throws MilkTeaException
      */
-    public String iotNotify(IotResponseBean iotResponseBean) throws MilkTeaException{
+    @Override
+    public String iotNotify(IotResponseBean iotResponseBean) {
         TeaPayInfo teaPayInfo = new TeaPayInfo();
+        String orderNum="";
         String result=null;
 
         //商户单号
@@ -182,14 +184,17 @@ public class PayInfoServiceImpl implements PayInfoService {
         int payStatus=iotResponseBean.getStatus();
         String channelId=iotResponseBean.getChannelId();
         String param1=iotResponseBean.getParam1();
-        teaPayInfo.setPayId(mapper.generateClassId());
+
+
         if (channelId.equals("WX_JSAPI")){
-            teaPayInfo.setOrderNo(param1);
+            teaPayInfo.setPayId(param1);
+            orderNum=param1.split("@")[0];
         }else{
-            teaPayInfo.setOrderNo(selfOrderNum);
+            teaPayInfo.setPayId(selfOrderNum);
+            orderNum=selfOrderNum.split("@")[0];
         }
 
-
+        teaPayInfo.setOrderNo(orderNum);
         teaPayInfo.setPaySerialNo(payOrderNum);
         teaPayInfo.setPayType("iotpay");
         teaPayInfo.setPayTime(new Date());
@@ -197,10 +202,10 @@ public class PayInfoServiceImpl implements PayInfoService {
             if (payStatus==2){  //支付成功
                 teaPayInfo.setPayStatus(1+"");
                 //更新订单状态
-                orderService.updatePayStatus(selfOrderNum, "1");
+                orderService.updatePayStatus(orderNum, "1");
                 //推送订单
                 Map<String, String> map = new HashMap<>();
-                map.put("orderNo", selfOrderNum);
+                map.put("orderNo", orderNum);
                 map.put("messageType", "0");
                 String response = HttpUtil.post(NOTIFY_ORDER_URL, map);
                 result="success";
@@ -210,14 +215,15 @@ public class PayInfoServiceImpl implements PayInfoService {
 
                 teaPayInfo.setPayStatus(3+"");
                 //更新订单状态 2失败
-                orderService.updatePayStatus(selfOrderNum, "2");
+                orderService.updatePayStatus(orderNum, "2");
                 result="fail";
 
             }
             mapper.insertSelective(teaPayInfo);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new MilkTeaException(MilkTeaErrorConstant.PAY_FAIL.getErrorCode(), e.getMessage(), e.getMessage(), e);
+            result="fail";
+           // throw new MilkTeaException(MilkTeaErrorConstant.PAY_FAIL.getErrorCode(), e.getMessage(), e.getMessage(), e);
         }
 
         return result;

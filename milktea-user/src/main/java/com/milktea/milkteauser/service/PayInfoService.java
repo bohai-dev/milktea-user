@@ -10,5 +10,5 @@ public interface PayInfoService {
 
     void  stripePay(StripeBean stripeBean) throws MilkTeaException;
     ResponseBody<String> iotPay(IOTBean iotBean) throws MilkTeaException;
-    String iotNotify(IotResponseBean iotResponseBean) throws MilkTeaException;
+    String iotNotify(IotResponseBean iotResponseBean);
 }
