@@ -42,19 +42,40 @@ public class PayController {
     
 
    @RequestMapping("/iotpay/notify")
-    public String  iotNotify(IotResponseBean responseBean){
+    public String  iotNotify(HttpServletRequest request, HttpServletResponse response){
 
-        LOGGER.info("支付通知"+responseBean.toString());
-        String result="";
-        try {
-            result=payInfoService.iotNotify(responseBean);
-        } catch (MilkTeaException e) {
-            e.printStackTrace();
-            result="fail";
-        }
+	   /* LOGGER.info("支付通知"+responseBean.toString());
+       String result="";
+       try {
+           result=payInfoService.iotNotify(responseBean);
+       } catch (MilkTeaException e) {
+           e.printStackTrace();
+           result="fail";
+       }
 
-        return result;
+       return result;*/
 
+      PrintWriter out = null;
+      LOGGER.info("iot支付异步接收通知");
+      StringBuilder sb = new StringBuilder();
+      try {
+          out=response.getWriter();
+          BufferedReader reader=request.getReader();
+          String line=null;
+          while ((line=reader.readLine())!=null){
+              sb.append(line);
+          }
+          String notifyResult=sb.toString();
+          LOGGER.info("iot支付接收到消息："+sb.toString());
+          //需要验证签名
+          String payOrderId=request.getParameter("payOrderId");
+          System.out.println("payOrderId="+payOrderId);
+
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+
+      return null;
     }
 
 }
