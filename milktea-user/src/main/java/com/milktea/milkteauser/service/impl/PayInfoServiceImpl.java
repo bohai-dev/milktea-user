@@ -171,62 +171,63 @@ public class PayInfoServiceImpl implements PayInfoService {
      * @throws MilkTeaException
      */
     @Override
-    public String iotNotify(IotResponseBean iotResponseBean){
-    	  TeaPayInfo teaPayInfo = new TeaPayInfo();
-          String orderNum="";
-          String result=null;
+    public String iotNotify(IotResponseBean iotResponseBean) {
+        TeaPayInfo teaPayInfo = new TeaPayInfo();
+        String orderNum="";
+        String result=null;
 
-          //商户单号
-          String selfOrderNum=iotResponseBean.getMchOrderNo();
-          //支付单号
-          String payOrderNum=iotResponseBean.getPayOrderId();
-          //支付状态,0-订单生成,1-支付中,2-支付成功,3-业务处理完成
-          int payStatus=iotResponseBean.getStatus();
-          String channelId=iotResponseBean.getChannelId();
-          String param1=iotResponseBean.getParam1();
-
-
-          if (channelId.equals("WX_JSAPI")){
-              teaPayInfo.setPayId(param1);
-              orderNum=param1.split("@")[0];
-          }else{
-              teaPayInfo.setPayId(selfOrderNum);
-              orderNum=selfOrderNum.split("@")[0];
-          }
-
-          teaPayInfo.setOrderNo(orderNum);
-          teaPayInfo.setPaySerialNo(payOrderNum);
-          teaPayInfo.setPayType("iotpay");
-          teaPayInfo.setPayTime(new Date());
-          try {
-              if (payStatus==2){  //支付成功
-                  teaPayInfo.setPayStatus(1+"");
-                  //更新订单状态
-                  orderService.updatePayStatus(orderNum, "1");
-                  //推送订单
-                  Map<String, String> map = new HashMap<>();
-                  map.put("orderNo", orderNum);
-                  map.put("messageType", "0");
-                  String response = HttpUtil.post(NOTIFY_ORDER_URL, map);
-                  result="success";
+        //商户单号
+        String selfOrderNum=iotResponseBean.getMchOrderNo();
+        //支付单号
+        String payOrderNum=iotResponseBean.getPayOrderId();
+        //支付状态,0-订单生成,1-支付中,2-支付成功,3-业务处理完成
+        int payStatus=iotResponseBean.getStatus();
+        String channelId=iotResponseBean.getChannelId();
+        String param1=iotResponseBean.getParam1();
 
 
-              }else{
+        if (channelId.equals("WX_JSAPI")){
+            teaPayInfo.setPayId(param1);
+            orderNum=param1.split("@")[0];
+        }else{
+            teaPayInfo.setPayId(selfOrderNum);
+            orderNum=selfOrderNum.split("@")[0];
+        }
 
-                  teaPayInfo.setPayStatus(3+"");
-                  //更新订单状态 2失败
-                  orderService.updatePayStatus(orderNum, "2");
-                  result="fail";
+        teaPayInfo.setOrderNo(orderNum);
+        teaPayInfo.setPaySerialNo(payOrderNum);
+        teaPayInfo.setPayType("iotpay");
+        teaPayInfo.setPayTime(new Date());
+        try {
+            if (payStatus==2){  //支付成功
+                teaPayInfo.setPayStatus(1+"");
+                //更新订单状态
+                orderService.updatePayStatus(orderNum, "1");
+                //推送订单
+                Map<String, String> map = new HashMap<>();
+                map.put("orderNo", orderNum);
+                map.put("messageType", "0");
+                String response = HttpUtil.post(NOTIFY_ORDER_URL, map);
+                result="success";
 
-              }
-              mapper.insertSelective(teaPayInfo);
-          } catch (Exception e) {
-              e.printStackTrace();
-              result="fail";
-             // throw new MilkTeaException(MilkTeaErrorConstant.PAY_FAIL.getErrorCode(), e.getMessage(), e.getMessage(), e);
-          }
 
-          return result;
+            }else{
+
+                teaPayInfo.setPayStatus(3+"");
+                //更新订单状态 2失败
+                orderService.updatePayStatus(orderNum, "2");
+                result="fail";
+
+            }
+            mapper.insertSelective(teaPayInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result="fail";
+           // throw new MilkTeaException(MilkTeaErrorConstant.PAY_FAIL.getErrorCode(), e.getMessage(), e.getMessage(), e);
+        }
+
+        return result;
+
     }
 
 }
