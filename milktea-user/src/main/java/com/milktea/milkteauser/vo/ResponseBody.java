@@ -12,4 +12,7 @@ public class ResponseBody<T> extends ResponseHeader{
         this.data = data;
     }
     
+    
+    
+    
 }

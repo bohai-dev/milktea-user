@@ -35,7 +35,7 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	
 	private static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
 	
-	private static  final String SMS_TEMPALETE_CODE="SMS_169112102";
+	private static  final String SMS_TEMPALETE_CODE="SMS_169112102";  
 	
 	
 	@Override

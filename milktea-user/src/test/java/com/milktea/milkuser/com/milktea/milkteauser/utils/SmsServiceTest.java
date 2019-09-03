@@ -26,12 +26,12 @@ public class SmsServiceTest {
    
    @Test
    public void sendSms(){
-	   
-	   ResponseBody<String> res= smsService.sendVerCodeSMS("16043655388","SMS_169112070");
-	   System.out.println("結果="+res.getData());
+	 
+	   ResponseBody<String> res= smsService.sendVerCodeSMS("16043678086","SMS_169112102");
+	   System.out.println("結果="+res.getRspCode()+res.getCnErrorMsg());
    }
 
-   @Test
+ /*  @Test
     public void  insertPayRecord(){
        TeaPayInfo teaPayInfo=new TeaPayInfo();
        teaPayInfo.setPayId(teaPayInfoMapper.generateClassId());
@@ -39,5 +39,5 @@ public class SmsServiceTest {
        teaPayInfo.setPayStatus("0");
        teaPayInfo.setPayTime(new Date());
        teaPayInfoMapper.insertSelective(teaPayInfo);
-   }
+   }*/
 }
