@@ -1,15 +1,14 @@
 package com.milktea.milkteauser.util;
 
-import org.apache.commons.beanutils.BeanMap;
-import org.apache.commons.beanutils.BeanUtils;
-import sun.rmi.server.InactiveGroupException;
-
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
+
+import org.apache.commons.beanutils.BeanMap;
+import org.apache.commons.beanutils.BeanUtils;
 
 /**
  * Cteated by cxy on 2018/9/19
@@ -73,6 +72,22 @@ public class Utils {
 
        return  dateStr+randomStr;
 
+   }
+   
+   /**
+    *生成四位验证码
+    * @return
+    */
+   public static String generateVertifyCode(){
+	   
+	   Random random=new Random();
+       String code="";
+       for (int i = 0; i < 4; i++) {
+          int r=random.nextInt(10);
+          code+=r;
+       }
+       return code;
+	   
    }
 
    public static void main(String[] args){

@@ -33,7 +33,10 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 	@Autowired
 	TeaLoginWeixinMapper teaLoginWeixinMapper;
 	
-	static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(UserLoginServiceImpl.class);
+	
+	private static  final String SMS_TEMPALETE_CODE="SMS_169112102";
+	
 	
 	@Override
 	public TeaUserInfo findRegisterOpenid(String weixinOpenid) throws MilkTeaException {
@@ -75,9 +78,9 @@ public  class UserRegisterServiceImpl implements UserRegisterService {
 		//SMS_134326005 是认证模板号
 		ResponseBody<String> responseStr = new ResponseBody<String>();
 		//海外
-//		responseStr = smsService.sendVerCodeSMS(telephone,"SMS_134326005");
+		responseStr = smsService.sendVerCodeSMS(1+telephone,SMS_TEMPALETE_CODE);     // SMS_169112102
 		//国内
-		responseStr = smsService.sendVerCodeSMS(telephone,"SMS_111715045");
+		//responseStr = smsService.sendVerCodeSMS(telephone,"SMS_111715045");
 		
 		//写入数据库
 		teaSmsRegisterMapper.insertSMSReg(telephone, responseStr.getData());

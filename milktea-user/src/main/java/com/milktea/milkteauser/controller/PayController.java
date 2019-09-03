@@ -41,41 +41,40 @@ public class PayController {
 
     
 
-   @RequestMapping("/iotpay/notify")
-    public String  iotNotify(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping("/iotpay/notify")
+    public void  iotNotify(HttpServletRequest request, HttpServletResponse response){
 
-	   /* LOGGER.info("支付通知"+responseBean.toString());
-       String result="";
+       LOGGER.info("iot支付异步接收通知");
+       String payOrderId=request.getParameter("payOrderId");
+       String mchOrderNo=request.getParameter("mchOrderNo");
+       String status=request.getParameter("status");
+       String channelId=request.getParameter("channelId");
+       String param1=request.getParameter("param1");
+
+       IotResponseBean responseBean=new IotResponseBean();
+       responseBean.setPayOrderId(payOrderId);
+       responseBean.setMchOrderNo(mchOrderNo);
+       responseBean.setStatus(Integer.parseInt(status));
+       responseBean.setChannelId(channelId);
+       responseBean.setParam1(param1);
+
+       String result="fail";
+       PrintWriter out =null;
        try {
+           out=response.getWriter();
            result=payInfoService.iotNotify(responseBean);
-       } catch (MilkTeaException e) {
+           out.print(result);
+       } catch (Exception e) {
            e.printStackTrace();
            result="fail";
+           out.print(result);
+       }finally {
+           if (out!=null){
+               out.close();
+           }
        }
 
-       return result;*/
-
-      PrintWriter out = null;
-      LOGGER.info("iot支付异步接收通知");
-      StringBuilder sb = new StringBuilder();
-      try {
-          out=response.getWriter();
-          BufferedReader reader=request.getReader();
-          String line=null;
-          while ((line=reader.readLine())!=null){
-              sb.append(line);
-          }
-          String notifyResult=sb.toString();
-          LOGGER.info("iot支付接收到消息："+sb.toString());
-          //需要验证签名
-          String payOrderId=request.getParameter("payOrderId");
-          System.out.println("payOrderId="+payOrderId);
-
-      } catch (IOException e) {
-          e.printStackTrace();
-      }
-
-      return null;
     }
+    
 
 }

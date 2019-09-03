@@ -27,8 +27,8 @@ public class SmsServiceTest {
    @Test
    public void sendSms(){
 	   
-	   ResponseBody<String> res= smsService.sendVerCodeSMS("17621503621","SMS_111715045");
-	   System.out.println(res.getData());
+	   ResponseBody<String> res= smsService.sendVerCodeSMS("16043655388","SMS_169112070");
+	   System.out.println("結果="+res.getData());
    }
 
    @Test

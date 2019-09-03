@@ -1,11 +1,10 @@
 package com.milktea.milkteauser.service.impl;
 
 
-import java.util.Random;
 
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -16,6 +15,7 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.milktea.milkteauser.exception.MilkTeaErrorConstant;
 import com.milktea.milkteauser.service.SmsService;
+import com.milktea.milkteauser.util.Utils;
 import com.milktea.milkteauser.vo.ResponseBody;
 
 
@@ -61,25 +61,14 @@ public class SmsServiceImpl implements SmsService {
 		 //必填:待发送手机号。支持以逗号分隔的形式进行批量调用，批量上限为1000个手机号码,批量调用相对于单条调用及时性稍有延迟,验证码类型的短信推荐使用单条调用的方式；发送国际/港澳台消息时，接收号码格式为00+国际区号+号码，如“0085200000000”
 		 request.setPhoneNumbers(phoneNumber);
 		 //必填:短信签名-可在短信控制台中找到
-		 request.setSignName("乔升科技");
+		 request.setSignName("creativefun");
 		 //必填:短信模板-可在短信控制台中找到
 		 request.setTemplateCode(templateCode);
 		 
 		
 	    //4位验证码
-		 String returnStr = "";
-	    long t = System.currentTimeMillis();
-		Random r1 = new Random(t);
-		int i;
-		i=r1.nextInt(10);
-		returnStr = returnStr + String.valueOf(i);
-		i=r1.nextInt(10);
-		returnStr = returnStr + String.valueOf(i);
-		i=r1.nextInt(10);
-		returnStr = returnStr + String.valueOf(i);
-		i=r1.nextInt(10);
-		returnStr = returnStr + String.valueOf(i);
-		 String code=returnStr;
+		 String code =Utils.generateVertifyCode();
+	   
 		 JSONObject param=new JSONObject();
 		//可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
 		//友情提示:如果JSON中需要带换行符,请参照标准的JSON协议对换行符的要求,比如短信内容中包含\r\n的情况在JSON中需要表示成\\r\\n,否则会导致JSON在服务端解析失败
